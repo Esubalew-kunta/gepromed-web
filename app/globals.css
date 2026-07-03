@@ -1,0 +1,168 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Font family variables are injected by next/font in app/layout.tsx:
+   --font-display (Spectral), --font-sans (IBM Plex Sans), --font-mono (IBM Plex Mono). */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-paper text-ink antialiased;
+    font-family: var(--font-sans), system-ui, sans-serif;
+    /* faint radiograph-film grain so the neutral never reads as flat white */
+    background-image: radial-gradient(
+      rgba(0, 48, 75, 0.022) 1px,
+      transparent 1px
+    );
+    background-size: 4px 4px;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display tracking-tight text-ink;
+    font-weight: 500;
+  }
+  ::selection {
+    background: theme("colors.brand.500");
+    color: white;
+  }
+  :focus-visible {
+    outline: 2px solid theme("colors.brand.500");
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  /* ---- Buttons -------------------------------------------------------- */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  /* Primary action = brand blue (identity + action). */
+  .btn-primary {
+    @apply btn bg-brand-600 text-white hover:bg-brand-700;
+  }
+  .btn-ghost {
+    @apply btn border border-line bg-white text-brand-700 hover:border-brand-400 hover:bg-brand-50;
+  }
+  /* On dark instrument panels. */
+  .btn-onDark {
+    @apply btn border border-white/30 text-white hover:border-white/60 hover:bg-white/10;
+  }
+  /* SEMANTIC ONLY: patient-safety / explant-analysis moments. Not a generic CTA. */
+  .btn-safety {
+    @apply btn bg-safety-500 text-white hover:bg-safety-600;
+  }
+  /* Original accent button, restored for the original V2 hero CTA. */
+  .btn-accent {
+    @apply btn bg-accent text-ink hover:brightness-105;
+  }
+
+  .card {
+    @apply rounded-xl2 border border-line bg-white shadow-card;
+  }
+
+  .pill {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold;
+  }
+
+  /* ---- Data / specimen annotation ------------------------------------ */
+  /* Mono label styled like an engineering-drawing or specimen-tag annotation. */
+  .mono-label {
+    @apply font-mono text-[0.68rem] font-medium uppercase tracking-annotation text-ink-muted;
+  }
+  .mono-label-brand {
+    @apply font-mono text-[0.68rem] font-medium uppercase tracking-annotation text-brand-600;
+  }
+  .stat-figure {
+    @apply font-mono font-medium tabular-nums;
+    font-feature-settings: "tnum", "ss01";
+  }
+
+  /* ---- Form fields ---------------------------------------------------- */
+  .field-label {
+    @apply mb-1.5 block text-sm font-medium text-ink-soft;
+  }
+  .field-input {
+    @apply w-full rounded-lg border border-line bg-white px-3.5 py-2.5 text-sm text-ink shadow-sm outline-none transition placeholder:text-ink-muted/60 focus:border-brand-400 focus:ring-2 focus:ring-brand-100;
+  }
+
+  /* ---- Engineering registration frame -------------------------------- */
+  /* Corner tick marks, like a drawing sheet or radiograph plate. */
+  .tick-frame {
+    position: relative;
+  }
+  .tick-frame::before,
+  .tick-frame::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-color: theme("colors.brand.400");
+    border-style: solid;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  .tick-frame::before {
+    top: -1px;
+    left: -1px;
+    border-width: 1px 0 0 1px;
+  }
+  .tick-frame::after {
+    bottom: -1px;
+    right: -1px;
+    border-width: 0 1px 1px 0;
+  }
+}
+
+@layer utilities {
+  /* Blueprint / imaging grid atmosphere for dark instrument panels. */
+  .bg-grid {
+    background-image: linear-gradient(
+        rgba(102, 173, 214, 0.06) 1px,
+        transparent 1px
+      ),
+      linear-gradient(90deg, rgba(102, 173, 214, 0.06) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  /* Hero duotone: masks a low-res source photo into an on-concept radiographic
+     blue-black image. Desaturate the photo, then tint shadows brand-navy and
+     lift midtones toward brand-blue via layered blends. */
+  .duotone {
+    filter: grayscale(1) contrast(1.08) brightness(0.92);
+  }
+  .duotone-tint {
+    background: linear-gradient(
+      180deg,
+      theme("colors.brand.500") 0%,
+      theme("colors.brand.900") 100%
+    );
+    mix-blend-mode: color;
+  }
+  .duotone-shadow {
+    background: linear-gradient(
+      120deg,
+      rgba(0, 24, 37, 0.72) 0%,
+      rgba(0, 48, 75, 0.5) 45%,
+      rgba(0, 90, 140, 0.28) 100%
+    );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
