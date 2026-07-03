@@ -5,7 +5,7 @@ services:
     name: gepromed-demo
     runtime: node
     plan: free
-    branch: claude/sleepy-maxwell-otfodc
+    branch: main
     buildCommand: npm install && npm run build
     startCommand: npm run start
     envVars:
