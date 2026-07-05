@@ -15,7 +15,7 @@ export default function LegalPage() {
     ],
     [tx("Statut", "Status"), tx("Association à but non lucratif", "Non-profit association")],
     [tx("Contact", "Contact"), "formation@gepromed.com"],
-    [tx("Hébergement", "Hosting"), tx("Fournisseur d'hébergement web", "Web hosting provider")],
+    [tx("Hébergement", "Hosting"), "Render, Inc. (render.com)"],
   ];
 
   return (
@@ -39,8 +39,8 @@ export default function LegalPage() {
       <Prose>
         <p className="mt-8">
           {tx(
-            "L'ensemble des contenus de ce site (textes, visuels, logos) est protégé. Toute reproduction sans autorisation est interdite. Ce site est une démonstration de refonte.",
-            "All content on this site (text, images, logos) is protected. Any reproduction without authorization is prohibited. This site is a redesign demonstration.",
+            "L'ensemble des contenus de ce site (textes, visuels, logos) est protégé. Toute reproduction sans autorisation est interdite.",
+            "All content on this site (text, images, logos) is protected. Any reproduction without authorization is prohibited.",
           )}
         </p>
         <p>

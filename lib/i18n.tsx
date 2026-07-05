@@ -58,6 +58,8 @@ export function useLang() {
 // UI string dictionary. `t(key)` returns the string in the active language.
 const DICT = {
   "nav.trainings": { fr: "Formations", en: "Trainings" },
+  "nav.congresses": { fr: "Congrès", en: "Congresses" },
+  "nav.news": { fr: "Actualités", en: "News" },
   "nav.about": { fr: "À propos", en: "About" },
   "nav.dashboard": { fr: "Espace organisateur", en: "Organizer space" },
   "nav.contact": { fr: "Contact", en: "Contact" },

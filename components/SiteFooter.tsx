@@ -32,6 +32,8 @@ export function SiteFooter() {
           <h4 className="mono-label text-white/50">{t("footer.navigation")}</h4>
           <ul className="mt-3 space-y-2 text-sm text-white/75">
             <li><Link className="transition hover:text-white" href="/trainings">{t("nav.trainings")}</Link></li>
+            <li><Link className="transition hover:text-white" href="/congresses">{t("nav.congresses")}</Link></li>
+            <li><Link className="transition hover:text-white" href="/news">{t("nav.news")}</Link></li>
             <li><Link className="transition hover:text-white" href="/register">{t("nav.register")}</Link></li>
             <li><Link className="transition hover:text-white" href="/about">{t("nav.about")}</Link></li>
             <li>

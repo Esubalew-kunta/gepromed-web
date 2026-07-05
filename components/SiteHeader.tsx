@@ -8,9 +8,11 @@ import { useT, useLang, loc, type DictKey, type L } from "@/lib/i18n";
 
 const NAV: { href: string; key: DictKey }[] = [
   { href: "/trainings", key: "nav.trainings" },
+  { href: "/congresses", key: "nav.congresses" },
 ];
 
 const NAV_AFTER: { href: string; key: DictKey }[] = [
+  { href: "/news", key: "nav.news" },
   { href: "/contact", key: "nav.contact" },
 ];
 
@@ -114,9 +116,11 @@ export function SiteHeader() {
       {open && (
         <div className="border-t border-line bg-paper md:hidden">
           <div className="container-page flex flex-col gap-1 py-3">
-            <Link href="/trainings" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 text-sm font-medium text-ink-soft hover:bg-brand-50">
-              {t("nav.trainings")}
-            </Link>
+            {NAV.map((item) => (
+              <Link key={item.href} href={item.href} onClick={() => setOpen(false)} className="rounded-lg px-3 py-2.5 text-sm font-medium text-ink-soft hover:bg-brand-50">
+                {t(item.key)}
+              </Link>
+            ))}
 
             <p className="mono-label px-3 pb-1 pt-3">
               {t("nav.about")}
