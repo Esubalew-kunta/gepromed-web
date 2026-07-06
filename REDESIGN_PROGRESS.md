@@ -5,8 +5,57 @@
 > This file captures the design system + what is done + what remains, so a new
 > session can continue without re-deriving anything.
 
-Last updated: session ending 2026-07-03. App: public website, Next 14, port **3001**,
-folder `gepromed-ai-makers-claude-sleepy-maxwell-otfodc`.
+Last updated: session **2026-07-05** (content + new pages). App: public website, Next 14,
+port **3001**, folder `gepromed-ai-makers-claude-sleepy-maxwell-otfodc`.
+
+---
+
+## LATEST SESSION (2026-07-05): content pass + 2 new sections (SHIPPED + pushed)
+
+Goal this session: not design, **data**. Several pages were thin or linked out to the old
+gepromed.com; the site also lacked news and congresses. Full reasoning + per-page rationale
+lives in `CONTENT_PLAN.md` (read it for the "why"). All work is **frontend only**, real data
+pulled from the old gepromed.com, placeholder photos, existing colors/tokens reused, no data
+wiring touched. **Committed and pushed to `main`** (commit `6b7677a`), which auto-redeploys
+`gepromed-demo` on Render.
+
+**New sections (local typed content, no backend):**
+- **Blog / News:** `app/news/page.tsx` (editorial featured lead + category filter + grid) and
+  `app/news/[slug]/page.tsx` (article: paragraph/heading/list/quote blocks + related posts).
+  Content in `lib/news.ts` = 5 real posts (ESVB congress, HelpMeSee simulation, VR
+  publications, FEDER/EU project, vascular bootcamp). Photos = existing `public/photos/*`;
+  photo-less posts get an on-brand blueprint panel.
+- **Congresses:** `app/congresses/page.tsx` (dark instrument featured panel + past-editions
+  timeline) and `app/congresses/[slug]/page.tsx` (instrument header + program timeline +
+  sticky CTA). Content in `lib/congresses.ts` = real ESVB 2025 / ISVB 2026 / ESVB 2023.
+  Design decision: index + per-congress detail (not a flat list) because ESVB content is deep
+  and it reuses the trainings list-to-detail grammar.
+- **`components/Reveal.tsx`:** shared scroll-entrance primitive. One short fade + rise, honours
+  `prefers-reduced-motion`, and CANNOT leave content hidden (shows in-viewport content at once
+  + 1.5s fallback). Use this for any new tasteful motion; do not add heavy animation.
+
+**Real data fed into existing pages:**
+- `app/about/team/page.tsx`: real operational team (Nabil Chakfé President, Annik Borcos CEO,
+  + Couvreur, Neumann, Lachegur, Tabouret, Allouche, Constans, Fuchs) + scientific committee.
+  Placeholder initials, "photos coming soon" (client to send real photos).
+- `app/about/funders/page.tsx`: real EU FEDER project stat panel (4,013,741.02 EUR = 56.56%,
+  total 7,096,430.37 EUR, 7 Sep 2023 to 31 Dec 2027) + Grand Est / Eurométropole / CEA.
+- `app/about/publications/page.tsx`: 5 real, verifiable references grouped by theme.
+- `app/about/legal/page.tsx`: hosting set to Render, removed the "demonstration" disclaimer.
+- Nav: `components/SiteHeader.tsx` + `SiteFooter.tsx` + 2 keys in `lib/i18n.tsx`
+  (`nav.congresses`, `nav.news`).
+
+**Explicitly NOT changed (client decisions honoured):** colors, hero, logo, all done page
+layouts, ALL data wiring (trainings fetch, register `createLead`, sign upload, Supabase),
+the shared DB. **Contact form left visual-only (no send wiring)** per client. Home
+testimonials left as DEMO per client.
+
+**Verified:** `tsc --noEmit` clean, `next build` exit 0, every new route 200, screenshots of
+all new pages reviewed, live Supabase trainings query still 200 (wiring intact).
+
+**Next-session TODO carried forward:** real team photos when the client sends them; optional
+HelpMeSee page and Platforms/Services detail page (proposed in `CONTENT_PLAN.md`, not built);
+`/dashboard` restyle still open (below).
 
 ---
 

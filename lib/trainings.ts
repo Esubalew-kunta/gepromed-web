@@ -82,7 +82,7 @@ export const trainings: TrainingSession[] = [
     priceEUR: 2400,
     depositEUR: 600,
     capacity: 16,
-    enrolled: 11,
+    enrolled: 6,
     qualiopi: true,
     summary: {
       fr: "Trois jours de pratique intensive sur modèles anatomiques et simulateurs haute-fidélité pour maîtriser les abords vasculaires périphériques complexes.",
@@ -177,7 +177,7 @@ export const trainings: TrainingSession[] = [
     priceEUR: 1750,
     depositEUR: 450,
     capacity: 12,
-    enrolled: 12,
+    enrolled: 5,
     qualiopi: true,
     summary: {
       fr: "Parcours d'initiation à la phacoémulsification sur simulateur et œil de synthèse, encadré par des superviseurs experts.",
@@ -245,7 +245,7 @@ export const trainings: TrainingSession[] = [
     priceEUR: 2950,
     depositEUR: 750,
     capacity: 14,
-    enrolled: 5,
+    enrolled: 8,
     qualiopi: true,
     summary: {
       fr: "Programme expert dédié aux endoprothèses aortiques, du planning 3D à la simulation per-procédurale.",
