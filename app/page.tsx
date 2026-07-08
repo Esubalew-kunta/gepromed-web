@@ -39,11 +39,15 @@ export default function HomePage() {
           <p className="mono-label text-center">
             {tx("Ils nous soutiennent", "They support us")}
           </p>
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
             {PARTNERS.map((p) => (
-              <span key={p} className="text-sm font-medium text-ink-muted">
-                {p}
-              </span>
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                key={p.name}
+                src={p.logo}
+                alt={p.name}
+                className="h-10 w-auto object-contain opacity-80 grayscale transition hover:opacity-100 hover:grayscale-0 md:h-12"
+              />
             ))}
           </div>
         </div>
@@ -53,16 +57,13 @@ export default function HomePage() {
       <section id="implant-cycle" className="scroll-mt-20 bg-paper py-20 sm:py-24">
         <div className="container-page">
           <div className="max-w-2xl">
-            <p className="mono-label-brand">
-              {tx("Section 01 · Notre cœur conceptuel", "Section 01 · Our conceptual core")}
-            </p>
-            <h2 className="mt-3 text-3xl sm:text-4xl">
-              {tx("Le cycle de l'implant", "The implant cycle")}
+            <h2 className="mt-0 text-3xl sm:text-4xl">
+              {tx("Sécurité chirurgicale : nos 3 plateformes", "Surgical safety: our 3 platforms")}
             </h2>
             <p className="mt-3 leading-relaxed text-ink-soft">
               {tx(
-                "Quatre plateformes qui se nourrissent l'une l'autre, du banc d'essai au retour au patient. Chaque plateforme est aussi une porte d'entrée selon qui vous êtes.",
-                "Four platforms that feed one another, from the test bench back to the patient. Each platform is also a doorway, depending on who you are.",
+                "Gepromed relie analyse d'explants, tests techniques et jumeau numérique pour réduire les complications évitables et sécuriser les dispositifs médicaux implantables.",
+                "Gepromed connects explant analysis, technical testing and a digital twin to reduce avoidable complications and make implantable medical devices safer.",
               )}
             </p>
           </div>
@@ -78,10 +79,7 @@ export default function HomePage() {
         <div className="container-page relative">
           <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-center">
             <div>
-              <p className="mono-label text-brand-200">
-                {tx("Section 02 · Preuve & impact", "Section 02 · Evidence & impact")}
-              </p>
-              <h2 className="mt-3 text-3xl text-white sm:text-4xl">
+              <h2 className="mt-0 text-3xl text-white sm:text-4xl">
                 {tx("30 ans de résultats mesurés", "30 years of measured results")}
               </h2>
               <p className="mt-3 max-w-md leading-relaxed text-white/70">
@@ -124,10 +122,7 @@ export default function HomePage() {
         <div className="container-page">
           <div className="flex items-end justify-between gap-4">
             <div>
-              <p className="mono-label-brand">
-                {tx("Section 03 · Plateforme Éducation", "Section 03 · Education platform")}
-              </p>
-              <h2 className="mt-3 text-3xl sm:text-4xl">{t("home.upcomingTitle")}</h2>
+              <h2 className="mt-0 text-3xl sm:text-4xl">{t("home.upcomingTitle")}</h2>
               <p className="mt-2 text-ink-soft">{t("home.upcomingSub")}</p>
             </div>
             <Link href="/trainings" className="btn-ghost hidden sm:inline-flex">
@@ -146,10 +141,7 @@ export default function HomePage() {
           <div className="tick-frame overflow-hidden rounded-xl2 border border-line bg-mist/60">
             <div className="grid gap-8 p-8 sm:p-12 lg:grid-cols-[1.2fr_1fr] lg:items-center">
               <div>
-                <p className="mono-label-brand">
-                  {tx("Section 04 · Industriels & fabricants", "Section 04 · Industry & manufacturers")}
-                </p>
-                <h2 className="mt-3 text-3xl sm:text-4xl">
+                <h2 className="mt-0 text-3xl sm:text-4xl">
                   {tx("Vous avez conçu un dispositif. Faites-le tester.", "You built a device. Have it tested.")}
                 </h2>
                 <p className="mt-4 max-w-xl leading-relaxed text-ink-soft">

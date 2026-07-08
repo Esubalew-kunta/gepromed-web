@@ -10,6 +10,19 @@ port **3001**, folder `gepromed-ai-makers-claude-sleepy-maxwell-otfodc`.
 
 ---
 
+## HOTFIX (2026-07-06): false "Complet" on training cards (SHIPPED + pushed)
+
+The trainings list is a client component: it paints the bundled seed fallback
+(`lib/trainings.ts`) first, then swaps in live Supabase data. The seed had the upcoming
+phaco session at 12/12, so cards briefly showed "Complet" before live (open) data
+loaded. Fix: aligned the 3 UPCOMING seed courses to live enrolment (abord 6/16,
+phaco-2026-11 5/12, endov 8/14). Presentation/seed values only, no wiring changed.
+Note: the DB itself was also cleaned this day (courses freed, leads trimmed to 4) from
+the console side; see the console `STATUS.md` 2026-07-06 block. If seed drifts from live
+again, just re-match the upcoming seed entries to the live `enrolled` values.
+
+---
+
 ## LATEST SESSION (2026-07-05): content pass + 2 new sections (SHIPPED + pushed)
 
 Goal this session: not design, **data**. Several pages were thin or linked out to the old

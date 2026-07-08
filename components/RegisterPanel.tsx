@@ -20,11 +20,52 @@ const EMPTY = {
   institution: "",
   country: "",
   dietary: "",
-  arrival: "",
-  needsAccommodation: false,
-  elearningAccess: true,
   notes: "",
 };
+
+const PROFESSIONS: { value: string; fr: string; en: string }[] = [
+  { value: "Résident", fr: "Résident", en: "Resident" },
+  { value: "Interne", fr: "Interne", en: "Junior doctor" },
+  { value: "IBODE", fr: "IBODE", en: "OR nurse (IBODE)" },
+  { value: "Infirmier(ère)", fr: "Infirmier(ère)", en: "Nurse" },
+  { value: "Chirurgien", fr: "Chirurgien", en: "Surgeon" },
+  { value: "Praticien hospitalier", fr: "Praticien hospitalier", en: "Hospital practitioner" },
+  { value: "Autre", fr: "Autre", en: "Other" },
+];
+
+const COUNTRIES: string[] = [
+  "France",
+  "Belgique",
+  "Suisse",
+  "Luxembourg",
+  "Allemagne",
+  "Espagne",
+  "Italie",
+  "Portugal",
+  "Royaume-Uni",
+  "Pays-Bas",
+  "Irlande",
+  "Autriche",
+  "Danemark",
+  "Suède",
+  "Norvège",
+  "Finlande",
+  "Pologne",
+  "Grèce",
+  "Roumanie",
+  "Hongrie",
+  "République tchèque",
+  "Croatie",
+  "Slovénie",
+  "Slovaquie",
+  "Bulgarie",
+  "Canada",
+  "États-Unis",
+  "Maroc",
+  "Tunisie",
+  "Algérie",
+  "Autre / Other",
+];
 
 export function RegisterPanel({
   initialSlug = "",
@@ -150,10 +191,28 @@ export function RegisterPanel({
           <Input label={`${t("reg.firstName")} *`} value={form.firstName} onChange={(v) => update("firstName", v)} required />
           <Input label={`${t("reg.lastName")} *`} value={form.lastName} onChange={(v) => update("lastName", v)} required />
           <Input label={`${t("reg.email")} *`} type="email" value={form.email} onChange={(v) => update("email", v)} required />
-          <Input label={t("reg.phone")} value={form.phone} onChange={(v) => update("phone", v)} />
-          <Input label={t("reg.profession")} value={form.profession} onChange={(v) => update("profession", v)} />
-          <Input label={t("reg.institution")} value={form.institution} onChange={(v) => update("institution", v)} />
-          <Input label={t("reg.country")} value={form.country} onChange={(v) => update("country", v)} />
+          <Input label={`${t("reg.phone")} *`} value={form.phone} onChange={(v) => update("phone", v)} required />
+          <Select label={`${t("reg.profession")} *`} value={form.profession} onChange={(v) => update("profession", v)} required>
+            <option value="" disabled>
+              {lang === "fr" ? "Sélectionner…" : "Select…"}
+            </option>
+            {PROFESSIONS.map((p) => (
+              <option key={p.value} value={p.value}>
+                {lang === "fr" ? p.fr : p.en}
+              </option>
+            ))}
+          </Select>
+          <Input label={`${t("reg.institution")} *`} value={form.institution} onChange={(v) => update("institution", v)} required />
+          <Select label={`${t("reg.country")} *`} value={form.country} onChange={(v) => update("country", v)} required>
+            <option value="" disabled>
+              {lang === "fr" ? "Sélectionner…" : "Select…"}
+            </option>
+            {COUNTRIES.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </Select>
         </div>
       </div>
 
@@ -161,11 +220,6 @@ export function RegisterPanel({
         <p className="mono-label-brand mb-2">03 · {t("reg.logistics")}</p>
         <div className="grid gap-4 sm:grid-cols-2">
           <Input label={t("reg.dietary")} value={form.dietary} onChange={(v) => update("dietary", v)} />
-          <Input label={t("reg.arrival")} value={form.arrival} onChange={(v) => update("arrival", v)} />
-        </div>
-        <div className="mt-3 space-y-2.5">
-          <Check label={t("reg.accommodation")} checked={form.needsAccommodation} onChange={(v) => update("needsAccommodation", v)} />
-          <Check label={t("reg.elearning")} checked={form.elearningAccess} onChange={(v) => update("elearningAccess", v)} />
         </div>
         <div className="mt-3">
           <label className="field-label">{t("reg.notes")}</label>
@@ -212,24 +266,30 @@ function Input({
   );
 }
 
-function Check({
+function Select({
   label,
-  checked,
+  value,
   onChange,
+  required = false,
+  children,
 }: {
   label: string;
-  checked: boolean;
-  onChange: (v: boolean) => void;
+  value: string;
+  onChange: (v: string) => void;
+  required?: boolean;
+  children: React.ReactNode;
 }) {
   return (
-    <label className="flex cursor-pointer items-center gap-3 text-sm text-ink-soft">
-      <input
-        type="checkbox"
-        className="h-4 w-4 rounded border-line text-brand-600 focus:ring-brand-400"
-        checked={checked}
-        onChange={(e) => onChange(e.target.checked)}
-      />
-      {label}
-    </label>
+    <div>
+      <label className="field-label">{label}</label>
+      <select
+        className="field-input"
+        value={value}
+        required={required}
+        onChange={(e) => onChange(e.target.value)}
+      >
+        {children}
+      </select>
+    </div>
   );
 }

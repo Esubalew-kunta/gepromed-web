@@ -4,6 +4,14 @@ import Link from "next/link";
 import { Logo } from "./Logo";
 import { useT, useLang } from "@/lib/i18n";
 
+// The four public funding institutions (client: "only those 4").
+const FUNDERS: { src: string; alt: string }[] = [
+  { src: "/brand/funders/eurometropole-strasbourg.svg", alt: "Eurométropole de Strasbourg" },
+  { src: "/brand/funders/collectivite-europeenne-alsace.svg", alt: "Collectivité européenne d'Alsace" },
+  { src: "/brand/funders/region-grand-est.svg", alt: "Région Grand Est" },
+  { src: "/brand/funders/universite-de-strasbourg.svg", alt: "Université de Strasbourg" },
+];
+
 export function SiteFooter() {
   const t = useT();
   const { lang } = useLang();
@@ -68,6 +76,25 @@ export function SiteFooter() {
           </div>
         </div>
       </div>
+
+      <div className="relative border-t border-white/10">
+        <div className="container-page py-8">
+          <h4 className="mono-label text-white/50">
+            {tx("Ils nous financent", "Our funders")}
+          </h4>
+          <div className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-5">
+            {FUNDERS.map((f) => (
+              <img
+                key={f.src}
+                src={f.src}
+                alt={f.alt}
+                className="h-8 w-auto opacity-80"
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
       <div className="relative border-t border-white/10">
         <div className="container-page flex flex-col items-center justify-between gap-2 py-5 text-xs text-white/50 sm:flex-row">
           <p className="font-mono">© {new Date().getFullYear()} {t("footer.rights")}</p>

@@ -143,9 +143,10 @@ export default function AboutPage() {
       <section className="border-t border-line bg-paper py-16">
         <div className="container-page text-center">
           <p className="mono-label-brand">{tx("Partenaires & financeurs", "Partners & funders")}</p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
             {PARTNERS.map((p) => (
-              <span key={p} className="text-sm font-medium text-ink-muted">{p}</span>
+              // eslint-disable-next-line @next/next/no-img-element
+              <img key={p.name} src={p.logo} alt={p.name} className="h-10 w-auto object-contain opacity-80 md:h-12" />
             ))}
           </div>
           <Link href="/trainings" className="btn-primary mt-10">{t("home.ctaTrainings")}</Link>

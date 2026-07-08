@@ -9,6 +9,7 @@ import { useT, useLang, loc, type DictKey, type L } from "@/lib/i18n";
 const NAV: { href: string; key: DictKey }[] = [
   { href: "/trainings", key: "nav.trainings" },
   { href: "/congresses", key: "nav.congresses" },
+  { href: "/engineering", key: "nav.engineering" },
 ];
 
 const NAV_AFTER: { href: string; key: DictKey }[] = [
@@ -86,11 +87,31 @@ export function SiteHeader() {
             </div>
           </div>
 
-          {NAV_AFTER.map((item) => (
-            <Link key={item.href} href={item.href} className={linkClass(item.href)}>
-              {t(item.key)}
-            </Link>
-          ))}
+          {NAV_AFTER.map((item) =>
+            item.key === "nav.contact" ? (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-label={t("nav.contact")}
+                title={t("nav.contact")}
+                className={`grid h-9 w-9 place-items-center rounded-full transition ${
+                  pathname === item.href || pathname.startsWith(item.href + "/")
+                    ? "bg-brand-50 text-brand-700"
+                    : "text-ink-soft hover:bg-brand-50 hover:text-brand-700"
+                }`}
+              >
+                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="M3.5 7l8.5 6 8.5-6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <span className="sr-only">{t("nav.contact")}</span>
+              </Link>
+            ) : (
+              <Link key={item.href} href={item.href} className={linkClass(item.href)}>
+                {t(item.key)}
+              </Link>
+            ),
+          )}
 
           <LangToggle />
           <Link href="/register" className="btn-primary ml-2">

@@ -9,6 +9,9 @@ export type TrainingSession = {
   specialty: Specialty;
   level: Level;
   audience: "France" | "Europe";
+  // Target audience tags (who the training is for), distinct from the
+  // France/Europe geography enum above. Short labels, e.g. "Internes", "IBODE".
+  targetAudience: string[];
   city: string;
   venue: L;
   startDate: string; // ISO
@@ -23,10 +26,17 @@ export type TrainingSession = {
   objectives: L[];
   program: { day: L; items: L[] }[];
   supervisors: { name: string; role: L }[];
+  // Qualiopi programme blocks (optional, bilingual free text). Rendered
+  // conditionally in the detail view when present.
+  prerequisites?: L; // Prérequis
+  pedagogicalResources?: L; // Ressources pédagogiques
+  teachingMethods?: L; // Méthodes d'enseignement (présentiel, simulateur…)
+  evaluationMethods?: L; // Méthodes d'évaluation
+  supervisionOrganization?: L; // Organisation / encadrement par créneau
   // proof / outcomes (shown for past sessions)
   satisfaction?: number; // %
   passRate?: number; // %
-  photos?: number;
+  photos?: string[]; // image paths for the past-session gallery
   // optional per-course cover image (from Supabase Storage); falls back to
   // SPECIALTY_IMAGE when absent.
   imageUrl?: string;
@@ -74,6 +84,7 @@ export const trainings: TrainingSession[] = [
     specialty: "vascular",
     level: "Advanced",
     audience: "Europe",
+    targetAudience: ["Chirurgiens seniors", "Internes", "IBODE"],
     city: "Strasbourg",
     venue: strasbourgVenue,
     startDate: "2026-09-22",
@@ -156,6 +167,26 @@ export const trainings: TrainingSession[] = [
         },
       },
     ],
+    prerequisites: {
+      fr: "Être chirurgien, interne ou IBODE en activité et justifier d'une première expérience des abords vasculaires.",
+      en: "Be a practising surgeon, resident or scrub nurse with prior experience of vascular access.",
+    },
+    pedagogicalResources: {
+      fr: "Modèles anatomiques perfusés, simulateurs haute-fidélité, échographes et instrumentation chirurgicale complète fournis sur le plateau technique.",
+      en: "Perfused anatomical models, high-fidelity simulators, ultrasound machines and full surgical instrumentation provided on the technical platform.",
+    },
+    teachingMethods: {
+      fr: "Présentiel : ateliers pratiques sur simulateur et modèle perfusé, mises en situation en binôme et débriefings vidéo individualisés.",
+      en: "In-person: hands-on workshops on simulators and perfused models, paired scenarios and individual video debriefs.",
+    },
+    evaluationMethods: {
+      fr: "Évaluation continue des gestes, grille de compétences certifiante et cas intégratif final.",
+      en: "Continuous assessment of technical gestures, a certifying competency grid and a final integrative case.",
+    },
+    supervisionOrganization: {
+      fr: "Un superviseur pour quatre apprenants maximum par créneau pratique, encadrement renforcé sur les ateliers de gestion de crise.",
+      en: "One supervisor per four trainees maximum during each hands-on slot, with reinforced supervision on crisis-management workshops.",
+    },
   },
   {
     slug: "phaco-initiation-2026-11",
@@ -166,6 +197,7 @@ export const trainings: TrainingSession[] = [
     specialty: "ophthalmology",
     level: "Initiation",
     audience: "France",
+    targetAudience: ["Internes", "Résidents", "Infirmiers"],
     city: "Lyon",
     venue: {
       fr: "Centre de simulation ophtalmologique",
@@ -237,6 +269,7 @@ export const trainings: TrainingSession[] = [
     specialty: "vascular",
     level: "Expert",
     audience: "Europe",
+    targetAudience: ["Chirurgiens seniors", "Chirurgiens vasculaires"],
     city: "Strasbourg",
     venue: { fr: "Institut Gepromed : Salle hybride", en: "Gepromed Institute : Hybrid room" },
     startDate: "2027-02-04",
@@ -304,6 +337,18 @@ export const trainings: TrainingSession[] = [
         },
       },
     ],
+    prerequisites: {
+      fr: "Chirurgien vasculaire expérimenté maîtrisant les abords artériels et disposant d'une pratique endovasculaire préalable.",
+      en: "Experienced vascular surgeon proficient in arterial access with prior endovascular practice.",
+    },
+    teachingMethods: {
+      fr: "Présentiel en salle hybride : planning 3D sur station de travail, simulation de déploiement per-procédurale et cas complexes commentés.",
+      en: "In-person in a hybrid room: 3D planning on a workstation, intra-procedural deployment simulation and commented complex cases.",
+    },
+    evaluationMethods: {
+      fr: "Évaluation certifiante sur cas complexes et validation des étapes de sizing et de déploiement.",
+      en: "Certifying assessment on complex cases with validation of the sizing and deployment steps.",
+    },
   },
   // ---- Past sessions (with proof / outcomes) ----
   {
@@ -315,6 +360,7 @@ export const trainings: TrainingSession[] = [
     specialty: "vascular",
     level: "Advanced",
     audience: "Europe",
+    targetAudience: ["Chirurgiens seniors", "Internes", "IBODE"],
     city: "Strasbourg",
     venue: strasbourgVenue,
     startDate: "2026-03-18",
@@ -364,7 +410,14 @@ export const trainings: TrainingSession[] = [
     ],
     satisfaction: 97,
     passRate: 100,
-    photos: 42,
+    photos: [
+      "/photos/workshop-dsc0059.jpg",
+      "/photos/workshop-dsc0104.jpg",
+      "/photos/workshop-img3049.jpg",
+      "/photos/doctor-goggles.jpg",
+      "/photos/workshop-dsc0104.jpg",
+      "/photos/workshop-dsc0059.jpg",
+    ],
   },
   {
     slug: "phaco-initiation-2026-01",
@@ -375,6 +428,7 @@ export const trainings: TrainingSession[] = [
     specialty: "ophthalmology",
     level: "Initiation",
     audience: "France",
+    targetAudience: ["Internes", "Résidents"],
     city: "Lyon",
     venue: {
       fr: "Centre de simulation ophtalmologique",
@@ -423,7 +477,13 @@ export const trainings: TrainingSession[] = [
     ],
     satisfaction: 94,
     passRate: 92,
-    photos: 28,
+    photos: [
+      "/photos/doctor-goggles.jpg",
+      "/photos/workshop-img3049.jpg",
+      "/photos/workshop-dsc0059.jpg",
+      "/photos/workshop-dsc0104.jpg",
+      "/photos/doctor-goggles.jpg",
+    ],
   },
 ];
 
@@ -450,6 +510,17 @@ export function formatDateRange(start: string, end: string, lang: Lang): string 
     return `${fmt(s)} ${year}`;
   }
   return `${s.toLocaleDateString(locale, { day: "numeric", month: "long" })} – ${fmt(e)} ${year}`;
+}
+
+/**
+ * Shareable URL to the Qualiopi program PDF, generated by the external console
+ * service. Returns null when NEXT_PUBLIC_PROGRAM_API_URL is not configured, in
+ * which case the UI should show a "coming soon" state instead of a dead link.
+ */
+export function programPdfUrl(slug: string): string | null {
+  const base = process.env.NEXT_PUBLIC_PROGRAM_API_URL;
+  if (!base) return null;
+  return `${base.replace(/\/$/, "")}/api/programs?session=${encodeURIComponent(slug)}`;
 }
 
 export function euro(n: number, lang: Lang): string {

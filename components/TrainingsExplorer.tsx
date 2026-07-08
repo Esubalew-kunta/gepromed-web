@@ -146,11 +146,18 @@ function TrainingCardModern({ t, onOpen }: { t: TrainingSession; onOpen: () => v
             {loc(SPECIALTY_LABELS[t.specialty], lang)}
           </span>
         </div>
-        <div className="absolute right-3 top-3">
-          <span className="pill border border-white/20 bg-brand-950/45 font-mono text-[0.66rem] uppercase tracking-annotation text-white backdrop-blur">
-            {loc(LEVEL_LABELS[t.level], lang)}
-          </span>
-        </div>
+        {t.targetAudience.length > 0 && (
+          <div className="absolute right-3 top-3 flex max-w-[60%] flex-wrap justify-end gap-1.5">
+            {t.targetAudience.slice(0, 3).map((a) => (
+              <span
+                key={a}
+                className="pill border border-white/20 bg-brand-950/45 text-[0.68rem] text-white backdrop-blur"
+              >
+                {a}
+              </span>
+            ))}
+          </div>
+        )}
         <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between gap-3 text-white">
           <span className="font-mono text-xs font-medium tracking-wide drop-shadow">
             {formatDateRange(t.startDate, t.endDate, lang)}
@@ -278,7 +285,9 @@ function DetailPanel({ t, onRegister }: { t: TrainingSession; onRegister: () => 
             <div className="mt-3 grid grid-cols-3 gap-3">
               <MiniStat label={tr("detail.satisfaction")} value={`${t.satisfaction}%`} />
               {t.passRate != null && <MiniStat label={tr("detail.passRate")} value={`${t.passRate}%`} />}
-              {t.photos != null && <MiniStat label={tr("detail.photos")} value={`${t.photos}`} />}
+              {t.photos && t.photos.length > 0 && (
+                <MiniStat label={tr("detail.photos")} value={`${t.photos.length}`} />
+              )}
             </div>
           </>
         )}

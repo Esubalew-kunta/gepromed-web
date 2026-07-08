@@ -34,6 +34,7 @@ export function ImplantCycle() {
   const { lang } = useLang();
   const [active, setActive] = useState(0);
   const stages = IMPLANT_CYCLE;
+  const seg = 360 / stages.length; // dial divides the circle by the stage count
 
   return (
     <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
@@ -45,8 +46,8 @@ export function ImplantCycle() {
           role="img"
           aria-label={
             lang === "fr"
-              ? "Le cycle de l'implant : quatre plateformes"
-              : "The implant cycle: four platforms"
+              ? `Boucle de sécurité : ${stages.length} plateformes`
+              : `Safety loop: ${stages.length} platforms`
           }
         >
           {/* faint outer registration ring + ticks */}
@@ -68,8 +69,8 @@ export function ImplantCycle() {
           })}
 
           {stages.map((s, i) => {
-            const start = i * 90 + GAP / 2;
-            const end = (i + 1) * 90 - GAP / 2;
+            const start = i * seg + GAP / 2;
+            const end = (i + 1) * seg - GAP / 2;
             const isActive = i === active;
             const isSafety = s.safety;
             const mid = (start + end) / 2;
@@ -123,8 +124,8 @@ export function ImplantCycle() {
         </svg>
         <div className="mono-label mt-3 text-center">
           {lang === "fr"
-            ? "Cycle de l'implant · GEPROVAS depuis 1993"
-            : "Implant cycle · GEPROVAS since 1993"}
+            ? "Boucle de sécurité · Gepromed depuis 1993"
+            : "Safety loop · Gepromed since 1993"}
         </div>
       </div>
 

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 90" role="img" aria-label="Collectivité européenne d'Alsace">
+  <rect width="260" height="90" fill="none"/>
+  <g fill="#C8102E">
+    <path d="M22 24 h30 v6 h-12 v36 h-6 v-36 h-12 z"/>
+    <circle cx="37" cy="70" r="3"/>
+  </g>
+  <text x="66" y="40" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="700" fill="#0A2540">Collectivité européenne</text>
+  <text x="66" y="61" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="700" fill="#C8102E">d'Alsace</text>
+</svg>

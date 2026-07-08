@@ -47,9 +47,9 @@ export type Registration = {
   country: string;
   // logistics
   dietary: string;
-  arrival: string;
-  needsAccommodation: boolean;
-  elearningAccess: boolean;
+  arrival?: string;
+  needsAccommodation?: boolean;
+  elearningAccess?: boolean;
   notes: string;
   // tracking
   status: LeadStatus;

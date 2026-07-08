@@ -29,6 +29,7 @@ function mapTraining(r: Record<string, unknown>): TrainingSession {
     specialty: r.specialty as TrainingSession["specialty"],
     level: r.level as TrainingSession["level"],
     audience: r.audience as TrainingSession["audience"],
+    targetAudience: (r.target_audience ?? []) as TrainingSession["targetAudience"],
     city: r.city as string,
     venue: r.venue as TrainingSession["venue"],
     startDate: r.start_date as string,
@@ -43,9 +44,14 @@ function mapTraining(r: Record<string, unknown>): TrainingSession {
     objectives: (r.objectives ?? []) as TrainingSession["objectives"],
     program: (r.program ?? []) as TrainingSession["program"],
     supervisors: (r.supervisors ?? []) as TrainingSession["supervisors"],
+    prerequisites: (r.prerequisites ?? undefined) as TrainingSession["prerequisites"],
+    pedagogicalResources: (r.pedagogical_resources ?? undefined) as TrainingSession["pedagogicalResources"],
+    teachingMethods: (r.teaching_methods ?? undefined) as TrainingSession["teachingMethods"],
+    evaluationMethods: (r.evaluation_methods ?? undefined) as TrainingSession["evaluationMethods"],
+    supervisionOrganization: (r.supervision_organization ?? undefined) as TrainingSession["supervisionOrganization"],
     satisfaction: (r.satisfaction ?? undefined) as number | undefined,
     passRate: (r.pass_rate ?? undefined) as number | undefined,
-    photos: (r.photos ?? undefined) as number | undefined,
+    photos: (r.photos ?? []) as TrainingSession["photos"],
     imageUrl: (r.image_url ?? undefined) as string | undefined,
   };
 }

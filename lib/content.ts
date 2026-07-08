@@ -46,11 +46,11 @@ export const HISTORY: { year: string; title: L; body: L }[] = [
   },
 ];
 
-/* The Implant Cycle: GEPROMED's real four-stage conceptual core (Section 4 of the
-   brief), not a marketing device. Each stage is also a doorway for one real
-   audience. `audience` labels the visitor; `href` routes them. Stage 04
-   (explant analysis / failure investigation) is the safety-critical stage and
-   is marked in the safety orange in the signature dial. */
+/* Surgical safety: Gepromed's three complementary platforms forming a single
+   "boucle de sécurité" (safety loop). Each platform is also a doorway for one
+   real audience. `audience` labels the visitor; `href` routes them. The explant
+   analysis platform is the safety-critical entry point and is marked in the
+   safety orange in the signature dial. */
 export const IMPLANT_CYCLE: {
   n: string;
   title: L;
@@ -61,43 +61,45 @@ export const IMPLANT_CYCLE: {
 }[] = [
   {
     n: "01",
-    title: { fr: "Ingénierie technologique", en: "Technological Engineering" },
-    audience: { fr: "Industriels & fabricants", en: "Industry & manufacturers" },
-    href: "/contact",
+    title: { fr: "Analyse des explants", en: "Explant Analysis" },
+    audience: {
+      fr: "Chercheurs, autorités de santé, fabricants",
+      en: "Researchers, health authorities, manufacturers",
+    },
+    href: "/about/publications",
+    safety: true,
     body: {
-      fr: "Test et évaluation indépendants des dispositifs médicaux pour l'industrie, et R&D de nouveaux concepts et simulateurs.",
-      en: "Independent testing and evaluation of medical devices for industry, plus R&D of new concepts and simulators.",
+      fr: "Un dispositif explanté est une preuve. Depuis sa création, Gepromed a analysé plus de 1 800 dispositifs médicaux implantables explantés selon des protocoles standardisés, nourrissant près de 290 publications scientifiques. Ces données objectives améliorent la conception des futurs dispositifs et construisent une base de connaissance indépendante.",
+      en: "An explanted device is evidence. Since its creation, Gepromed has analyzed more than 1,800 explanted implantable medical devices using standardized protocols, feeding nearly 290 scientific publications. This objective data improves the design of future devices and builds an independent knowledge base.",
     },
   },
   {
     n: "02",
-    title: { fr: "Éducation", en: "Education" },
-    audience: { fr: "Professionnels de santé", en: "Healthcare professionals" },
-    href: "/trainings",
+    title: {
+      fr: "Parc technologique d'essais (ISO 13485)",
+      en: "Testing Technology Park (ISO 13485)",
+    },
+    audience: { fr: "Industriels & fabricants", en: "Industry & manufacturers" },
+    href: "/engineering",
     body: {
-      fr: "Formation par la simulation et la certification, bien au-delà de l'observation passive. L'expérience clinique nourrit la R&D.",
-      en: "Simulator and certification based training, well beyond passive observation. Clinician insight feeds R&D.",
+      fr: "Avant qu'un dispositif n'atteigne un bloc opératoire, il doit prouver sa sécurité. Gepromed met à disposition des fabricants un parc de bancs d'essais mécaniques et hydrauliques (traction, fatigue, perméabilité, compliance), opéré sous certification ISO 13485, pour constituer les dossiers de marquage CE. Résultats indépendants et reproductibles.",
+      en: "Before a device reaches an operating room, it must prove its safety. Gepromed provides manufacturers with a park of mechanical and hydraulic test benches (tensile, fatigue, permeability, compliance), operated under ISO 13485 certification, to build CE-marking files. Independent and reproducible results.",
     },
   },
   {
     n: "03",
-    title: { fr: "Suivi clinique & recherche", en: "Clinical Monitoring & Research" },
-    audience: { fr: "Chercheurs & universitaires", en: "Researchers & academics" },
-    href: "/about/publications",
-    body: {
-      fr: "Études de l'efficacité, de la sécurité et de l'impact des dispositifs, traitements et thérapies sur le patient.",
-      en: "Studies of the efficacy, safety and patient impact of devices, drugs and therapies.",
+    title: {
+      fr: "Éducation par simulation & jumeau numérique",
+      en: "Simulation & Digital-Twin Education",
     },
-  },
-  {
-    n: "04",
-    title: { fr: "Analyse d'explants", en: "Explant Analysis" },
-    audience: { fr: "Sécurité & investigation", en: "Safety & investigation" },
-    href: "/contact",
-    safety: true,
+    audience: {
+      fr: "Chirurgiens, internes, IBODE, ingénieurs biomédicaux",
+      en: "Surgeons, residents, OR nurses, biomedical engineers",
+    },
+    href: "/trainings",
     body: {
-      fr: "Analyse systématique des défaillances des dispositifs explantés, sur le modèle de l'investigation des accidents aériens.",
-      en: "Systematic failure analysis of explanted devices, modelled on aviation accident investigation.",
+      fr: "Plus de 1 800 professionnels de santé formés depuis 2018 sur un large parc de simulateurs et deux blocs opératoires connectés, avec un taux de satisfaction supérieur à 95 %. Gepromed développe un jumeau numérique chirurgical pour objectiver la performance technique et détecter les situations à risque. Objectif : former et certifier plus de 4 000 professionnels d'ici 2030.",
+      en: "More than 1,800 healthcare professionals trained since 2018 on a broad park of simulators and two connected operating rooms, with a satisfaction rate above 95%. Gepromed is developing a surgical digital twin to objectify technical performance and detect at-risk situations. Goal: train and certify more than 4,000 professionals by 2030.",
     },
   },
 ];
@@ -183,11 +185,11 @@ export const TESTIMONIALS: { quote: L; name: string; role: L }[] = [
   },
 ];
 
-export const PARTNERS: string[] = [
-  "Université de Strasbourg",
-  "Eurométropole de Strasbourg",
-  "BioValley France",
-  "HelpMeSee",
-  "W.L. Gore & Associates",
-  "Johnson & Johnson",
+// Public funders that support Gepromed (only these four). Logos live under
+// /public/brand/funders and are rendered greyscale on the light home strip.
+export const PARTNERS: { name: string; logo: string }[] = [
+  { name: "Eurométropole de Strasbourg", logo: "/brand/funders/eurometropole-strasbourg.svg" },
+  { name: "Collectivité européenne d'Alsace", logo: "/brand/funders/collectivite-europeenne-alsace.svg" },
+  { name: "Région Grand Est", logo: "/brand/funders/region-grand-est.svg" },
+  { name: "Université de Strasbourg", logo: "/brand/funders/universite-de-strasbourg.svg" },
 ];
