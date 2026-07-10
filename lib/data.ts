@@ -96,6 +96,33 @@ export async function createLead(data: NewRegistration): Promise<string> {
   return (await res.json()) as string;
 }
 
+export type EngineeringRequestInput = {
+  kind: "explant" | "test" | "equipment";
+  name: string;
+  email: string;
+  institution?: string;
+  desiredDate?: string;
+  notes?: string;
+  meta?: Record<string, unknown>;
+};
+
+/** Create an engineering request (explant / test / equipment) via the RPC. Returns ENG-… ref. */
+export async function createEngineeringRequest(
+  input: EngineeringRequestInput,
+): Promise<string> {
+  if (!isConfigured()) throw new Error("Requests are not configured.");
+  const res = await fetch(`${URL}/rest/v1/rpc/create_engineering_request`, {
+    method: "POST",
+    headers: headers(),
+    body: JSON.stringify({ payload: input }),
+  });
+  if (!res.ok) {
+    const e = await res.json().catch(() => ({}));
+    throw new Error(e.message || "Failed to submit request.");
+  }
+  return (await res.json()) as string;
+}
+
 /** Upload a signed contract for a lead ref → stored + attached as pending verification. */
 export async function uploadSignedContract(ref: string, file: File): Promise<void> {
   if (!isConfigured()) throw new Error("Uploads are not configured.");

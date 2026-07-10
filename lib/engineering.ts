@@ -31,19 +31,23 @@ export const EXPLANT_ITEMS: EngineeringItem[] = [
     },
     description: [
       {
-        fr: "Notre plateau d'analyse des explants examine les dispositifs médicaux retirés afin de comprendre leurs mécanismes de défaillance et d'orienter l'amélioration des futures générations d'implants.",
-        en: "Our explant analysis platform examines retrieved medical devices to understand their failure mechanisms and to guide the improvement of future implant generations.",
+        fr: "Notre objectif n'est pas d'évaluer des cas de matériovigilance, mais d'offrir un service unique d'étude et de catégorisation des défauts pouvant survenir sur les implants vasculaires ou d'autres spécialités chirurgicales. Tous les dispositifs explantés (compliqués ou non) sont analysés dans le cadre d'un réseau européen de chirurgiens vasculaires.",
+        en: "Our goal is not to assess vigilance cases, but to offer a unique service that studies and categorizes the defects that can arise on vascular implants and other surgical specialties. Every explanted device (complicated or not) is analyzed within a European network of vascular surgeons.",
       },
       {
-        fr: "Chaque explant est reçu, tracé et documenté selon un protocole conforme aux exigences de matériovigilance. Le rapport final réunit imagerie, caractérisation des matériaux et interprétation clinique.",
-        en: "Each explant is received, traced and documented under a protocol aligned with post-market surveillance requirements. The final report brings together imaging, material characterization and clinical interpretation.",
+        fr: "Au fil des années, nous avons constitué la plus grande base de données d'explants vasculaires au monde. Depuis le 6 décembre 2012, notre protocole d'analyse des explants est certifié ISO 9001. Chaque explant est référencé dès sa réception, analysé de façon macroscopique puis lavé ; sur demande, des analyses complémentaires (faxitron, histologie, macro et microscopie après lavage enzymatique) donnent lieu à un rapport détaillé.",
+        en: "Over the years we have built the world's largest database of vascular explants. Since 6 December 2012 our explant analysis protocol is ISO 9001 certified. Each explant is logged on reception, analyzed macroscopically then cleaned; on request, complementary analyses (faxitron, histology, macro and microscopy after enzymatic cleaning) produce a detailed report.",
+      },
+      {
+        fr: "Comment nous envoyer un explant : placez l'échantillon dans un flacon scellé contenant 10% de formol (environ 4% de formaldéhyde) avec la fiche de recueil de données, puis expédiez-le à Gepromed, Faculté de médecine - Bâtiment d'anesthésiologie, 4 rue Kirschleger, 67085 Strasbourg Cedex. Plus de kit de transport ? Écrivez-nous à explant@gepromed.com avec votre adresse postale professionnelle et nous vous enverrons flacons et fiches.",
+        en: "How to send us an explant: place the sample in a sealed bottle containing 10% formalin (approx. 4% formaldehyde) with the data collection sheet, then ship it to Gepromed, Faculté de médecine - Bâtiment d'anesthésiologie, 4 rue Kirschleger, 67085 Strasbourg Cedex, France. Out of transport kits? Email explant@gepromed.com with your work postal address and we will send you bottles and collection sheets.",
       },
     ],
     highlights: [
-      { fr: "Microscopie électronique à balayage (MEB)", en: "Scanning electron microscopy (SEM)" },
-      { fr: "Analyse de la corrosion et des dépôts", en: "Corrosion and deposit analysis" },
-      { fr: "Micro-tomographie (micro-CT)", en: "Micro-computed tomography (micro-CT)" },
-      { fr: "Rapport d'expertise avec interprétation clinique", en: "Expert report with clinical interpretation" },
+      { fr: "Référencement et traçabilité dès la réception", en: "Logging and traceability on reception" },
+      { fr: "Analyse macroscopique systématique", en: "Systematic macroscopic analysis" },
+      { fr: "Faxitron, histologie, MEB et micro-CT sur demande", en: "Faxitron, histology, SEM and micro-CT on request" },
+      { fr: "Protocole certifié ISO 9001 depuis 2012", en: "ISO 9001 certified protocol since 2012" },
     ],
   },
   {
@@ -93,12 +97,12 @@ export const TESTING_ITEMS: EngineeringItem[] = [
     },
     description: [
       {
-        fr: "Notre plateforme d'essais mécaniques évalue la tenue des dispositifs et matériaux dans des conditions représentatives de leur usage physiologique.",
-        en: "Our mechanical testing platform evaluates the durability of devices and materials under conditions representative of their physiological use.",
+        fr: "Créée en 2009 sur le site des Hôpitaux Universitaires de Strasbourg avec le LPMT de l'Université de Haute-Alsace, notre plateforme de tests est un environnement technique indépendant dédié à l'évaluation mécanique des dispositifs médicaux implantables et de leurs matériaux. Ces activités sont réalisées sous certification ISO 13485 et ISO 9001 depuis 2013.",
+        en: "Created in 2009 at the Strasbourg University Hospitals with the LPMT of the University of Haute-Alsace, our testing platform is an independent technical environment dedicated to the mechanical evaluation of implantable medical devices and their materials. These activities are ISO 13485 and ISO 9001 certified since 2013.",
       },
       {
-        fr: "Les campagnes d'essais sont conçues pour répondre aux exigences des dossiers réglementaires et des normes ISO applicables aux dispositifs vasculaires.",
-        en: "Test campaigns are designed to meet the requirements of regulatory files and ISO standards applicable to vascular devices.",
+        fr: "Nous réalisons des essais standards, principalement sur les textiles et implants vasculaires (norme ISO 7198) ou sur les stents et endoprothèses (norme ISO 25539), ainsi que la conception de tests sur-mesure lorsque les performances recherchées ne figurent pas dans les normes existantes. Notre vocation est le conseil : identifier tôt les limites et les mécanismes de dégradation pour optimiser la fiabilité, y compris pour les start-ups.",
+        en: "We run standard tests, mainly on vascular textiles and implants (ISO 7198) or on stents and endoprostheses (ISO 25539), plus the design of custom tests when the target performance is not covered by existing standards. Our vocation is advisory: identifying limits and degradation mechanisms early to optimize reliability, including for start-ups.",
       },
     ],
     highlights: [

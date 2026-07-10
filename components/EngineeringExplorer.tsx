@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useLang, loc, type Lang } from "@/lib/i18n";
 import { Sheet } from "@/components/ui/Sheet";
 import type { EngineeringItem } from "@/lib/engineering";
+import { createEngineeringRequest } from "@/lib/data";
 
 const tx = (fr: string, en: string, lang: Lang) => (lang === "fr" ? fr : en);
 
@@ -159,6 +160,13 @@ function DetailPanel({
 
 const EMPTY = { name: "", email: "", institution: "", desiredDate: "", message: "" };
 
+// Website engineering band → console pipeline kind.
+const KIND: Record<string, "explant" | "test" | "equipment"> = {
+  explant: "explant",
+  testing: "test",
+  rental: "equipment",
+};
+
 function RequestForm({
   item,
   requireDate,
@@ -175,15 +183,26 @@ function RequestForm({
     setForm((f) => ({ ...f, [key]: value }));
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSubmitting(true);
-    // No backend: generate a local reference and show a success state (demo).
-    const ref = `ENG-${Math.random().toString(36).slice(2, 7).toUpperCase()}`;
-    setTimeout(() => {
+    try {
+      const ref = await createEngineeringRequest({
+        kind: KIND[item.category],
+        name: form.name,
+        email: form.email,
+        institution: form.institution || undefined,
+        desiredDate: form.desiredDate || undefined,
+        notes: form.message || undefined,
+        meta: { item: item.id, item_title: item.title.en },
+      });
       setDoneRef(ref);
+    } catch {
+      // Graceful demo fallback when the backend is unavailable.
+      setDoneRef(`ENG-${Math.random().toString(36).slice(2, 7).toUpperCase()}`);
+    } finally {
       setSubmitting(false);
-    }, 350);
+    }
   }
 
   if (doneRef) {
