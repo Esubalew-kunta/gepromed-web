@@ -51,6 +51,16 @@ export type Registration = {
   needsAccommodation?: boolean;
   elearningAccess?: boolean;
   notes: string;
+  // funding (public form) — a self-funded seat, or a lab-sponsored one. When
+  // sponsored we capture the organization so its name + logo can replace the
+  // price on the participant's communications (Rule 1).
+  funding?: "self" | "sponsored";
+  sponsorName?: string;
+  sponsorContact?: string;
+  sponsorLogoUrl?: string;
+  // HelpMeSee referral (private /lead/helpmesee form) — foundation intake.
+  helpMeSeeRef?: string;
+  coordinator?: string;
   // tracking
   status: LeadStatus;
   followUps: FollowUp[];

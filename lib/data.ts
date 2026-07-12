@@ -53,6 +53,11 @@ function mapTraining(r: Record<string, unknown>): TrainingSession {
     passRate: (r.pass_rate ?? undefined) as number | undefined,
     photos: (r.photos ?? []) as TrainingSession["photos"],
     imageUrl: (r.image_url ?? undefined) as string | undefined,
+    programType:
+      (r.program_type as TrainingSession["programType"]) ??
+      (r.specialty === "ophthalmology" ? "helpmesee" : "bootcamp"),
+    isSponsored: Boolean(r.is_sponsored),
+    sponsors: (r.sponsors ?? []) as TrainingSession["sponsors"],
   };
 }
 

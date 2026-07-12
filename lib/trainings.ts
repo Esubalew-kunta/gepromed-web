@@ -40,7 +40,22 @@ export type TrainingSession = {
   // optional per-course cover image (from Supabase Storage); falls back to
   // SPECIALTY_IMAGE when absent.
   imageUrl?: string;
+  // Pipeline routing — mirrors trainings.program_type in the DB. Drives which
+  // parcours a lead lands in (HelpMeSee vs Bootcamp/Workshop). Ophthalmology
+  // defaults to HelpMeSee; everything else is a Bootcamp/Workshop.
+  programType?: "helpmesee" | "bootcamp" | "workshop";
+  // Whether the *session* is lab-sponsored, and by whom (Rule 1 comms).
+  isSponsored?: boolean;
+  sponsors?: { name: string; logoUrl?: string }[];
 };
+
+/** True when a session runs the foundation-imposed HelpMeSee parcours. */
+export function isHelpMeSee(
+  t: Pick<TrainingSession, "programType" | "specialty">,
+): boolean {
+  const p = t.programType ?? (t.specialty === "ophthalmology" ? "helpmesee" : "bootcamp");
+  return p === "helpmesee";
+}
 
 export const SPECIALTY_LABELS: Record<Specialty, L> = {
   vascular: { fr: "Chirurgie vasculaire", en: "Vascular surgery" },
