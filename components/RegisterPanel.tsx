@@ -94,9 +94,16 @@ export function RegisterPanel({
   // The public form only offers Bootcamp/Workshop sessions; the private
   // HelpMeSee form only offers foundation sessions. This is what routes each
   // lead into the correct parcours (create_lead derives it from the session).
-  const bookable = trainings.filter(
-    (x) => isUpcoming(x) && spotsLeft(x) > 0 && isHelpMeSee(x) === isHms,
-  );
+  //
+  // Seat gating differs by pathway: public self-registration needs open seats,
+  // but the private HelpMeSee referral does not — the foundation dictates
+  // enrollment, so it lists every upcoming foundation session regardless of the
+  // public seat counter.
+  const bookable = trainings.filter((x) => {
+    if (isHelpMeSee(x) !== isHms) return false;
+    if (!isUpcoming(x)) return false;
+    return isHms ? true : spotsLeft(x) > 0;
+  });
   const [sessionSlug, setSessionSlug] = useState(
     bookable.some((x) => x.slug === initialSlug) ? initialSlug : "",
   );
