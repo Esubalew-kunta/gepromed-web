@@ -35,6 +35,10 @@ export const metadata: Metadata = {
   title: "Gepromed | Medical device safety, surgical training and explant analysis",
   description:
     "Gepromed is a Strasbourg research institute at the intersection of medical device safety, surgical training and biomaterials research. Four platforms, one implant cycle, since 1993.",
+  // Disable browser auto-translate: when Chrome translates the bilingual UI it
+  // wraps text nodes in <font> tags React doesn't track, causing removeChild/
+  // insertBefore crashes on dynamic content (register/lead forms).
+  other: { google: "notranslate" },
 };
 
 export default function RootLayout({
@@ -45,7 +49,8 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${display.variable} ${sans.variable} ${mono.variable}`}
+      translate="no"
+      className={`notranslate ${display.variable} ${sans.variable} ${mono.variable}`}
     >
       <body className="flex min-h-screen flex-col bg-paper text-ink">
         <LanguageProvider>
