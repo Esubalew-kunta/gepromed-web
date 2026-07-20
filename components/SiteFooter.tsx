@@ -4,12 +4,16 @@ import Link from "next/link";
 import { Logo } from "./Logo";
 import { useT, useLang } from "@/lib/i18n";
 
-// The four public funding institutions (client: "only those 4").
+// The four public funding institutions, per gepromed.com/en/about-us/our-funders
+// (client: "only those 4"): Grand Est Region, European Union, Eurométropole de
+// Strasbourg, and the CEA (Collectivité européenne d'Alsace, not the atomic
+// energy commission — confirmed from the real logo artwork downloaded from
+// the legacy site). Real logo images, downloaded from gepromed.com.
 const FUNDERS: { src: string; alt: string }[] = [
-  { src: "/brand/funders/eurometropole-strasbourg.svg", alt: "Eurométropole de Strasbourg" },
-  { src: "/brand/funders/collectivite-europeenne-alsace.svg", alt: "Collectivité européenne d'Alsace" },
-  { src: "/brand/funders/region-grand-est.svg", alt: "Région Grand Est" },
-  { src: "/brand/funders/universite-de-strasbourg.svg", alt: "Université de Strasbourg" },
+  { src: "/brand/funders/region-grand-est.png", alt: "La Région Grand Est" },
+  { src: "/brand/funders/european-union.png", alt: "Financé par l'Union européenne" },
+  { src: "/brand/funders/eurometropole-strasbourg.png", alt: "Strasbourg Eurométropole" },
+  { src: "/brand/funders/cea.png", alt: "Collectivité européenne d'Alsace" },
 ];
 
 export function SiteFooter() {
@@ -63,33 +67,63 @@ export function SiteFooter() {
           <ul className="mt-3 space-y-2 text-sm text-white/75">
             <li>{tx("Centre d'Éducation, Bâtiment eXplora", "Education Center, eXplora Building")}</li>
             <li>2 rue Marie Hamm, 67000 Strasbourg</li>
-            <li>
+            <li className="pt-2">{tx("Bureaux, Bâtiment d'Anesthésiologie", "Offices, Anesthesiology Building")}</li>
+            <li>1 place de l&apos;Hôpital, 67085 Strasbourg</li>
+            <li className="pt-2">
               <a className="transition hover:text-white" href="mailto:formation@gepromed.com">
                 formation@gepromed.com
               </a>
             </li>
           </ul>
-          <div className="mt-4 flex gap-3 font-mono text-xs font-medium uppercase tracking-annotation text-brand-200">
-            <a href="https://www.linkedin.com/company/gepromed/" target="_blank" rel="noreferrer" className="transition hover:text-white">LinkedIn</a>
-            <a href="https://twitter.com/gepromed" target="_blank" rel="noreferrer" className="transition hover:text-white">X</a>
-            <a href="https://www.instagram.com/Gepromed/" target="_blank" rel="noreferrer" className="transition hover:text-white">Instagram</a>
+          <div className="mt-4 flex items-center gap-4">
+            <a
+              href="https://www.linkedin.com/company/gepromed/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn"
+              className="opacity-80 transition hover:opacity-100"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/brand/social/linkedin.svg" alt="LinkedIn" className="h-6 w-6" />
+            </a>
+            <a
+              href="https://twitter.com/gepromed"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="X"
+              className="opacity-80 transition hover:opacity-100"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/brand/social/x.svg" alt="X" className="h-6 w-6" />
+            </a>
+            <a
+              href="https://www.instagram.com/Gepromed/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Instagram"
+              className="opacity-80 transition hover:opacity-100"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/brand/social/instagram.svg" alt="Instagram" className="h-6 w-6" />
+            </a>
           </div>
         </div>
       </div>
 
       <div className="relative border-t border-white/10">
-        <div className="container-page py-8">
+        <div className="container-page py-4">
           <h4 className="mono-label text-white/50">
             {tx("Ils nous financent", "Our funders")}
           </h4>
-          <div className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-5">
+          <div className="mt-3 flex flex-wrap items-center gap-4">
             {FUNDERS.map((f) => (
-              <img
+              <span
                 key={f.src}
-                src={f.src}
-                alt={f.alt}
-                className="h-8 w-auto opacity-80"
-              />
+                className="flex items-center rounded-lg bg-white/10 p-1.5"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={f.src} alt={f.alt} className="h-14 w-auto" />
+              </span>
             ))}
           </div>
         </div>
@@ -98,7 +132,19 @@ export function SiteFooter() {
       <div className="relative border-t border-white/10">
         <div className="container-page flex flex-col items-center justify-between gap-2 py-5 text-xs text-white/50 sm:flex-row">
           <p className="font-mono">© {new Date().getFullYear()} {t("footer.rights")}</p>
-          <p>{t("footer.legal")}</p>
+          <div className="flex items-center gap-3">
+            <Link href="/about/legal" className="transition hover:text-white">
+              {t("footer.legalNotice")}
+            </Link>
+            <span aria-hidden="true">·</span>
+            <Link href="/about/privacy" className="transition hover:text-white">
+              {t("footer.privacyPolicy")}
+            </Link>
+            <span aria-hidden="true">·</span>
+            <Link href="/about/quality" className="transition hover:text-white">
+              {t("footer.qualityIndicators")}
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

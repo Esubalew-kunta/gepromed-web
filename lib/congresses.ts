@@ -64,6 +64,11 @@ export type Congress = {
   committee?: CommitteeMember[];
 
   // §6.1 — past edition blocks
+  // Reserved for a REAL proceedings/abstracts file, if Gepromed ever supplies
+  // one — not currently wired to any button. The "Récapitulatif" button on
+  // the congress page always calls /api/congress-recap/[slug] instead, which
+  // generates an honest recap (program/committee/photos) from data we
+  // actually have. See raised_questions.md → Congresses.
   ebookUrl?: string;
   photos?: string[];
 
@@ -79,166 +84,44 @@ export type Congress = {
 
 export const CONGRESSES: Congress[] = [
   {
+    // Real dates/venue per gepromed.com/en/symposium (verified live 2026-07-20):
+    // ISVB 2026 is in Tampa, Florida, 1-2 June 2026, not a Gepromed-organized
+    // Strasbourg event. Gepromed supports it but the previous Strasbourg
+    // venue/access/sponsors/accommodation/day-by-day program below were
+    // fabricated for a different (Strasbourg-hosted) event model and have been
+    // removed rather than guessed at Tampa specifics. Only fields backed by the
+    // real site's copy are kept; the rest stays unset until Gepromed confirms
+    // more detail for this externally-hosted edition.
     slug: "isvb-2026",
     status: "upcoming",
     acronym: "ISVB 2026",
     year: "2026",
-    dates: { fr: "12 au 14 mars 2026", en: "12 to 14 March 2026" },
-    city: { fr: "Strasbourg, France", en: "Strasbourg, France" },
-    venue: {
-      fr: "Palais de la Musique et des Congrès (PMC)",
-      en: "Palais de la Musique et des Congrès (PMC)",
-    },
+    dates: { fr: "1 au 2 juin 2026", en: "1 to 2 June 2026" },
+    city: { fr: "Tampa, Floride, États-Unis", en: "Tampa, Florida, USA" },
     featured: true,
     title: {
-      fr: "ISVB 2026 : prochaine édition du congrès de biologie vasculaire",
-      en: "ISVB 2026: the next vascular biology congress",
+      fr: "ISVB 2026 : symposium international de biomatériaux vasculaires",
+      en: "ISVB 2026: International Symposium on Vascular Biomaterials",
     },
     summary: {
-      fr: "La prochaine édition de la série biennale organisée par Gepromed. Programme et informations pratiques en préparation.",
-      en: "The next edition of the biennial series organized by Gepromed. Program and practical information in preparation.",
+      fr: "Gepromed est fier de soutenir l'International Symposium on Vascular Biomaterials (ISVB 2026), à Tampa, en Floride.",
+      en: "Gepromed is proud to support the International Symposium on Vascular Biomaterials (ISVB 2026), taking place in Tampa, Florida.",
     },
     intro: {
-      fr: "Dans la continuité de l'ESVB, l'édition 2026 poursuivra le rapprochement entre recherche sur les biomatériaux, pratique chirurgicale et industrie. Les informations pratiques (dates, lieu, inscription, appel à communications) seront publiées ici et relayées dans les Actualités.",
-      en: "Continuing the ESVB series, the 2026 edition will keep bringing together biomaterials research, surgical practice and industry. Practical information (dates, venue, registration, call for abstracts) will be published here and relayed in the News section.",
+      fr: "Cet évènement de référence réunit des médecins, ingénieurs, chercheurs et industriels de premier plan pour explorer les dernières avancées en biomatériaux vasculaires, du diagnostic assisté par IA et de la robotique chirurgicale aux implants de nouvelle génération et aux thérapies cardiovasculaires. Fort de plus de deux décennies d'excellence européenne à travers l'ESVB, ISVB 2026 est une occasion unique de rejoindre la communauté vasculaire mondiale et d'être à la pointe de l'innovation cardiovasculaire.",
+      en: "This landmark event brings together world-leading physicians, engineers, researchers, and industry experts to explore the latest breakthroughs in vascular biomaterials, from AI-driven diagnostics and surgical robotics to next-generation implants and cardiovascular therapies. Built on over two decades of European excellence through the ESVB, ISVB 2026 is a unique opportunity to connect with the global vascular community and be at the forefront of cardiovascular innovation.",
     },
-    welcome: {
-      fr: "Au nom de Gepromed et du comité d'organisation, nous avons le plaisir de vous convier à l'ISVB 2026, à Strasbourg. Fidèle à l'esprit de la série ESVB engagée depuis 2001, cette édition réunira cliniciens, chercheurs, ingénieurs et industriels autour d'un objectif commun : rendre les dispositifs cardiovasculaires plus sûrs, du banc d'essai au bloc opératoire. Nous vous attendons nombreux au cœur de l'Europe institutionnelle.",
-      en: "On behalf of Gepromed and the organizing committee, we are delighted to invite you to ISVB 2026 in Strasbourg. True to the spirit of the ESVB series running since 2001, this edition will bring together clinicians, researchers, engineers and industry around a shared goal: making cardiovascular devices safer, from the test bench to the operating room. We look forward to welcoming you at the heart of institutional Europe.",
-    },
-    location: {
-      venue: {
-        fr: "Palais de la Musique et des Congrès (PMC)",
-        en: "Palais de la Musique et des Congrès (PMC)",
-      },
-      address: {
-        fr: "Place de Bordeaux, 67000 Strasbourg, France",
-        en: "Place de Bordeaux, 67000 Strasbourg, France",
-      },
-      access: {
-        fr: "À 10 minutes de la gare de Strasbourg en tramway (lignes B et E, arrêt Wacken). L'aéroport de Strasbourg-Entzheim est relié au centre-ville en 20 minutes par navette ferroviaire.",
-        en: "10 minutes from Strasbourg station by tram (lines B and E, Wacken stop). Strasbourg-Entzheim airport connects to the city center in 20 minutes via rail shuttle.",
-      },
-    },
-    eventTypes: [
-      {
-        title: { fr: "Bootcamp vasculaire", en: "Vascular Bootcamp" },
-        body: {
-          fr: "Deux jours de pratique intensive sur simulateurs et modèles ex vivo, dédiés aux procédures endovasculaires périphériques et aortiques.",
-          en: "Two days of intensive hands-on practice on simulators and ex vivo models, dedicated to peripheral and aortic endovascular procedures.",
-        },
-      },
-      {
-        title: { fr: "Symposium ISVB", en: "ISVB Symposium" },
-        body: {
-          fr: "Le congrès principal : conférences plénières, sessions thématiques et communications libres sur les biomatériaux cardiovasculaires.",
-          en: "The main congress: plenary lectures, thematic sessions and free communications on cardiovascular biomaterials.",
-        },
-      },
-      {
-        title: {
-          fr: "Translational Research Meeting",
-          en: "Translational Research Meeting",
-        },
-        body: {
-          fr: "Une session translationnelle avec Prix du Jeune Chercheur, pour rapprocher la paillasse de la pratique clinique.",
-          en: "A translational session with a Young Researcher Prize, bridging the bench and clinical practice.",
-        },
-      },
-    ],
-    program: [
-      {
-        when: { fr: "12 mars", en: "12 March" },
-        title: { fr: "Jour 1 — Bootcamp vasculaire", en: "Day 1 — Vascular Bootcamp" },
-        body: {
-          fr: "Ateliers pratiques sur les procédures endovasculaires périphériques, encadrés par des superviseurs experts. Sessions du matin et de l'après-midi.",
-          en: "Hands-on workshops on peripheral endovascular procedures, led by expert supervisors. Morning and afternoon sessions.",
-        },
-      },
-      {
-        when: { fr: "13 mars", en: "13 March" },
-        title: { fr: "Jour 2 — Symposium ISVB", en: "Day 2 — ISVB Symposium" },
-        body: {
-          fr: "Conférences plénières sur les biomatériaux cardiovasculaires, sessions thématiques et communications libres. Dîner de gala en soirée.",
-          en: "Plenary lectures on cardiovascular biomaterials, thematic sessions and free communications. Gala dinner in the evening.",
-        },
-      },
-      {
-        when: { fr: "14 mars", en: "14 March" },
-        title: {
-          fr: "Jour 3 — Translational Research Meeting",
-          en: "Day 3 — Translational Research Meeting",
-        },
-        body: {
-          fr: "Session commune avec l'ESVS, remise du Prix du Jeune Chercheur et table ronde de clôture avec les partenaires industriels.",
-          en: "Joint session with the ESVS, Young Researcher Prize ceremony and closing round table with industry partners.",
-        },
-      },
-    ],
-    programPdfUrl: undefined,
-    committee: [
-      {
-        name: "Pr. Nabil Chakfé",
-        role: { fr: "Président du congrès", en: "Congress Chair" },
-        affiliation: "Université de Strasbourg, GEPROVAS",
-      },
-      {
-        name: "Dr. Frédéric Heim",
-        role: { fr: "Coordination scientifique", en: "Scientific Coordination" },
-        affiliation: "Université de Haute-Alsace, LPMT",
-      },
-      {
-        name: "Pr. Anne Lejay",
-        role: { fr: "Comité scientifique", en: "Scientific Committee" },
-        affiliation: "Hôpitaux Universitaires de Strasbourg",
-      },
-      {
-        name: "Dr. Salomé Kuntz",
-        role: { fr: "Recherche translationnelle", en: "Translational Research" },
-        affiliation: "GEPROVAS, Strasbourg",
-      },
-    ],
     registration: {
       info: {
-        fr: "Les inscriptions ouvriront à l'automne 2025. Tarifs préférentiels pour les membres, internes et étudiants. L'inscription inclut l'accès à toutes les sessions, les pauses et le déjeuner.",
-        en: "Registration will open in autumn 2025. Preferential rates for members, residents and students. Registration includes access to all sessions, coffee breaks and lunch.",
+        fr: "ISVB 2026 est organisé par ses propres hôtes à Tampa ; Gepromed soutient l'évènement au titre de la série ESVB. Modalités d'inscription à confirmer auprès de l'organisateur.",
+        en: "ISVB 2026 is run by its own host organizers in Tampa; Gepromed supports the event as part of the ESVB series. Registration details to be confirmed with the organizer.",
       },
       method: {
-        fr: "Inscription en ligne via le portail Gepromed, avec paiement sécurisé par carte ou virement. Une confirmation et une facture vous seront adressées par e-mail.",
-        en: "Online registration via the Gepromed portal, with secure payment by card or bank transfer. A confirmation and invoice will be sent to you by email.",
+        fr: "Consultez le site de l'ISVB 2026 ou contactez Gepromed pour les informations d'inscription les plus récentes.",
+        en: "Check the ISVB 2026 event site or contact Gepromed for the latest registration information.",
       },
       url: "/contact",
     },
-    sponsors: [
-      { name: "GEPROVAS" },
-      { name: "Université de Strasbourg" },
-      { name: "Université de Haute-Alsace" },
-      { name: "European Society for Vascular Surgery (ESVS)" },
-      { name: "Eurométropole de Strasbourg" },
-    ],
-    accommodation: [
-      {
-        name: { fr: "Hilton Strasbourg", en: "Hilton Strasbourg" },
-        note: {
-          fr: "À 5 minutes à pied du PMC. Tarif négocié pour les congressistes.",
-          en: "A 5-minute walk from the PMC. Negotiated rate for congress attendees.",
-        },
-      },
-      {
-        name: { fr: "Novotel Strasbourg Centre Halles", en: "Novotel Strasbourg Centre Halles" },
-        note: {
-          fr: "Proche de la gare et du centre-ville, accès direct en tramway.",
-          en: "Near the station and city center, with direct tram access.",
-        },
-      },
-      {
-        name: { fr: "Maison Rouge Strasbourg, Autograph Collection", en: "Maison Rouge Strasbourg, Autograph Collection" },
-        note: {
-          fr: "Hôtel de charme au cœur de la Grande-Île classée à l'UNESCO.",
-          en: "A charming hotel in the heart of the UNESCO-listed Grande-Île.",
-        },
-      },
-    ],
   },
   {
     slug: "esvb-2025",
@@ -268,8 +151,8 @@ export const CONGRESSES: Congress[] = [
         when: { fr: "14 au 15 mai", en: "14 to 15 May" },
         title: { fr: "Bootcamp Vasculaire", en: "Vascular Bootcamp" },
         body: {
-          fr: "Deux jours de pratique sur les procédures endovasculaires périphériques et aortiques, pour l'amélioration des dispositifs chirurgicaux.",
-          en: "Two days of practice on peripheral and aortic endovascular procedures, for surgical device improvement.",
+          fr: "Deux jours de pratique sur les procédures endovasculaires périphériques et aortiques : 20 internes vasculaires internationaux se sont exercés aux côtés de chirurgiens vasculaires reconnus, lors d'ateliers animés par les sponsors industriels. 3 lauréats ont été récompensés lors du dîner de gala.",
+          en: "Two days of practice on peripheral and aortic endovascular procedures: 20 international vascular residents practiced alongside renowned vascular surgeons in workshops led by industry sponsors. 3 winners were announced at the conference dinner.",
         },
       },
       {
@@ -279,8 +162,8 @@ export const CONGRESSES: Congress[] = [
           en: "Translational Research Meeting",
         },
         body: {
-          fr: "Session commune avec l'ESVS, avec un Prix du Jeune Chercheur pour valoriser les talents scientifiques émergents.",
-          en: "A joint session with the ESVS, featuring a Young Researcher Prize to promote emerging scientific talent.",
+          fr: "Session commune avec l'ESVS Translational Meeting, avec un Prix du Jeune Chercheur ouvert aux internes, doctorants et chercheurs de 35 ans ou moins en biomatériaux et chirurgie vasculaire. 3 lauréats pour la meilleure communication et 1 lauréat pour le meilleur poster ont été récompensés lors du dîner de gala du 16 mai.",
+          en: "A joint session with the ESVS Translational Meeting, featuring a Young Researcher Prize open to vascular trainees, PhD students and researchers aged 35 or under in biomaterials and vascular surgery. 3 winners for best presentation and 1 winner for best poster were crowned at the May 16th conference dinner.",
         },
       },
       {
@@ -292,7 +175,9 @@ export const CONGRESSES: Congress[] = [
         },
       },
     ],
-    ebookUrl: "/downloads/esvb-2025-ebook.pdf",
+    // No real e-book file exists yet (the earlier /downloads/esvb-2025-ebook.pdf
+    // reference was a dead link — the file was never present). Leave ebookUrl
+    // unset so the button shows its built-in "coming soon" state instead of 404ing.
     photos: [
       "/photos/doctor-goggles.jpg",
       "/photos/workshop-dsc0059.jpg",
@@ -320,6 +205,41 @@ export const CONGRESSES: Congress[] = [
         role: { fr: "Recherche translationnelle", en: "Translational Research" },
         affiliation: "GEPROVAS, Strasbourg",
       },
+    ],
+  },
+  {
+    // Added per gepromed.com/en/symposium (verified live 2026-07-20) — this
+    // edition was missing from the site entirely. Real photos below are
+    // downloaded from the legacy site, EXIF-dated 2021-11-17, matching the
+    // real 4-6 Nov 2021 dates.
+    slug: "esvb-2021",
+    status: "past",
+    acronym: "ESVB 2021",
+    year: "2021",
+    dates: { fr: "4 au 6 novembre 2021", en: "4 to 6 November 2021" },
+    city: { fr: "Strasbourg, France", en: "Strasbourg, France" },
+    venue: {
+      fr: "Palais de la Musique et des Congrès (PMC)",
+      en: "Palais de la Musique et des Congrès (PMC)",
+    },
+    title: {
+      fr: "ESVB 2021 : 20e anniversaire du symposium européen sur les biomatériaux vasculaires",
+      en: "ESVB 2021: 20th anniversary of the European Symposium on Vascular Biomaterials",
+    },
+    summary: {
+      fr: "Le Symposium Européen sur les Biomatériaux Vasculaires a célébré son 20e anniversaire.",
+      en: "The European Symposium on Vascular Biomaterials celebrated its 20th anniversary.",
+    },
+    intro: {
+      fr: "L'édition 2021 marquait 20 ans de la série ESVB organisée par Gepromed (alors GEPROVAS) depuis 2001, réunissant cliniciens, chercheurs et industriels autour des biomatériaux cardiovasculaires au Palais de la Musique et des Congrès de Strasbourg.",
+      en: "The 2021 edition marked 20 years of the ESVB series organized by Gepromed (then GEPROVAS) since 2001, bringing together clinicians, researchers and industry around cardiovascular biomaterials at the Palais de la Musique et des Congrès in Strasbourg.",
+    },
+    // No committee list for this specific 2021 edition is confirmed by the
+    // legacy site — left unset rather than reusing other editions' names.
+    photos: [
+      "/photos/congresses/esvb-subevent1.png",
+      "/photos/congresses/esvb-dsc3076.jpg",
+      "/photos/congresses/esvb-dsc3246.jpg",
     ],
   },
   {

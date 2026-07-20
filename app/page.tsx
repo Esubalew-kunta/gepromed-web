@@ -35,18 +35,18 @@ export default function HomePage() {
 
       {/* Partners strip (real supporters) */}
       <section className="border-b border-line bg-white">
-        <div className="container-page py-7">
+        <div className="container-page py-8">
           <p className="mono-label text-center">
             {tx("Ils nous soutiennent", "They support us")}
           </p>
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
             {PARTNERS.map((p) => (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 key={p.name}
                 src={p.logo}
                 alt={p.name}
-                className="h-10 w-auto object-contain opacity-80 grayscale transition hover:opacity-100 hover:grayscale-0 md:h-12"
+                className="h-14 w-auto object-contain opacity-90 transition hover:opacity-100 md:h-16"
               />
             ))}
           </div>

@@ -46,6 +46,8 @@ export default function EngineeringPage() {
           "Faites analyser un dispositif explanté ou tout autre échantillon par notre plateau d'expertise en biomatériaux.",
           "Have an explanted device or any other sample analyzed by our biomaterials expertise platform.",
         )}
+        image="/photos/engineering/dsc0078.jpg"
+        imageAlt={tx("Analyse d'un dispositif explanté par imagerie", "Explanted device analysis by imaging")}
       >
         <EngineeringExplorer items={EXPLANT_ITEMS} />
       </Band>
@@ -60,6 +62,8 @@ export default function EngineeringPage() {
           "Mechanical, hydrodynamic and imaging testing aligned with standards for implantable devices.",
         )}
         tone="muted"
+        image="/photos/engineering/dsc5039.jpg"
+        imageAlt={tx("Banc d'essai sur-mesure de la plateforme technologique", "Custom test bench at the technological platform")}
       >
         <EngineeringExplorer items={TESTING_ITEMS} />
       </Band>
@@ -73,6 +77,8 @@ export default function EngineeringPage() {
           "Réservez nos plateaux techniques et équipements pour vos propres campagnes. Indiquez la date souhaitée dans votre demande.",
           "Book our technical platforms and equipment for your own campaigns. Provide your desired date in the request.",
         )}
+        image="/photos/engineering/dsc0025.jpg"
+        imageAlt={tx("Équipement de mesure du plateau technique", "Measurement equipment on the technical platform")}
       >
         <EngineeringExplorer items={RENTAL_ITEMS} requireDate />
       </Band>
@@ -86,6 +92,8 @@ function Band({
   title,
   intro,
   tone = "default",
+  image,
+  imageAlt,
   children,
 }: {
   index: string;
@@ -93,18 +101,28 @@ function Band({
   title: string;
   intro: string;
   tone?: "default" | "muted";
+  image?: string;
+  imageAlt?: string;
   children: React.ReactNode;
 }) {
   return (
     <section className={tone === "muted" ? "border-t border-line bg-white" : "border-t border-line bg-paper"}>
       <div className="container-page py-14">
-        <div className="flex items-start gap-4">
-          <span className="stat-figure mt-1 text-2xl font-semibold text-brand-200">{index}</span>
-          <div>
-            <p className="mono-label-brand">{eyebrow}</p>
-            <h2 className="mt-2 text-3xl">{title}</h2>
-            <p className="mt-3 max-w-2xl leading-relaxed text-ink-soft">{intro}</p>
+        <div className="grid gap-8 lg:grid-cols-[1.3fr_1fr] lg:items-center">
+          <div className="flex items-start gap-4">
+            <span className="stat-figure mt-1 text-2xl font-semibold text-brand-200">{index}</span>
+            <div>
+              <p className="mono-label-brand">{eyebrow}</p>
+              <h2 className="mt-2 text-3xl">{title}</h2>
+              <p className="mt-3 max-w-2xl leading-relaxed text-ink-soft">{intro}</p>
+            </div>
           </div>
+          {image && (
+            <div className="tick-frame overflow-hidden rounded-xl2 border border-line shadow-card">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={image} alt={imageAlt || ""} className="h-56 w-full object-cover lg:h-64" />
+            </div>
+          )}
         </div>
         <div className="mt-10">{children}</div>
       </div>

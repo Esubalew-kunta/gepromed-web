@@ -86,13 +86,12 @@ const DICT = {
   },
   "footer.navigation": { fr: "Navigation", en: "Navigation" },
   "footer.contact": { fr: "Contact", en: "Contact" },
-  "footer.legal": {
-    fr: "Mentions légales · Politique RGPD · Indicateurs Qualiopi",
-    en: "Legal notice · GDPR policy · Qualiopi indicators",
-  },
+  "footer.legalNotice": { fr: "Mentions légales", en: "Legal notice" },
+  "footer.privacyPolicy": { fr: "Politique RGPD", en: "GDPR policy" },
+  "footer.qualityIndicators": { fr: "Indicateurs Qualiopi", en: "Qualiopi indicators" },
   "footer.rights": {
-    fr: "Gepromed. Démo de refonte et rebranding.",
-    en: "Gepromed. Redesign and rebranding demo.",
+    fr: "Gepromed. Tous droits réservés.",
+    en: "Gepromed. All rights reserved.",
   },
 
   "home.eyebrow": {
@@ -163,6 +162,14 @@ const DICT = {
     fr: "Aucune formation ne correspond à ces filtres pour le moment.",
     en: "No training matches these filters for now.",
   },
+  "trainings.helpmesee": { fr: "HelpMeSee · Fondation", en: "HelpMeSee · Foundation" },
+  "trainings.helpmeseeNote": {
+    fr: "Parcours fondation — inscription sur référencement HelpMeSee.",
+    en: "Foundation pathway — enrolment by HelpMeSee referral.",
+  },
+  "trainings.helpmeseeCta": { fr: "Demander une inscription", en: "Request registration" },
+  "trainings.priceFrom": { fr: "À partir de {price}", en: "From {price}" },
+  "trainings.sponsoredBy": { fr: "Financé par", en: "Sponsored by" },
 
   "detail.back": { fr: "← Toutes les formations", en: "← All trainings" },
   "detail.audience": { fr: "Public", en: "Audience" },
@@ -195,6 +202,17 @@ const DICT = {
     fr: "Inscription sans engagement, confirmée après acompte et contrat.",
     en: "No-commitment registration, confirmed after deposit and contract.",
   },
+  "detail.qualiopiInfo": { fr: "Informations pratiques & Qualiopi", en: "Practical & Qualiopi information" },
+  "detail.prerequisites": { fr: "Prérequis", en: "Prerequisites" },
+  "detail.teachingMethods": { fr: "Méthodes et moyens pédagogiques", en: "Teaching methods & resources" },
+  "detail.evaluationMethods": { fr: "Modalités d'évaluation", en: "Assessment methods" },
+  "detail.supervisionOrganization": { fr: "Organisation / encadrement", en: "Supervision organization" },
+  "detail.maxParticipants": { fr: "Nombre maximum de participants", en: "Maximum number of participants" },
+  "detail.accessibility": { fr: "Accessibilité handicap", en: "Accessibility" },
+  "detail.accessibilityReferent": { fr: "Référent handicap", en: "Disability referent" },
+  "detail.registration": { fr: "Modalités et délais d'inscription", en: "Registration process & deadlines" },
+  "detail.priceNote": { fr: "Tarif", en: "Price" },
+  "detail.certificate": { fr: "Certificat / attestation", en: "Certificate / attestation" },
 
   // Registration flow
   "reg.title": { fr: "Inscription à une formation", en: "Training registration" },

@@ -185,11 +185,14 @@ export const TESTIMONIALS: { quote: L; name: string; role: L }[] = [
   },
 ];
 
-// Public funders that support Gepromed (only these four). Logos live under
-// /public/brand/funders and are rendered greyscale on the light home strip.
+// Public funders that support Gepromed (only these four, per
+// gepromed.com/en/about-us/our-funders). Real logo images, downloaded from
+// gepromed.com, live under /public/brand/funders and are rendered greyscale
+// on the light home strip. "CEA" = Collectivité européenne d'Alsace, per the
+// real logo artwork (not the atomic energy commission).
 export const PARTNERS: { name: string; logo: string }[] = [
-  { name: "Eurométropole de Strasbourg", logo: "/brand/funders/eurometropole-strasbourg.svg" },
-  { name: "Collectivité européenne d'Alsace", logo: "/brand/funders/collectivite-europeenne-alsace.svg" },
-  { name: "Région Grand Est", logo: "/brand/funders/region-grand-est.svg" },
-  { name: "Université de Strasbourg", logo: "/brand/funders/universite-de-strasbourg.svg" },
+  { name: "Région Grand Est", logo: "/brand/funders/region-grand-est.png" },
+  { name: "European Union", logo: "/brand/funders/european-union.png" },
+  { name: "Eurométropole de Strasbourg", logo: "/brand/funders/eurometropole-strasbourg.png" },
+  { name: "Collectivité européenne d'Alsace", logo: "/brand/funders/cea.png" },
 ];

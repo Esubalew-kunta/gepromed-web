@@ -1,0 +1,9 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="80" height="80">
+	<title>64px-Instagram_simple_icon</title>
+	<defs>
+		<image  width="64" height="64" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABAAQMAAACQp+OdAAAAAXNSR0IB2cksfwAAAAZQTFRFAAAA////pdmf3QAAAAJ0Uk5TAP9bkSK1AAABDklEQVR4nJXSPU7DQBAF4HleC1uKULgAcjpXnGEdcRKOwAWymAJKzpBjUKSIxCVcEJGWBraIhBVi83YdjSNRRS78SWt5ft5CpBcR8Ck+iDaHuAeiTxBPeAbzG7FG9hOxxfQ7wmP6lfDt7lE0OVE0sMsZke1g64owLRz4Q7O5HpB9XsLV4RN/MWLxKFlT+id0idjVxD8T6CSPYP23mxeC9bczR7C+vwpg020eYF/L9zTA3ZW7AfPbfRKB+hDRcyQEsIirT2H2qdh5fyb+/2csoUW1Dbs8NqatavM6jg7IkddVAENgIsNaUoKLMqtKFsPqRLoThPUKDiM0Ag1FY9LgNEoNV+PWCzBeCb0kx2vzBw9Tqu3eJfBMAAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+	</style>
+	<use id="Background" href="#img1" x="0" y="0"/>
+</svg>

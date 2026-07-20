@@ -157,22 +157,22 @@ function PastBody({ c, lang, tx }: { c: Congress; lang: Lang; tx: Tx }) {
           </div>
         )}
 
-        {/* 2. E-book download */}
+        {/* 2. Recap PDF download — an honest recap (program, committee,
+            photos) generated from real data, NOT the official proceedings
+            and abstracts (we hold no real scientific abstracts for any
+            edition; see raised_questions.md → Congresses). */}
         <div>
-          <SectionHeading>{tx("E-book de l'édition", "Edition e-book")}</SectionHeading>
+          <SectionHeading>{tx("Récapitulatif de l'édition", "Edition recap")}</SectionHeading>
           <p className="mt-3 text-ink-soft">
             {tx(
-              "Retrouvez le recueil des actes et résumés de cette édition.",
-              "Access the collected proceedings and abstracts of this edition.",
+              "Téléchargez un récapitulatif de cette édition : programme, comité scientifique et photos.",
+              "Download a recap of this edition: program, scientific committee and photos.",
             )}
           </p>
           <DownloadButton
-            href={c.ebookUrl}
-            label={tx("Télécharger l'e-book", "Download the e-book")}
-            soonLabel={tx(
-              "E-book — bientôt disponible",
-              "E-book — coming soon",
-            )}
+            href={`/api/congress-recap/${c.slug}?lang=${lang}`}
+            label={tx("Télécharger le récapitulatif (PDF)", "Download the recap (PDF)")}
+            soonLabel={tx("Récapitulatif — bientôt disponible", "Recap — coming soon")}
           />
         </div>
 
