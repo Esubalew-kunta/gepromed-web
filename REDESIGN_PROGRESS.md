@@ -1,12 +1,137 @@
 # GEPROMED Website Redesign, Progress & Handoff
 
-> Read this together with `DESIGN_HANDOFF.md` (data-wiring rules) and
-> `../gepromed-os-ai-makers-gepromed-os/STATUS.md` (backend/console).
+> Read this together with `DESIGN_HANDOFF.md` (data-wiring rules),
+> `GEPROMED_LEGACY_PARITY_PLAN.md` (gap plan vs. gepromed.com),
+> `raised_questions.md` (open questions needing Gepromed/client input, by
+> section), and `../gepromed-os-ai-makers-gepromed-os/STATUS.md` (backend/console).
 > This file captures the design system + what is done + what remains, so a new
 > session can continue without re-deriving anything.
 
-Last updated: session **2026-07-05** (content + new pages). App: public website, Next 14,
-port **3001**, folder `gepromed-ai-makers-claude-sleepy-maxwell-otfodc`.
+Last updated: session **2026-07-21** (legacy-parity polish pass: trainings,
+congresses, engineering, real PDF generation). App: public website, Next 14,
+port **3001**. Console: Next 15, port **3000**, repo `gepromed-ai-console`.
+
+---
+
+## SESSION 2026-07-21: legacy-content polish + real PDF generation (SHIPPED, not pushed)
+
+**Committed locally** — `gepromed-web` commit `fd37e08` (47 files), `gepromed-ai-console`
+commit `a1f9b69` (5 files, PDF generator only). **Not pushed to `origin/main` yet.**
+
+**Context**: given `gepromed-inputs-v2.md` (client brief) and told to compare the
+redesign against the live legacy site (`https://www.gepromed.com/en` — a plain
+server-rendered CMS, no client API, verified via network log) page by page,
+fixing factual/content gaps while keeping layout, colors, and brand system as-is.
+
+### What changed, by area
+
+**Brand assets (real, downloaded from gepromed.com)**
+- Logo: replaced the hand-coded SVG reconstruction with the real
+  `logo-gepromed-color.png` / `logo-gepromed-white.png` (full-res originals, not the
+  low-res CMS thumbnails — 352×108 and 2354×704 respectively).
+- Footer funders: replaced 2 wrong entities (Collectivité européenne d'Alsace under
+  the wrong assumption it wasn't real, Université de Strasbourg) with real logo
+  images for the correct 4: Grand Est, European Union, Eurométropole de Strasbourg,
+  and **CEA = Collectivité européenne d'Alsace** (not the atomic energy commission —
+  confirmed from the real logo artwork). Same fix applied to the homepage "Ils nous
+  soutiennent" strip, which had a second, independent copy of the same wrong data.
+- Social icons: real LinkedIn/X/Instagram SVGs replacing plain text links.
+- Footer copyright ("Démo de refonte..." → real copyright line) and legal links
+  (plain text → real working `<Link>`s to `/about/legal`, `/about/privacy`,
+  `/about/quality`).
+- Added the missing second office address (Bureaux, Bâtiment d'Anesthésiologie).
+
+**Trainings**
+- Card redesign: image no longer buried under text overlays (just specialty +
+  HelpMeSee badge now), price removed from cards/drawer (self-funded), sponsor name
+  or logo shown when sponsored, HelpMeSee note preserved.
+- Drawer (`TrainingsExplorer.tsx` `DetailPanel`): trimmed to a genuine preview (was
+  duplicating the full page), then given back real substance per follow-up ask —
+  quick-facts row + objectives + prerequisites — plus a "Voir la fiche complète →"
+  link to the full page (previously an orphan route nothing linked to).
+  `Sheet.tsx`'s title-bar font-vs-brand-heading mismatch was flagged but not fixed
+  (still open, low priority).
+- `TrainingDetailView.tsx`: added the hero photo (was missing entirely — only
+  badges on a plain dark panel), added a dynamic sponsor-logo block (falls back to
+  name/link until a real `logoUrl` exists in Supabase).
+- **Fixed a systemic missing-accent bug** in Supabase: `phaco-initiation-helpmesee-2026-10`
+  and `workshop-simulation-innovation-2026-12` had every French field typed without
+  accents ("Realiser", "Presentiel", etc.) while English was fine. Fixed both +
+  enriched their generic copy with real procedure detail from the legacy
+  Phacoemulsification course description. **Other trainings likely have the same
+  issue** — not yet swept (see `raised_questions.md` → Trainings).
+- Register form preselection bug fixed: `?session=` links silently failed whenever
+  `useTrainings()` resolved after first render (race condition in `RegisterPanel`'s
+  `useState` initializer) — added a `useEffect` + ref guard so a manual pick still
+  always wins.
+- PDF button (`programPdfUrl()`) now appends `&format=pdf` so it triggers a real
+  file download (see console section below) instead of an HTML preview tab; a
+  `&return=` param also makes the printed program's "← Retour" link work.
+
+**Congresses**
+- ISVB 2026 had **fabricated Strasbourg venue/dates** for what is actually a
+  Tampa, Florida event (1–2 June 2026) that Gepromed only supports, not organizes —
+  rewrote with the real data, removed the invented local program/sponsors/
+  accommodation rather than guess Tampa specifics.
+- Added the **missing ESVB 2021 edition** (20th anniversary, 4–6 Nov 2021) with 3
+  real photos downloaded from the legacy Symposium page (EXIF-dated 2021-11-17,
+  confirming the match) — it existed on gepromed.com but not on the redesign at all.
+- Fixed a dead e-book link (`/downloads/esvb-2025-ebook.pdf` never existed) and
+  enriched ESVB 2025's program text with real specifics (20 residents, 3+1 prize
+  winners, May 16 gala).
+- **New feature**: `/api/congress-recap/[slug]` (pdfkit, in `gepromed-web` this
+  time, not the console) generates a real "recap" PDF (program/committee/photos)
+  with the real logo letterhead — deliberately NOT labeled "actes et résumés"
+  (official proceedings) since no real scientific abstracts exist anywhere to put
+  in it; the button/copy was relabeled "Récapitulatif" to match honestly. Photos
+  embedded in the PDF must be pre-resized (see gotcha below).
+
+**Engineering**
+- Content was already excellent (real, specific institutional facts, no accent
+  issues) — only gap was zero photos on cards/bands, unlike Trainings. Added one
+  real photo per band (Explant Analysis, Testing Platform, Equipment Rental),
+  cross-checked against the legacy `implant-cycle` page's own 4-card photo grid
+  (Explant Analysis / Technological Engineering / Education / Clinical research) to
+  get the mapping right instead of guessing.
+
+**Console (`gepromed-ai-console`)**
+- `/api/programs?format=pdf`: added real, binary PDF generation via **pdfkit**
+  (was: browser-print-only HTML). Real logo letterhead, tinted section headers,
+  page numbers. `Content-Disposition: attachment` forces an actual download
+  regardless of `target="_blank"`.
+- **Gotcha, will recur**: pdfkit's bundled font-metrics (`.afm`) files break under
+  Next's webpack bundling ("Helvetica.afm ENOENT") — must set
+  `serverExternalPackages: ["pdfkit"]` (Next 15 console) /
+  `experimental.serverComponentsExternalPackages` (Next 14 web) in `next.config.mjs`.
+- **Gotcha**: embedding full-res source photos (5-11MB Nikon/DSLR originals) into a
+  pdfkit PDF balloons the file to 20MB+ (pdfkit does not downsample on embed,
+  `fit:` only changes display size). Always downscale source images (via `sharp`,
+  ~1200-1400px wide, JPEG q≈78) before committing them, not just before embedding.
+- **Gotcha**: `lib/i18n.tsx` is `"use client"` — importing anything from it into a
+  server-only API route resolves to `undefined` at runtime with no helpful error
+  beyond "X is not a function". Inline a tiny local copy of trivial helpers like
+  `loc()` in server routes instead.
+
+**Not committed / explicitly left alone**: a large amount of *pre-existing*
+uncommitted work in `gepromed-ai-console` (leads board, engineering pipeline,
+course/trainee actions, several `db/*.sql` migrations, a few scripts) — untouched
+this session, not mine to attribute or verify. Still sitting locally uncommitted;
+whoever owns it needs to review/commit separately.
+
+**Environment state when this session ended**: both dev servers were left running
+(web on 3001, console on 3000) with a couple of manual restarts along the way
+(stale process on 3000 had to be `taskkill`'d once; both needed restarts after
+`next.config.mjs`/dependency changes). If picking this up fresh, just check
+`netstat -ano | grep ":3001"` / `:3000"` before assuming nothing is running.
+
+**Full list of open questions for Gepromed/client**: see `raised_questions.md` —
+organized by section (Homepage, Trainings, Congresses, Engineering, Footer/site-wide).
+Highlights: real vs. placeholder training catalog content mismatch with the live
+site, narrower specialty list than the real site, HelpMeSee's missing public
+catalog, unverified 96%/40+/1,150 vs 1,800 stats, 3-platform vs 4-platform homepage
+story, whether Gepromed has real congress e-books/photos to supply, and whether
+ISVB 2026 (externally hosted) or a future Gepromed-organized edition should be the
+featured "upcoming congress."
 
 ---
 
