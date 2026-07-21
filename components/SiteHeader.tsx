@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 import { useT, useLang, loc, type DictKey, type L } from "@/lib/i18n";
 
@@ -32,6 +32,14 @@ export function SiteHeader() {
   const t = useT();
   const { lang } = useLang();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const linkClass = (href: string) => {
     const active = pathname === href || pathname.startsWith(href + "/");
@@ -43,7 +51,13 @@ export function SiteHeader() {
   const aboutActive = pathname === "/about" || pathname.startsWith("/about/");
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-paper/85 backdrop-blur">
+    <header
+      className={`sticky top-0 z-40 border-b transition-[background-color,box-shadow,border-color] duration-300 ${
+        scrolled
+          ? "border-line bg-paper/95 shadow-sm backdrop-blur-md"
+          : "border-transparent bg-paper/85 backdrop-blur"
+      }`}
+    >
       <div className="h-0.5 w-full bg-gradient-to-r from-brand-600 via-brand-400 to-safety-500" />
       <div className="container-page flex h-16 items-center justify-between">
         <Logo />

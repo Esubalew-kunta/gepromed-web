@@ -8,10 +8,14 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* keep anchor-jump targets clear of the sticky header */
+    scroll-padding-top: 5.5rem;
   }
   body {
     @apply bg-paper text-ink antialiased;
     font-family: var(--font-sans), system-ui, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-tap-highlight-color: transparent;
     /* faint radiograph-film grain so the neutral never reads as flat white */
     background-image: radial-gradient(
       rgba(0, 48, 75, 0.022) 1px,
@@ -43,15 +47,17 @@
   }
 
   /* ---- Buttons -------------------------------------------------------- */
+  /* Micro-interaction: subtle press-scale + smooth multi-prop transition,
+     applied to every button so CTAs feel responsive and premium. */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-[background-color,border-color,box-shadow,transform,opacity] duration-200 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100;
   }
   /* Primary action = brand blue (identity + action). */
   .btn-primary {
-    @apply btn bg-brand-600 text-white hover:bg-brand-700;
+    @apply btn bg-brand-600 text-white shadow-sm hover:bg-brand-700 hover:shadow-md hover:shadow-brand-700/25;
   }
   .btn-ghost {
-    @apply btn border border-line bg-white text-brand-700 hover:border-brand-400 hover:bg-brand-50;
+    @apply btn border border-line bg-white text-brand-700 hover:border-brand-400 hover:bg-brand-50 hover:shadow-sm;
   }
   /* On dark instrument panels. */
   .btn-onDark {
@@ -68,6 +74,22 @@
 
   .card {
     @apply rounded-xl2 border border-line bg-white shadow-card;
+  }
+  /* Opt-in interactive card: consistent hover lift for clickable cards. */
+  .card-interactive {
+    @apply card transition duration-300 hover:-translate-y-0.5 hover:border-brand-200 hover:shadow-soft;
+  }
+  /* Animated inline link underline, grows from the left on hover. */
+  .link-underline {
+    @apply relative text-brand-700 transition-colors hover:text-brand-800;
+    background-image: linear-gradient(theme("colors.brand.400"), theme("colors.brand.400"));
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1.5px;
+    transition: background-size 0.25s ease-out, color 0.2s ease-out;
+  }
+  .link-underline:hover {
+    background-size: 100% 1.5px;
   }
 
   .pill {
@@ -92,7 +114,7 @@
     @apply mb-1.5 block text-sm font-medium text-ink-soft;
   }
   .field-input {
-    @apply w-full rounded-lg border border-line bg-white px-3.5 py-2.5 text-sm text-ink shadow-sm outline-none transition placeholder:text-ink-muted/60 focus:border-brand-400 focus:ring-2 focus:ring-brand-100;
+    @apply w-full rounded-lg border border-line bg-white px-3.5 py-2.5 text-sm text-ink shadow-sm outline-none transition duration-200 placeholder:text-ink-muted/60 hover:border-brand-300 focus:border-brand-400 focus:ring-2 focus:ring-brand-100;
   }
 
   /* ---- Engineering registration frame -------------------------------- */

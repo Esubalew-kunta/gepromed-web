@@ -131,8 +131,19 @@ export function SiteFooter() {
       </div>
 
       <div className="relative border-t border-white/10">
-        <div className="container-page flex flex-col items-center justify-between gap-2 py-5 text-xs text-white/50 sm:flex-row">
-          <p className="font-mono">© {new Date().getFullYear()} {t("footer.rights")}</p>
+        <div className="container-page flex flex-col items-center justify-between gap-3 py-5 text-xs text-white/50 sm:flex-row">
+          <div className="flex flex-col items-center gap-1.5 sm:flex-row sm:gap-4">
+            <p className="font-mono">© {new Date().getFullYear()} {t("footer.rights")}</p>
+            <a
+              href="https://makers.fr/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 transition hover:text-white"
+            >
+              {tx("Conçu par", "Built by")}
+              <span className="font-semibold text-white/80">AI Makers</span>
+            </a>
+          </div>
           <div className="flex items-center gap-3">
             <Link href="/about/legal" className="transition hover:text-white">
               {t("footer.legalNotice")}
