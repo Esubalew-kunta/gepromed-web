@@ -1,11 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "motion/react";
 import { useLang, useT, loc } from "@/lib/i18n";
 import { Hero } from "@/components/HomeHeroes";
 import { ImplantCycle } from "@/components/ImplantCycle";
 import { TrainingsExplorer } from "@/components/TrainingsExplorer";
 import { Accordion } from "@/components/ui/Accordion";
+import { ScanSweep, PulseLine } from "@/components/GepromedTexture";
+import { CountUp } from "@/components/CountUp";
+import { fadeUp, scaleIn, staggerContainer, inViewProps } from "@/lib/motion";
 import { FAQ, TESTIMONIALS, PARTNERS, HISTORY } from "@/lib/content";
 
 export default function HomePage() {
@@ -56,7 +60,7 @@ export default function HomePage() {
       {/* Implant cycle — signature element + multi-audience wayfinding */}
       <section id="implant-cycle" className="scroll-mt-20 bg-paper py-20 sm:py-24">
         <div className="container-page">
-          <div className="max-w-2xl">
+          <motion.div {...inViewProps} variants={fadeUp} className="max-w-2xl">
             <h2 className="mt-0 text-3xl sm:text-4xl">
               {tx("Sécurité chirurgicale : nos 3 plateformes", "Surgical safety: our 3 platforms")}
             </h2>
@@ -66,53 +70,61 @@ export default function HomePage() {
                 "Gepromed connects explant analysis, technical testing and a digital twin to reduce avoidable complications and make implantable medical devices safer.",
               )}
             </p>
-          </div>
-          <div className="mt-14">
+          </motion.div>
+          <motion.div {...inViewProps} variants={scaleIn} className="mt-14">
             <ImplantCycle />
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Evidence / impact — real stats + publication record */}
       <section className="relative overflow-hidden border-y border-brand-800 bg-brand-950 py-20 text-white sm:py-24">
         <div className="bg-grid pointer-events-none absolute inset-0 opacity-60" />
+        <ScanSweep />
         <div className="container-page relative">
           <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-center">
-            <div>
-              <h2 className="mt-0 text-3xl text-white sm:text-4xl">
+            <motion.div {...inViewProps} variants={staggerContainer}>
+              <motion.h2 variants={fadeUp} className="mt-0 text-3xl text-white sm:text-4xl">
                 {tx("30 ans de résultats mesurés", "30 years of measured results")}
-              </h2>
-              <p className="mt-3 max-w-md leading-relaxed text-white/70">
+              </motion.h2>
+              <motion.p variants={fadeUp} className="mt-3 max-w-md leading-relaxed text-white/70">
                 {tx(
                   "Une institution de recherche, pas une marque marketing. Nos travaux sont publiés dans des revues à comité de lecture et nos indicateurs sont documentés.",
                   "A research institution, not a marketing brand. Our work is published in peer-reviewed journals and our indicators are documented.",
                 )}
-              </p>
+              </motion.p>
 
               <ul className="mt-8 space-y-3">
                 {publications.map((p) => (
-                  <li key={p.journal} className="flex items-baseline gap-3 border-t border-white/10 pt-3">
+                  <motion.li variants={fadeUp} key={p.journal} className="flex items-baseline gap-3 border-t border-white/10 pt-3">
                     <span className="mono-label shrink-0 text-brand-200">{p.group}</span>
                     <span className="text-sm text-white/80">{p.journal}</span>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
-              <Link href="/about/publications" className="btn-onDark mt-8">
-                {tx("Voir les publications clés", "See key publications")}
-              </Link>
-            </div>
+              <motion.div variants={fadeUp} className="mt-8 flex items-center gap-5">
+                <Link href="/about/publications" className="btn-onDark">
+                  {tx("Voir les publications clés", "See key publications")}
+                </Link>
+                <PulseLine className="hidden h-6 w-28 text-brand-300/70 sm:block" />
+              </motion.div>
+            </motion.div>
 
-            <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-xl2 border border-white/10 bg-white/10">
+            <motion.dl
+              {...inViewProps}
+              variants={staggerContainer}
+              className="grid grid-cols-2 gap-px overflow-hidden rounded-xl2 border border-white/10 bg-white/10"
+            >
               {evidence.map((e) => (
-                <div key={e.label} className="bg-brand-950 p-6 sm:p-8">
+                <motion.div variants={fadeUp} key={e.label} className="group bg-brand-950 p-6 transition-colors hover:bg-brand-900/60 sm:p-8">
                   <dt className="stat-figure flex items-center gap-2 text-4xl text-white sm:text-5xl">
-                    {e.fig}
+                    <CountUp value={e.fig} className="transition-colors group-hover:text-brand-100" />
                     {e.safety && <span className="h-2 w-2 rounded-full bg-safety-500" aria-hidden="true" />}
                   </dt>
                   <dd className="mt-2 text-sm leading-snug text-white/65">{e.label}</dd>
-                </div>
+                </motion.div>
               ))}
-            </dl>
+            </motion.dl>
           </div>
         </div>
       </section>
@@ -159,18 +171,18 @@ export default function HomePage() {
                   </Link>
                 </div>
               </div>
-              <ul className="grid gap-2.5">
+              <motion.ul {...inViewProps} variants={staggerContainer} className="grid gap-2.5">
                 {[
                   ["ISO 13485", tx("Conception & test de dispositifs", "Device design & testing")],
                   ["ZEISS Xradia", tx("Microscopie à rayons X 3D", "3D X-ray microscopy")],
                   ["Faxitron", tx("Radiographie haute résolution", "High-resolution radiography")],
                 ].map(([code, label]) => (
-                  <li key={code} className="flex items-center gap-4 rounded-lg border border-line bg-white px-4 py-3">
+                  <motion.li variants={fadeUp} key={code} className="flex items-center gap-4 rounded-lg border border-line bg-white px-4 py-3 transition hover:border-brand-200 hover:shadow-card">
                     <span className="mono-label-brand w-28 shrink-0">{code}</span>
                     <span className="text-sm text-ink-soft">{label}</span>
-                  </li>
+                  </motion.li>
                 ))}
-              </ul>
+              </motion.ul>
             </div>
           </div>
         </div>
@@ -188,18 +200,18 @@ export default function HomePage() {
                 {tx("Notre histoire complète", "Our full history")}
               </Link>
             </div>
-            <ol className="relative space-y-6 border-l border-line pl-7">
+            <motion.ol {...inViewProps} variants={staggerContainer} className="relative space-y-6 border-l border-line pl-7">
               {HISTORY.slice(0, 4).map((h) => (
-                <li key={h.year} className="relative">
+                <motion.li variants={fadeUp} key={h.year} className="relative">
                   <span className="absolute -left-[35px] grid h-6 w-6 place-items-center rounded-full border border-brand-200 bg-white">
                     <span className="h-2 w-2 rounded-full bg-brand-600" />
                   </span>
                   <p className="stat-figure text-sm font-semibold text-brand-700">{h.year}</p>
                   <p className="mt-0.5 font-display text-lg text-ink">{loc(h.title, lang)}</p>
                   <p className="mt-1 text-sm leading-relaxed text-ink-soft">{loc(h.body, lang)}</p>
-                </li>
+                </motion.li>
               ))}
-            </ol>
+            </motion.ol>
           </div>
         </div>
       </section>
@@ -211,9 +223,9 @@ export default function HomePage() {
           <h2 className="mt-3 text-3xl sm:text-4xl">
             {tx("Ce qu'en disent les praticiens", "What practitioners say")}
           </h2>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
+          <motion.div {...inViewProps} variants={staggerContainer} className="mt-12 grid gap-6 md:grid-cols-3">
             {TESTIMONIALS.map((tm) => (
-              <figure key={tm.name} className="card flex flex-col p-6">
+              <motion.figure variants={fadeUp} key={tm.name} className="card flex flex-col p-6">
                 <div className="font-display text-4xl leading-none text-brand-200">&ldquo;</div>
                 <blockquote className="mt-2 flex-1 text-sm leading-relaxed text-ink-soft">
                   {loc(tm.quote, lang)}
@@ -222,9 +234,9 @@ export default function HomePage() {
                   <p className="text-sm font-semibold text-ink">{tm.name}</p>
                   <p className="mono-label mt-0.5">{loc(tm.role, lang)}</p>
                 </figcaption>
-              </figure>
+              </motion.figure>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -249,8 +261,13 @@ export default function HomePage() {
       {/* CTA — blue (orange stays semantic) */}
       <section className="bg-paper pb-24">
         <div className="container-page">
-          <div className="relative overflow-hidden rounded-xl2 bg-gradient-to-br from-brand-800 to-brand-950 px-8 py-14 text-center text-white sm:px-16">
+          <motion.div
+            {...inViewProps}
+            variants={fadeUp}
+            className="relative overflow-hidden rounded-xl2 bg-gradient-to-br from-brand-800 to-brand-950 px-8 py-14 text-center text-white sm:px-16"
+          >
             <div className="bg-grid pointer-events-none absolute inset-0 opacity-40" />
+            <ScanSweep />
             <div className="relative">
               <h2 className="text-3xl text-white">{t("home.ctaTitle")}</h2>
               <p className="mx-auto mt-3 max-w-xl text-white/80">{t("home.ctaSub")}</p>
@@ -263,7 +280,7 @@ export default function HomePage() {
                 </Link>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
     </>

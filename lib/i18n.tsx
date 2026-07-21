@@ -164,8 +164,8 @@ const DICT = {
   },
   "trainings.helpmesee": { fr: "HelpMeSee · Fondation", en: "HelpMeSee · Foundation" },
   "trainings.helpmeseeNote": {
-    fr: "Parcours fondation — inscription sur référencement HelpMeSee.",
-    en: "Foundation pathway — enrolment by HelpMeSee referral.",
+    fr: "Parcours fondation : inscription sur référencement HelpMeSee.",
+    en: "Foundation pathway: enrolment by HelpMeSee referral.",
   },
   "trainings.helpmeseeCta": { fr: "Demander une inscription", en: "Request registration" },
   "trainings.priceFrom": { fr: "À partir de {price}", en: "From {price}" },

@@ -135,7 +135,7 @@ export function SiteFooter() {
           <div className="flex flex-col items-center gap-1.5 sm:flex-row sm:gap-4">
             <p className="font-mono">© {new Date().getFullYear()} {t("footer.rights")}</p>
             <a
-              href="https://makers.fr/"
+              href="https://aimakers.fr/"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 transition hover:text-white"

@@ -172,7 +172,7 @@ function PastBody({ c, lang, tx }: { c: Congress; lang: Lang; tx: Tx }) {
           <DownloadButton
             href={`/api/congress-recap/${c.slug}?lang=${lang}`}
             label={tx("Télécharger le récapitulatif (PDF)", "Download the recap (PDF)")}
-            soonLabel={tx("Récapitulatif — bientôt disponible", "Recap — coming soon")}
+            soonLabel={tx("Récapitulatif : bientôt disponible", "Recap: coming soon")}
           />
         </div>
 
@@ -334,8 +334,8 @@ function UpcomingBody({ c, lang, tx }: { c: Congress; lang: Lang; tx: Tx }) {
               href={c.programPdfUrl}
               label={tx("Télécharger le programme", "Download the program")}
               soonLabel={tx(
-                "Programme — bientôt disponible",
-                "Program — coming soon",
+                "Programme : bientôt disponible",
+                "Program: coming soon",
               )}
             />
           </div>

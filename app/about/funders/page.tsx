@@ -226,8 +226,8 @@ export default function FundersPage() {
           <p className="mono-label-brand">{tx("Remerciements", "Acknowledgements")}</p>
           <p className="mx-auto mt-3 max-w-2xl leading-relaxed text-ink-soft">
             {tx(
-              "Un grand merci à nos partenaires institutionnels et financiers — la Région Grand Est, l'Union européenne, l'Eurométropole de Strasbourg et la Collectivité européenne d'Alsace — pour leur soutien essentiel au développement de nos projets.",
-              "Warm thanks to our institutional and financial partners — the Grand Est Region, the European Union, the Eurométropole de Strasbourg and the Collectivité européenne d'Alsace — for their essential support in developing our projects.",
+              "Un grand merci à nos partenaires institutionnels et financiers : la Région Grand Est, l'Union européenne, l'Eurométropole de Strasbourg et la Collectivité européenne d'Alsace, pour leur soutien essentiel au développement de nos projets.",
+              "Warm thanks to our institutional and financial partners: the Grand Est Region, the European Union, the Eurométropole de Strasbourg and the Collectivité européenne d'Alsace, for their essential support in developing our projects.",
             )}
           </p>
           <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-ink-muted">

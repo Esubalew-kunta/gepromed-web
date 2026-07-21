@@ -335,7 +335,7 @@ export function TrainingDetailView({ t }: { t: TrainingSession }) {
                 title={tx("Bientôt disponible", "Coming soon")}
                 className="btn-ghost mt-3 flex w-full cursor-not-allowed items-center justify-center gap-2 opacity-60"
               >
-                {tx("Programme PDF — bientôt disponible", "Program PDF — coming soon")}
+                {tx("Programme PDF : bientôt disponible", "Program PDF: coming soon")}
               </button>
             )}
 

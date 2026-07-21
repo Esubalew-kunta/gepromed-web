@@ -15,8 +15,10 @@ import {
   type TrainingSession,
 } from "@/lib/trainings";
 import Link from "next/link";
+import { motion } from "motion/react";
 import { useTrainings } from "@/lib/trainings-context";
 import { useLang, useT, loc } from "@/lib/i18n";
+import { fadeUp, staggerContainer, inViewProps } from "@/lib/motion";
 import { Sheet } from "@/components/ui/Sheet";
 import { RegisterPanel } from "@/components/RegisterPanel";
 
@@ -119,11 +121,17 @@ export function TrainingsExplorer({
         </div>
       )}
 
-      <div className={`grid gap-6 sm:grid-cols-2 lg:grid-cols-3 ${showFilters ? "mt-10" : ""}`}>
+      <motion.div
+        {...inViewProps}
+        variants={staggerContainer}
+        className={`grid gap-6 sm:grid-cols-2 lg:grid-cols-3 ${showFilters ? "mt-10" : ""}`}
+      >
         {filtered.map((x) => (
-          <TrainingCardModern key={x.slug} t={x} onOpen={() => setDetail(x)} />
+          <motion.div variants={fadeUp} key={x.slug} className="h-full">
+            <TrainingCardModern t={x} onOpen={() => setDetail(x)} />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {filtered.length === 0 && (
         <p className="mt-16 text-center text-ink-muted">{t("trainings.empty")}</p>
@@ -180,7 +188,7 @@ function TrainingCardModern({ t, onOpen }: { t: TrainingSession; onOpen: () => v
   return (
     <button
       onClick={onOpen}
-      className={`tick-frame group flex flex-col overflow-hidden rounded-xl2 border bg-white text-left shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-soft ${
+      className={`tick-frame group flex h-full flex-col overflow-hidden rounded-xl2 border bg-white text-left shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-soft ${
         hms
           ? "border-amber-300 ring-1 ring-amber-200 hover:border-amber-400"
           : "border-line hover:border-brand-200"
@@ -229,25 +237,30 @@ function TrainingCardModern({ t, onOpen }: { t: TrainingSession; onOpen: () => v
         {/* Status-specific footer detail, pushed to the bottom */}
         <div className="mt-auto pt-4">
           {upcoming ? (
-            hms ? (
-              <p className="flex items-start gap-2 rounded-lg bg-amber-50 px-3 py-2.5 text-xs text-amber-800">
-                <svg className="mt-0.5 h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                  <rect x="3" y="11" width="18" height="11" rx="2" />
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                </svg>
-                <span>{tr("trainings.helpmeseeNote")}</span>
-              </p>
-            ) : sponsored ? (
-              <p className="flex items-center gap-1.5 rounded-lg bg-brand-50 px-3 py-2.5 text-xs text-ink-soft">
-                {tr("trainings.sponsoredBy")}
-                {t.sponsors![0].logoUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={t.sponsors![0].logoUrl} alt={t.sponsors![0].name} className="h-4 w-auto max-w-[6rem] object-contain" />
-                ) : (
-                  <span className="font-semibold text-brand-700">{t.sponsors![0].name}</span>
-                )}
-              </p>
-            ) : (
+            <div className="space-y-3">
+              {/* Type note (shown alongside the capacity bar, not instead of it) */}
+              {hms && (
+                <p className="flex items-start gap-2 rounded-lg bg-amber-50 px-3 py-2.5 text-xs text-amber-800">
+                  <svg className="mt-0.5 h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                    <rect x="3" y="11" width="18" height="11" rx="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                  </svg>
+                  <span>{tr("trainings.helpmeseeNote")}</span>
+                </p>
+              )}
+              {sponsored && (
+                <p className="flex items-center gap-1.5 rounded-lg bg-brand-50 px-3 py-2.5 text-xs text-ink-soft">
+                  {tr("trainings.sponsoredBy")}
+                  {t.sponsors![0].logoUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={t.sponsors![0].logoUrl} alt={t.sponsors![0].name} className="h-4 w-auto max-w-[6rem] object-contain" />
+                  ) : (
+                    <span className="font-semibold text-brand-700">{t.sponsors![0].name}</span>
+                  )}
+                </p>
+              )}
+
+              {/* Capacity / spots-left bar — shown for every upcoming session */}
               <div>
                 <div className="flex items-center justify-between text-xs">
                   <span className={full ? "font-medium text-ink-muted" : "font-medium text-brand-700"}>
@@ -259,12 +272,12 @@ function TrainingCardModern({ t, onOpen }: { t: TrainingSession; onOpen: () => v
                 </div>
                 <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-mist">
                   <div
-                    className={`h-full rounded-full ${full ? "bg-ink-muted/50" : "bg-brand-500"}`}
+                    className={`h-full rounded-full ${hms ? "bg-amber-500" : "bg-brand-500"}`}
                     style={{ width: `${pct}%` }}
                   />
                 </div>
               </div>
-            )
+            </div>
           ) : (
             t.satisfaction && (
               <div className="flex gap-4 rounded-lg bg-mist px-4 py-2.5 text-xs text-ink-soft">

@@ -1,9 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "motion/react";
 import { useLang, useT, loc } from "@/lib/i18n";
 import { Accordion } from "@/components/ui/Accordion";
 import { ImplantCycle } from "@/components/ImplantCycle";
+import { AnimatedText } from "@/components/AnimatedText";
+import { CountUp } from "@/components/CountUp";
+import { ScanSweep } from "@/components/GepromedTexture";
+import { fadeUp, staggerContainer, inViewProps } from "@/lib/motion";
 import { HISTORY, PARTNERS } from "@/lib/content";
 
 export default function AboutPage() {
@@ -53,21 +58,30 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-brand-800 bg-brand-950 text-white">
         <div className="bg-grid pointer-events-none absolute inset-0 opacity-50" />
+        <ScanSweep />
         <div className="container-page relative grid gap-10 py-20 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div>
-            <p className="mono-label text-brand-200">Gepromed · Strasbourg · Depuis 1993</p>
-            <h1 className="mt-3 max-w-3xl text-4xl text-white sm:text-5xl">{t("about.title")}</h1>
-            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/80">{t("about.lead")}</p>
-            <div className="mt-12 grid max-w-2xl grid-cols-3 gap-6 border-t border-white/10 pt-8">
+          <motion.div variants={staggerContainer} initial="hidden" animate="show">
+            <motion.p variants={fadeUp} className="mono-label text-brand-200">Gepromed · Strasbourg · Depuis 1993</motion.p>
+            <h1 className="mt-3 max-w-3xl text-4xl text-white sm:text-5xl">
+              <AnimatedText text={t("about.title")} delay={0.12} step={0.022} y={14} />
+            </h1>
+            <motion.p variants={fadeUp} className="mt-5 max-w-2xl text-lg leading-relaxed text-white/80">{t("about.lead")}</motion.p>
+            <motion.div variants={fadeUp} className="mt-12 grid max-w-2xl grid-cols-3 gap-6 border-t border-white/10 pt-8">
               {kpis.map(([n, l]) => (
-                <div key={l}>
-                  <p className="stat-figure text-3xl text-white sm:text-4xl">{n}</p>
+                <div key={l} className="group">
+                  <CountUp value={n} className="stat-figure block text-3xl text-white transition-colors group-hover:text-brand-100 sm:text-4xl" />
                   <p className="mt-1.5 text-xs text-white/65">{l}</p>
                 </div>
               ))}
-            </div>
-          </div>
-          <div className="relative">
+            </motion.div>
+          </motion.div>
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            transition={{ delay: 0.25 }}
+            className="relative"
+          >
             <div className="overflow-hidden rounded-2xl border border-white/10 shadow-soft">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -79,7 +93,7 @@ export default function AboutPage() {
             <p className="mt-2 text-xs text-white/50">
               {tx("Bâtiment eXplora · Centre d'éducation", "eXplora building · Education center")}
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -97,18 +111,18 @@ export default function AboutPage() {
               )}
             </p>
           </div>
-          <ol className="relative space-y-7 border-l border-line pl-7">
+          <motion.ol {...inViewProps} variants={staggerContainer} className="relative space-y-7 border-l border-line pl-7">
             {HISTORY.map((h) => (
-              <li key={h.year} className="relative">
+              <motion.li variants={fadeUp} key={h.year} className="relative">
                 <span className="stat-figure absolute -left-[38px] grid h-7 w-7 place-items-center rounded-full border border-brand-200 bg-white text-[10px] font-semibold text-brand-700">
                   {h.year.slice(2)}
                 </span>
                 <p className="stat-figure text-sm font-semibold text-brand-700">{h.year}</p>
                 <p className="mt-0.5 font-display text-lg text-ink">{loc(h.title, lang)}</p>
                 <p className="mt-1 text-sm leading-relaxed text-ink-soft">{loc(h.body, lang)}</p>
-              </li>
+              </motion.li>
             ))}
-          </ol>
+          </motion.ol>
         </div>
       </section>
 
@@ -131,17 +145,17 @@ export default function AboutPage() {
           <div>
             <p className="mono-label-brand">{tx("Ce qui nous guide", "What guides us")}</p>
             <h2 className="mt-3 text-3xl">{t("about.valuesTitle")}</h2>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            <motion.div {...inViewProps} variants={staggerContainer} className="mt-6 grid gap-4 sm:grid-cols-2">
               {values.map(([title, desc, safety]) => (
-                <div key={title} className="card p-5">
+                <motion.div variants={fadeUp} key={title} className="card p-5 transition hover:-translate-y-0.5 hover:border-brand-200 hover:shadow-soft">
                   <div className="flex items-center gap-2">
                     {safety && <span className="h-2 w-2 rounded-full bg-safety-500" aria-hidden="true" />}
                     <h3 className="text-base font-semibold text-brand-700">{title}</h3>
                   </div>
                   <p className="mt-1.5 text-sm text-ink-soft">{desc}</p>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
           <div>
             <p className="mono-label-brand">{tx("Qualité", "Quality")}</p>

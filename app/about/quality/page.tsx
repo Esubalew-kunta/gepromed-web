@@ -157,7 +157,7 @@ export default function QualityPage() {
               {tx("Notre politique qualité", "Our quality policy")}
             </span>
             <span className="mt-0.5 block text-xs text-ink-muted">
-              {tx("Indice de révision F — 17 février 2026", "Revision index F — 17 February 2026")}
+              {tx("Indice de révision F · 17 février 2026", "Revision index F · 17 February 2026")}
             </span>
           </span>
           <span
@@ -259,7 +259,7 @@ export default function QualityPage() {
               </p>
               <ul className="ml-1 space-y-2">
                 {[
-                  tx("Éthique et humaniste — promouvoir des soins sûrs pour les patients, par la prévention des risques,", "Ethical and Humanistic — to promote safe care for patients, through risk prevention,"),
+                  tx("Éthique et humaniste : promouvoir des soins sûrs pour les patients, par la prévention des risques,", "Ethical and Humanistic: to promote safe care for patients, through risk prevention,"),
                   tx("Indépendance et transparence,", "Independence and Transparency,"),
                   tx("Ouverture et partage.", "Openness and Sharing."),
                 ].map((li) => (

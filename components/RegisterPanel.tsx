@@ -227,8 +227,8 @@ export function RegisterPanel({
             </svg>
             <span>
               {lang === "fr"
-                ? "Parcours fondation HelpMeSee. Gepromed vous transmettra le formulaire d'inscription HelpMeSee par email après cette demande — aucun acompte ni contrat (financement selon le statut du participant)."
-                : "HelpMeSee foundation pathway. Gepromed will email you HelpMeSee's enrollment form after this request — no deposit or contract (funding depends on participant status)."}
+                ? "Parcours fondation HelpMeSee. Gepromed vous transmettra le formulaire d'inscription HelpMeSee par email après cette demande. Aucun acompte ni contrat (financement selon le statut du participant)."
+                : "HelpMeSee foundation pathway. Gepromed will email you HelpMeSee's enrollment form after this request. No deposit or contract (funding depends on participant status)."}
             </span>
           </div>
         )}

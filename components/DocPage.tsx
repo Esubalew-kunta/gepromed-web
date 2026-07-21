@@ -1,8 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "motion/react";
 import { useLang, loc, type L } from "@/lib/i18n";
 import { ABOUT_ITEMS } from "@/components/SiteHeader";
+import { AnimatedText } from "@/components/AnimatedText";
+import { fadeUp, scaleIn, staggerContainer } from "@/lib/motion";
 import { usePathname } from "next/navigation";
 
 export function DocPage({
@@ -31,26 +34,33 @@ export function DocPage({
             heroImage ? "grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-center" : ""
           }`}
         >
-          <div>
+          <motion.div variants={staggerContainer} initial="hidden" animate="show">
             {eyebrow && (
-              <p className="mono-label-brand">{loc(eyebrow, lang)}</p>
+              <motion.p variants={fadeUp} className="mono-label-brand">{loc(eyebrow, lang)}</motion.p>
             )}
-            <h1 className="mt-3 max-w-3xl text-4xl sm:text-5xl">{loc(title, lang)}</h1>
+            <h1 className="mt-3 max-w-3xl text-4xl sm:text-5xl">
+              <AnimatedText text={loc(title, lang)} delay={0.12} step={0.02} y={14} />
+            </h1>
             {intro && (
-              <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-soft">
+              <motion.p variants={fadeUp} className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-soft">
                 {loc(intro, lang)}
-              </p>
+              </motion.p>
             )}
-          </div>
+          </motion.div>
           {heroImage && (
-            <div className="overflow-hidden rounded-2xl border border-line shadow-card">
+            <motion.div
+              variants={scaleIn}
+              initial="hidden"
+              animate="show"
+              className="overflow-hidden rounded-2xl border border-line shadow-card"
+            >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={heroImage.src}
                 alt={heroImage.alt}
                 className="aspect-[4/3] w-full object-cover"
               />
-            </div>
+            </motion.div>
           )}
         </div>
       </section>
