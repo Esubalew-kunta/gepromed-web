@@ -3,8 +3,10 @@ import { Spectral, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/i18n";
 import { TrainingsProvider } from "@/lib/trainings-context";
+import { CookieConsentProvider } from "@/lib/cookie-consent";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { CookieConsent } from "@/components/CookieConsent";
 
 // Display: scientific-journal serif for institutional gravitas.
 const display = Spectral({
@@ -54,11 +56,14 @@ export default function RootLayout({
     >
       <body className="flex min-h-screen flex-col bg-paper text-ink">
         <LanguageProvider>
-          <TrainingsProvider>
-            <SiteHeader />
-            <main className="flex-1">{children}</main>
-            <SiteFooter />
-          </TrainingsProvider>
+          <CookieConsentProvider>
+            <TrainingsProvider>
+              <SiteHeader />
+              <main className="flex-1">{children}</main>
+              <SiteFooter />
+              <CookieConsent />
+            </TrainingsProvider>
+          </CookieConsentProvider>
         </LanguageProvider>
       </body>
     </html>

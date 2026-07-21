@@ -1,10 +1,10 @@
 "use client";
 
-import { DocPage, Prose } from "@/components/DocPage";
+import { DocPage } from "@/components/DocPage";
 import { Reveal } from "@/components/Reveal";
 import { useLang, loc, type L } from "@/lib/i18n";
 
-type Person = { name: string; role: L; lead?: boolean };
+type Person = { name: string; role: L; lead?: boolean; photo?: string };
 
 function initials(name: string) {
   const parts = name.replace(/^(Pr\.?|Dr\.?)\s+/i, "").trim().split(/\s+/);
@@ -17,27 +17,24 @@ export default function TeamPage() {
   const { lang } = useLang();
   const tx = (fr: string, en: string) => (lang === "fr" ? fr : en);
 
-  // Operational team, real names and roles from the official Gepromed team page.
-  const team: Person[] = [
-    { name: "Nabil Chakfé", role: { fr: "Président, chirurgien vasculaire", en: "President, vascular surgeon" }, lead: true },
-    { name: "Annik Borcos", role: { fr: "Directrice générale", en: "Chief Executive Officer" }, lead: true },
-    { name: "Nathalie Couvreur", role: { fr: "Responsable administrative et financière", en: "Administrative and financial manager" } },
-    { name: "Nicole Neumann", role: { fr: "Responsable développement et innovation", en: "Development and Innovation manager" } },
-    { name: "Wissal Lachegur", role: { fr: "Ingénieure mécatronique", en: "Mechatronics engineer" } },
-    { name: "Juliette Tabouret", role: { fr: "Ingénieure textile", en: "Textile engineer" } },
-    { name: "Mohamed Allouche", role: { fr: "Ingénieur logiciel IA", en: "AI software engineer" } },
-    { name: "Noé Constans", role: { fr: "Doctorant", en: "PhD student" } },
-    { name: "Fanny Fuchs", role: { fr: "Alternante, laboratoire technique", en: "Tech Lab work-study student" } },
-  ];
+  // Real names and roles from the official Gepromed team page.
+  // Legacy structure: President (alone), then the Team group.
+  const president: Person = {
+    name: "Nabil Chakfé",
+    role: { fr: "Président de l'association", en: "President of the association" },
+    lead: true,
+    photo: "/photos/team/nabil-chakfe.jpg",
+  };
 
-  // Scientific committee: specialty leads named in the Gepromed history.
-  const committee = [
-    "Pr. Bourcier",
-    "Pr. Ehlinger",
-    "Pr. Liverneaux",
-    "Pr. Proust",
-    "Pr. Cebula",
-    "Pr. Romain",
+  const team: Person[] = [
+    { name: "Nathalie Couvreur", role: { fr: "Responsable administrative et financière", en: "Administrative and financial manager" }, photo: "/photos/team/nathalie-couvreur.jpg" },
+    { name: "Nicole Neumann", role: { fr: "Responsable développement et innovation", en: "Development and Innovation manager" }, photo: "/photos/team/nicole-neumann.jpg" },
+    { name: "Wissal Lachegur", role: { fr: "Ingénieure mécatronique", en: "Mechatronics engineer" }, photo: "/photos/team/wissal-lachegur.jpg" },
+    { name: "Juliette Tabouret", role: { fr: "Ingénieure textile", en: "Textile engineer" }, photo: "/photos/team/juliette-tabouret.jpg" },
+    { name: "Mohamed Allouche", role: { fr: "Ingénieur logiciel IA", en: "AI software engineer" }, photo: "/photos/team/mohamed-allouche.jpg" },
+    { name: "Noé Constans", role: { fr: "Doctorant", en: "PhD student" }, photo: "/photos/team/noe-constans.jpg" },
+    { name: "Fanny Fuchs", role: { fr: "Alternante, laboratoire technique", en: "Tech Lab work-study student" }, photo: "/photos/team/fanny-fuchs.png" },
+    { name: "Annik Borcos", role: { fr: "Directrice générale", en: "Chief Executive Officer" }, photo: "/photos/team/annik-borcos.jpg" },
   ];
 
   const poles = [
@@ -56,36 +53,46 @@ export default function TeamPage() {
       eyebrow={{ fr: "À propos", en: "About us" }}
       title={{ fr: "L'équipe Gepromed", en: "Gepromed Team" }}
       intro={{
-        fr: "Une équipe permanente pluridisciplinaire, chirurgiens, ingénieurs et chercheurs, épaulée par un comité scientifique de praticiens hospitalo-universitaires de référence.",
-        en: "A multidisciplinary permanent team of surgeons, engineers and researchers, backed by a scientific committee of leading hospital-university practitioners.",
+        fr: "Découvrez les membres de l'équipe Gepromed et leurs rôles au sein de l'association.",
+        en: "Learn more about the members of the Gepromed team and their roles within the association.",
       }}
     >
-      <Prose>
-        <p>
-          {tx(
-            "Depuis ses origines en 1993 autour de Pr. Nabil Chakfé et Pr. Bernard Durand, Gepromed fédère chirurgiens, ingénieurs et chercheurs autour d'un objectif commun : la sécurité du patient à travers la maîtrise des dispositifs médicaux et la formation par la pratique.",
-            "Since its origins in 1993 around Pr. Nabil Chakfé and Pr. Bernard Durand, Gepromed has brought together surgeons, engineers and researchers around a common goal: patient safety through medical-device mastery and hands-on training.",
-          )}
-        </p>
-      </Prose>
+      {/* President */}
+      <h2 className="text-2xl">{tx("Président", "President")}</h2>
+      <div className="mt-5">
+        <div className="flex items-center gap-5 rounded-2xl border border-brand-200 bg-white p-6 shadow-card">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={president.photo}
+            alt={president.name}
+            className="h-20 w-20 shrink-0 rounded-full object-cover ring-2 ring-brand-200"
+          />
+          <div>
+            <p className="text-lg font-semibold text-ink">{president.name}</p>
+            <p className="mt-0.5 text-sm text-ink-muted">{loc(president.role, lang)}</p>
+          </div>
+        </div>
+      </div>
 
-      <h2 className="mt-10 text-2xl">{tx("Direction et équipe", "Leadership and team")}</h2>
+      {/* Team */}
+      <h2 className="mt-12 text-2xl">{tx("L'équipe", "The team")}</h2>
       <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {team.map((p, i) => (
           <Reveal key={p.name} delay={(i % 3) * 60}>
-            <div
-              className={`group h-full rounded-2xl border bg-white p-5 shadow-card transition hover:-translate-y-0.5 hover:shadow-soft ${
-                p.lead ? "border-brand-200" : "border-line hover:border-brand-300"
-              }`}
-            >
+            <div className="group h-full rounded-2xl border border-line bg-white p-5 shadow-card transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-soft">
               <div className="flex items-center gap-3.5">
-                <div
-                  className={`grid h-12 w-12 shrink-0 place-items-center rounded-full font-mono text-sm font-semibold ${
-                    p.lead ? "bg-brand-600 text-white" : "bg-brand-50 text-brand-700"
-                  }`}
-                >
-                  {initials(p.name)}
-                </div>
+                {p.photo ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={p.photo}
+                    alt={p.name}
+                    className="h-12 w-12 shrink-0 rounded-full object-cover ring-1 ring-line"
+                  />
+                ) : (
+                  <div className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-brand-50 font-mono text-sm font-semibold text-brand-700">
+                    {initials(p.name)}
+                  </div>
+                )}
                 <div>
                   <p className="font-semibold text-ink">{p.name}</p>
                   <p className="mt-0.5 text-sm text-ink-muted">{loc(p.role, lang)}</p>
@@ -93,35 +100,6 @@ export default function TeamPage() {
               </div>
             </div>
           </Reveal>
-        ))}
-      </div>
-      <p className="mt-4 text-xs text-ink-muted">
-        {tx(
-          "Photographies de l'équipe à venir.",
-          "Team photographs coming soon.",
-        )}
-      </p>
-
-      <h2 className="mt-12 text-2xl">{tx("Comité scientifique", "Scientific committee")}</h2>
-      <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-soft">
-        {tx(
-          "Des praticiens hospitalo-universitaires de référence encadrent les activités de formation, de R&D et d'analyse d'explants dans chaque spécialité.",
-          "Leading hospital-university practitioners guide the training, R&D and explant-analysis activities in each specialty.",
-        )}
-      </p>
-      <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {committee.map((name) => (
-          <div key={name} className="flex items-center gap-3 rounded-2xl border border-line p-4">
-            <div className="grid h-11 w-11 place-items-center rounded-full bg-mist font-mono text-sm font-semibold text-ink-soft">
-              {initials(name)}
-            </div>
-            <div>
-              <p className="text-sm font-semibold text-ink">{name}</p>
-              <p className="text-xs text-ink-muted">
-                {tx("Membre du comité scientifique", "Scientific committee member")}
-              </p>
-            </div>
-          </div>
         ))}
       </div>
 

@@ -1,116 +1,102 @@
 "use client";
 
-import { DocPage, Prose } from "@/components/DocPage";
+import { DocPage } from "@/components/DocPage";
 import { Reveal } from "@/components/Reveal";
-import { useLang, type L } from "@/lib/i18n";
+import { useLang, loc } from "@/lib/i18n";
+import { PUB_CATEGORIES, type Publication } from "@/lib/publications";
 
-type Pub = { title: string; venue: string; year: string; href: string };
-type Group = { theme: L; items: Pub[] };
+function IconExternal({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
+      <path d="M14 5h5v5M19 5l-8 8" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M18 14v4a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2h4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
 
-const GROUPS: Group[] = [
-  {
-    theme: { fr: "Analyse d'explants", en: "Explant analysis" },
-    items: [
-      {
-        title:
-          "Explanted Vascular and Endovascular Graft Analysis: Where Do We Stand and What Should We Do?",
-        venue: "European Journal of Vascular and Endovascular Surgery",
-        year: "2018",
-        href: "https://pubmed.ncbi.nlm.nih.gov/29478909/",
-      },
-      {
-        title:
-          "What Have We Learned From Explanted Peripheral Stents Analysis?",
-        venue: "Journal of Endovascular Therapy",
-        year: "2025",
-        href: "https://journals.sagepub.com/doi/10.1177/15266028251349486",
-      },
-      {
-        title:
-          "Type IIIb Endoleaks: Fabric Perforations of Explanted New Generation Endoprostheses",
-        venue: "European Journal of Vascular and Endovascular Surgery",
-        year: "2023",
-        href: "https://www.ejves.com/article/S1078-5884(23)00781-5/fulltext",
-      },
-    ],
-  },
-  {
-    theme: { fr: "Éducation & simulation", en: "Education & simulation" },
-    items: [
-      {
-        title:
-          "Validity evidence of a new virtual reality simulator for phacoemulsification training in cataract surgery",
-        venue: "PubMed",
-        year: "2024",
-        href: "https://pubmed.ncbi.nlm.nih.gov/39461993/",
-      },
-      {
-        title:
-          "Virtual reality simulator-based assessment of non-technical skills in eye surgery: managing complex cataract surgery",
-        venue: "BMC Medical Education",
-        year: "2026",
-        href: "https://link.springer.com/article/10.1186/s12909-026-09029-6",
-      },
-    ],
-  },
-];
+function PubCard({ p, delay }: { p: Publication; delay: number }) {
+  const inner = (
+    <>
+      <div className="flex items-start justify-between gap-4">
+        <p className="font-medium leading-snug text-ink group-hover:text-brand-700">{p.title}</p>
+        <span className="stat-figure shrink-0 text-sm text-brand-600">{p.year}</span>
+      </div>
+      <p className="mt-2 text-sm leading-relaxed text-ink-muted">{p.authors}</p>
+      <p className="mt-1.5 text-sm text-ink-soft">
+        <span className="italic">{p.journal}</span>
+        {p.ref ? ` · ${p.ref}` : ""}
+        {p.href && <IconExternal className="ml-1.5 inline h-3.5 w-3.5 align-[-1px] text-brand-500" />}
+      </p>
+    </>
+  );
+
+  const cls =
+    "group block h-full rounded-2xl border border-line p-5 transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-card";
+
+  return (
+    <Reveal as="li" delay={delay}>
+      {p.href ? (
+        <a href={p.href} target="_blank" rel="noreferrer" className={cls}>
+          {inner}
+        </a>
+      ) : (
+        <div className={cls}>{inner}</div>
+      )}
+    </Reveal>
+  );
+}
 
 export default function PublicationsPage() {
   const { lang } = useLang();
   const tx = (fr: string, en: string) => (lang === "fr" ? fr : en);
+
+  const total = PUB_CATEGORIES.reduce((n, c) => n + c.items.length, 0);
 
   return (
     <DocPage
       eyebrow={{ fr: "À propos", en: "About us" }}
       title={{ fr: "Publications clés", en: "Key Publications" }}
       intro={{
-        fr: "Une sélection de travaux scientifiques issus de nos activités de recherche et de formation, regroupés par thème.",
-        en: "A selection of scientific works from our research and training activities, grouped by theme.",
+        fr: "Découvrez nos publications scientifiques et pédagogiques phares, illustrant l'expertise de Gepromed en formation à la chirurgie vasculaire, en simulation et en évaluation des compétences, ainsi qu'en analyse d'explants et en essais de caractérisation des biomatériaux.",
+        en: "Explore our flagship scientific and educational publications, showcasing GEPROMED's expertise in vascular surgery training, simulation and competency development, as well as in explant analysis and biomaterials characterization testing.",
+      }}
+      heroImage={{
+        src: "/photos/about/publications.jpg",
+        alt: tx("Publications scientifiques Gepromed", "Gepromed scientific publications"),
       }}
     >
-      <Prose>
-        <p>
-          {tx(
-            "Plus de 20 études cliniques et un programme continu d'analyse d'explants nourrissent nos publications et la sécurité des dispositifs médicaux. Nos travaux paraissent dans des revues à comité de lecture, souvent en collaboration avec le groupe GEPROVAS et l'Université de Strasbourg.",
-            "More than 20 clinical studies and an ongoing explant-analysis program feed our publications and medical-device safety. Our work appears in peer-reviewed journals, often in collaboration with the GEPROVAS group and the University of Strasbourg.",
-          )}
-        </p>
-      </Prose>
-
-      <div className="mt-8 space-y-10">
-        {GROUPS.map((g) => (
-          <div key={g.theme.en}>
-            <h2 className="mono-label-brand">{g.theme[lang]}</h2>
-            <ul className="mt-4 space-y-4">
-              {g.items.map((p, i) => (
-                <Reveal as="li" key={p.href} delay={i * 60}>
-                  <a
-                    href={p.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group block rounded-2xl border border-line p-5 transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-card"
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <p className="font-medium text-ink group-hover:text-brand-700">
-                        {p.title}
-                      </p>
-                      <span className="stat-figure shrink-0 text-sm text-brand-600">
-                        {p.year}
-                      </span>
-                    </div>
-                    <p className="mt-1 text-sm text-ink-muted">{p.venue}</p>
-                  </a>
-                </Reveal>
-              ))}
-            </ul>
-          </div>
+      {/* Category quick-nav with counts */}
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="pill bg-brand-50 text-brand-700">
+          {total} {tx("publications", "publications")}
+        </span>
+        {PUB_CATEGORIES.map((c) => (
+          <a key={c.id} href={`#${c.id}`} className="pill border border-line bg-white text-ink-soft transition hover:border-brand-300 hover:text-brand-700">
+            {loc(c.theme, lang)} · {c.items.length}
+          </a>
         ))}
       </div>
 
-      <p className="mt-8 rounded-xl bg-brand-50/60 px-4 py-3 text-sm text-ink-soft">
+      <div className="mt-10 space-y-12">
+        {PUB_CATEGORIES.map((c) => (
+          <section key={c.id} id={c.id} className="scroll-mt-24">
+            <div className="flex items-baseline justify-between gap-4 border-b border-line pb-3">
+              <h2 className="text-2xl">{loc(c.theme, lang)}</h2>
+              <span className="mono-label">{c.items.length} {tx("réf.", "refs")}</span>
+            </div>
+            <ul className="mt-5 grid gap-4 lg:grid-cols-2">
+              {c.items.map((p, i) => (
+                <PubCard key={p.title} p={p} delay={(i % 2) * 60} />
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+
+      <p className="mt-10 rounded-xl bg-brand-50/60 px-4 py-3 text-sm text-ink-soft">
         {tx(
-          "La liste complète et à jour des publications est disponible sur PubMed et sur le site institutionnel de Gepromed.",
-          "The full, up-to-date list of publications is available on PubMed and on Gepromed's institutional website.",
+          "La liste complète et à jour des publications est disponible sur PubMed, souvent en collaboration avec le groupe GEPROVAS et l'Université de Strasbourg.",
+          "The full, up-to-date list of publications is available on PubMed, often in collaboration with the GEPROVAS group and the University of Strasbourg.",
         )}
       </p>
     </DocPage>

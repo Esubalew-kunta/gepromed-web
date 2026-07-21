@@ -165,9 +165,17 @@ function TrainingCardModern({ t, onOpen }: { t: TrainingSession; onOpen: () => v
   const tr = useT();
   const upcoming = isUpcoming(t);
   const hms = isHelpMeSee(t);
+  const sponsored = !hms && !!t.isSponsored && !!t.sponsors && t.sponsors.length > 0;
   const left = spotsLeft(t);
   const full = left === 0;
   const pct = Math.round((t.enrolled / t.capacity) * 100);
+
+  // Explicit funding/pathway status, shown as one consistent badge on every card.
+  const status = hms
+    ? { label: tr("trainings.helpmeseeShort"), cls: "bg-amber-400/95 text-amber-950" }
+    : sponsored
+      ? { label: tr("trainings.sponsored"), cls: "bg-brand-600/95 text-white" }
+      : { label: tr("trainings.openEnrolment"), cls: "bg-white/90 text-brand-700" };
 
   return (
     <button
@@ -184,16 +192,13 @@ function TrainingCardModern({ t, onOpen }: { t: TrainingSession; onOpen: () => v
           style={{ backgroundImage: `url('${t.imageUrl || SPECIALTY_IMAGE[t.specialty]}')` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-brand-950/55 via-transparent to-transparent" />
-        <div className="absolute left-3 top-3 flex flex-wrap gap-2">
-          <span className="pill bg-white/90 text-brand-700 backdrop-blur">
-            {loc(SPECIALTY_LABELS[t.specialty], lang)}
-          </span>
-          {hms && (
-            <span className="pill bg-amber-400/95 font-semibold text-amber-950 backdrop-blur">
-              {tr("trainings.helpmesee")}
-            </span>
-          )}
-        </div>
+        {/* specialty (left) + explicit funding status (right) */}
+        <span className="pill absolute left-3 top-3 bg-white/90 text-brand-700 backdrop-blur">
+          {loc(SPECIALTY_LABELS[t.specialty], lang)}
+        </span>
+        <span className={`pill absolute right-3 top-3 font-semibold backdrop-blur ${status.cls}`}>
+          {status.label}
+        </span>
       </div>
 
       <div className="flex flex-1 flex-col p-5">
@@ -202,79 +207,81 @@ function TrainingCardModern({ t, onOpen }: { t: TrainingSession; onOpen: () => v
           <span className="shrink-0">{t.city}</span>
         </div>
         <h3 className="mt-2 font-display text-lg leading-snug text-ink">{loc(t.title, lang)}</h3>
-        <p className="mt-2 line-clamp-2 flex-1 text-sm leading-relaxed text-ink-soft">
+        <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-ink-soft">
           {loc(t.summary, lang)}
         </p>
-        {t.targetAudience.length > 0 && (
-          <div className="mt-3 flex flex-wrap gap-1.5">
-            {t.targetAudience.slice(0, 3).map((a) => (
-              <span key={a} className="pill border border-line bg-mist text-[0.68rem] text-ink-soft">
-                {a}
-              </span>
-            ))}
-          </div>
-        )}
 
-        {upcoming ? (
-          hms ? (
-            <div className="mt-4 flex items-start gap-2 rounded-lg bg-amber-50 px-3 py-2.5 text-xs text-amber-800">
-              <svg className="mt-0.5 h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                <rect x="3" y="11" width="18" height="11" rx="2" />
-                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-              </svg>
-              <span>{tr("trainings.helpmeseeNote")}</span>
-            </div>
-          ) : (
-            <div className="mt-4">
-              <div className="flex items-center justify-between text-xs">
-                <span className={full ? "font-medium text-ink-muted" : "font-medium text-brand-700"}>
-                  {full ? tr("common.full") : `${left} ${tr("common.spotsLeft")}`}
-                </span>
-                <span className="stat-figure text-ink-muted">
-                  {t.enrolled}/{t.capacity}
-                </span>
-              </div>
-              <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-mist">
-                <div
-                  className={`h-full rounded-full ${full ? "bg-ink-muted/50" : "bg-brand-500"}`}
-                  style={{ width: `${pct}%` }}
-                />
-              </div>
-            </div>
-          )
-        ) : (
-          t.satisfaction && (
-            <div className="mt-4 flex gap-4 rounded-lg bg-mist px-4 py-2.5 text-xs text-ink-soft">
-              <span><strong className="stat-figure text-ink">{t.satisfaction}%</strong> {tr("detail.satisfaction").toLowerCase()}</span>
-              {t.passRate != null && <span><strong className="stat-figure text-ink">{t.passRate}%</strong> {tr("detail.passRate").toLowerCase()}</span>}
-            </div>
-          )
-        )}
-
-        <div className={`mt-5 flex items-center border-t border-line pt-4 ${
-          !hms && t.isSponsored && t.sponsors && t.sponsors.length > 0 ? "justify-between" : "justify-end"
-        }`}>
-          {!hms && t.isSponsored && t.sponsors && t.sponsors.length > 0 && (
-            <span className="inline-flex items-center gap-1.5 text-sm text-ink-soft">
-              {tr("trainings.sponsoredBy")}
-              {t.sponsors[0].logoUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={t.sponsors[0].logoUrl}
-                  alt={t.sponsors[0].name}
-                  className="h-5 w-auto max-w-[6rem] object-contain"
-                />
-              ) : (
-                <span className="font-semibold text-ink">{t.sponsors[0].name}</span>
-              )}
-            </span>
+        {/* Clean at-a-glance meta row */}
+        <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-ink-muted">
+          <span className="font-medium text-ink-soft">{loc(LEVEL_LABELS[t.level], lang)}</span>
+          <span aria-hidden>·</span>
+          <span>{t.durationDays} {tr("detail.days")}</span>
+          <span aria-hidden>·</span>
+          <span>{loc(AUDIENCE_LABELS[t.audience], lang)}</span>
+          {t.qualiopi && (
+            <>
+              <span aria-hidden>·</span>
+              <span className="font-medium text-brand-600">✓ Qualiopi</span>
+            </>
           )}
-          <span className="inline-flex items-center gap-1.5 font-display text-sm font-semibold text-brand-700 transition group-hover:gap-2.5">
-            {tr("common.details")}
-            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </span>
+        </div>
+
+        {/* Status-specific footer detail, pushed to the bottom */}
+        <div className="mt-auto pt-4">
+          {upcoming ? (
+            hms ? (
+              <p className="flex items-start gap-2 rounded-lg bg-amber-50 px-3 py-2.5 text-xs text-amber-800">
+                <svg className="mt-0.5 h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                  <rect x="3" y="11" width="18" height="11" rx="2" />
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+                <span>{tr("trainings.helpmeseeNote")}</span>
+              </p>
+            ) : sponsored ? (
+              <p className="flex items-center gap-1.5 rounded-lg bg-brand-50 px-3 py-2.5 text-xs text-ink-soft">
+                {tr("trainings.sponsoredBy")}
+                {t.sponsors![0].logoUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={t.sponsors![0].logoUrl} alt={t.sponsors![0].name} className="h-4 w-auto max-w-[6rem] object-contain" />
+                ) : (
+                  <span className="font-semibold text-brand-700">{t.sponsors![0].name}</span>
+                )}
+              </p>
+            ) : (
+              <div>
+                <div className="flex items-center justify-between text-xs">
+                  <span className={full ? "font-medium text-ink-muted" : "font-medium text-brand-700"}>
+                    {full ? tr("common.full") : `${left} ${tr("common.spotsLeft")}`}
+                  </span>
+                  <span className="stat-figure text-ink-muted">
+                    {t.enrolled}/{t.capacity}
+                  </span>
+                </div>
+                <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-mist">
+                  <div
+                    className={`h-full rounded-full ${full ? "bg-ink-muted/50" : "bg-brand-500"}`}
+                    style={{ width: `${pct}%` }}
+                  />
+                </div>
+              </div>
+            )
+          ) : (
+            t.satisfaction && (
+              <div className="flex gap-4 rounded-lg bg-mist px-4 py-2.5 text-xs text-ink-soft">
+                <span><strong className="stat-figure text-ink">{t.satisfaction}%</strong> {tr("detail.satisfaction").toLowerCase()}</span>
+                {t.passRate != null && <span><strong className="stat-figure text-ink">{t.passRate}%</strong> {tr("detail.passRate").toLowerCase()}</span>}
+              </div>
+            )
+          )}
+
+          <div className="mt-4 flex items-center justify-end border-t border-line pt-4">
+            <span className="inline-flex items-center gap-1.5 font-display text-sm font-semibold text-brand-700 transition group-hover:gap-2.5">
+              {tr("common.details")}
+              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+          </div>
         </div>
       </div>
     </button>

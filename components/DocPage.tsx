@@ -9,12 +9,14 @@ export function DocPage({
   eyebrow,
   title,
   intro,
+  heroImage,
   children,
   withSidebar = true,
 }: {
   eyebrow?: L;
   title: L;
   intro?: L;
+  heroImage?: { src: string; alt: string };
   children: React.ReactNode;
   withSidebar?: boolean;
 }) {
@@ -24,15 +26,31 @@ export function DocPage({
   return (
     <>
       <section className="border-b border-line bg-paper">
-        <div className="container-page py-16">
-          {eyebrow && (
-            <p className="mono-label-brand">{loc(eyebrow, lang)}</p>
-          )}
-          <h1 className="mt-3 max-w-3xl text-4xl sm:text-5xl">{loc(title, lang)}</h1>
-          {intro && (
-            <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-soft">
-              {loc(intro, lang)}
-            </p>
+        <div
+          className={`container-page py-16 ${
+            heroImage ? "grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-center" : ""
+          }`}
+        >
+          <div>
+            {eyebrow && (
+              <p className="mono-label-brand">{loc(eyebrow, lang)}</p>
+            )}
+            <h1 className="mt-3 max-w-3xl text-4xl sm:text-5xl">{loc(title, lang)}</h1>
+            {intro && (
+              <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-soft">
+                {loc(intro, lang)}
+              </p>
+            )}
+          </div>
+          {heroImage && (
+            <div className="overflow-hidden rounded-2xl border border-line shadow-card">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={heroImage.src}
+                alt={heroImage.alt}
+                className="aspect-[4/3] w-full object-cover"
+              />
+            </div>
           )}
         </div>
       </section>

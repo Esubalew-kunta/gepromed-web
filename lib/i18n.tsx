@@ -170,6 +170,9 @@ const DICT = {
   "trainings.helpmeseeCta": { fr: "Demander une inscription", en: "Request registration" },
   "trainings.priceFrom": { fr: "À partir de {price}", en: "From {price}" },
   "trainings.sponsoredBy": { fr: "Financé par", en: "Sponsored by" },
+  "trainings.sponsored": { fr: "Sponsorisée", en: "Sponsored" },
+  "trainings.openEnrolment": { fr: "Inscription ouverte", en: "Open enrolment" },
+  "trainings.helpmeseeShort": { fr: "HelpMeSee", en: "HelpMeSee" },
 
   "detail.back": { fr: "← Toutes les formations", en: "← All trainings" },
   "detail.audience": { fr: "Public", en: "Audience" },

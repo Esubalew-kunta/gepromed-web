@@ -318,26 +318,28 @@ function UpcomingBody({ c, lang, tx }: { c: Congress; lang: Lang; tx: Tx }) {
           </div>
         )}
 
-        {/* 6. Téléchargement du programme (PDF) */}
-        <div>
-          <SectionHeading>
-            {tx("Programme complet (PDF)", "Full program (PDF)")}
-          </SectionHeading>
-          <p className="mt-3 text-ink-soft">
-            {tx(
-              "Téléchargez le programme détaillé au format PDF.",
-              "Download the detailed program as a PDF.",
-            )}
-          </p>
-          <DownloadButton
-            href={c.programPdfUrl}
-            label={tx("Télécharger le programme", "Download the program")}
-            soonLabel={tx(
-              "Programme — bientôt disponible",
-              "Program — coming soon",
-            )}
-          />
-        </div>
+        {/* 6. Téléchargement du programme (PDF) — only when a real file exists */}
+        {c.programPdfUrl && (
+          <div>
+            <SectionHeading>
+              {tx("Programme complet (PDF)", "Full program (PDF)")}
+            </SectionHeading>
+            <p className="mt-3 text-ink-soft">
+              {tx(
+                "Téléchargez le programme détaillé au format PDF.",
+                "Download the detailed program as a PDF.",
+              )}
+            </p>
+            <DownloadButton
+              href={c.programPdfUrl}
+              label={tx("Télécharger le programme", "Download the program")}
+              soonLabel={tx(
+                "Programme — bientôt disponible",
+                "Program — coming soon",
+              )}
+            />
+          </div>
+        )}
 
         {/* 7. Comité scientifique / faculty */}
         {c.committee && c.committee.length > 0 && (
@@ -363,11 +365,21 @@ function UpcomingBody({ c, lang, tx }: { c: Congress; lang: Lang; tx: Tx }) {
               <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
                 {loc(c.registration.method, lang)}
               </p>
-              {c.registration.url && (
-                <Link href={c.registration.url} className="btn-primary mt-5">
-                  {tx("S'inscrire", "Register")}
-                </Link>
-              )}
+              {c.registration.url &&
+                (c.registration.url.startsWith("http") ? (
+                  <a
+                    href={c.registration.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn-primary mt-5"
+                  >
+                    {tx("S'inscrire", "Register")}
+                  </a>
+                ) : (
+                  <Link href={c.registration.url} className="btn-primary mt-5">
+                    {tx("S'inscrire", "Register")}
+                  </Link>
+                ))}
             </div>
           </div>
         )}

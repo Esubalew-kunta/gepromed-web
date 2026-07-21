@@ -113,14 +113,14 @@ export const CONGRESSES: Congress[] = [
     },
     registration: {
       info: {
-        fr: "ISVB 2026 est organisé par ses propres hôtes à Tampa ; Gepromed soutient l'évènement au titre de la série ESVB. Modalités d'inscription à confirmer auprès de l'organisateur.",
-        en: "ISVB 2026 is run by its own host organizers in Tampa; Gepromed supports the event as part of the ESVB series. Registration details to be confirmed with the organizer.",
+        fr: "ISVB 2026 est organisé par ses propres hôtes à Tampa ; Gepromed soutient l'évènement au titre de la série ESVB. Les inscriptions sont ouvertes sur le site officiel de l'évènement.",
+        en: "ISVB 2026 is run by its own host organizers in Tampa; Gepromed supports the event as part of the ESVB series. Registration is open on the official event site.",
       },
       method: {
-        fr: "Consultez le site de l'ISVB 2026 ou contactez Gepromed pour les informations d'inscription les plus récentes.",
-        en: "Check the ISVB 2026 event site or contact Gepromed for the latest registration information.",
+        fr: "Inscrivez-vous directement sur la plateforme de l'ISVB 2026.",
+        en: "Register directly on the ISVB 2026 event platform.",
       },
-      url: "/contact",
+      url: "https://events.bizzabo.com/isvbe/page/5557705/register-here",
     },
   },
   {

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
 import { useT, useLang } from "@/lib/i18n";
+import { CookieSettingsLink } from "./CookieConsent";
 
 // The four public funding institutions, per gepromed.com/en/about-us/our-funders
 // (client: "only those 4"): Grand Est Region, European Union, Eurométropole de
@@ -119,10 +120,10 @@ export function SiteFooter() {
             {FUNDERS.map((f) => (
               <span
                 key={f.src}
-                className="flex items-center rounded-lg bg-white/10 p-1.5"
+                className="flex items-center rounded-lg bg-white/10 p-2"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={f.src} alt={f.alt} className="h-14 w-auto" />
+                <img src={f.src} alt={f.alt} className="h-11 w-auto" />
               </span>
             ))}
           </div>
@@ -144,6 +145,8 @@ export function SiteFooter() {
             <Link href="/about/quality" className="transition hover:text-white">
               {t("footer.qualityIndicators")}
             </Link>
+            <span aria-hidden="true">·</span>
+            <CookieSettingsLink className="transition hover:text-white" />
           </div>
         </div>
       </div>

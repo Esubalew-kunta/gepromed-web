@@ -53,17 +53,32 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-brand-800 bg-brand-950 text-white">
         <div className="bg-grid pointer-events-none absolute inset-0 opacity-50" />
-        <div className="container-page relative py-20">
-          <p className="mono-label text-brand-200">Gepromed · Strasbourg · Depuis 1993</p>
-          <h1 className="mt-3 max-w-3xl text-4xl text-white sm:text-5xl">{t("about.title")}</h1>
-          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/80">{t("about.lead")}</p>
-          <div className="mt-12 grid max-w-2xl grid-cols-3 gap-6 border-t border-white/10 pt-8">
-            {kpis.map(([n, l]) => (
-              <div key={l}>
-                <p className="stat-figure text-3xl text-white sm:text-4xl">{n}</p>
-                <p className="mt-1.5 text-xs text-white/65">{l}</p>
-              </div>
-            ))}
+        <div className="container-page relative grid gap-10 py-20 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div>
+            <p className="mono-label text-brand-200">Gepromed · Strasbourg · Depuis 1993</p>
+            <h1 className="mt-3 max-w-3xl text-4xl text-white sm:text-5xl">{t("about.title")}</h1>
+            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/80">{t("about.lead")}</p>
+            <div className="mt-12 grid max-w-2xl grid-cols-3 gap-6 border-t border-white/10 pt-8">
+              {kpis.map(([n, l]) => (
+                <div key={l}>
+                  <p className="stat-figure text-3xl text-white sm:text-4xl">{n}</p>
+                  <p className="mt-1.5 text-xs text-white/65">{l}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="relative">
+            <div className="overflow-hidden rounded-2xl border border-white/10 shadow-soft">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/photos/about/explora-building.png"
+                alt={tx("Bâtiment eXplora, centre d'éducation Gepromed à Strasbourg", "The eXplora building, Gepromed's education center in Strasbourg")}
+                className="aspect-[4/3] w-full object-cover"
+              />
+            </div>
+            <p className="mt-2 text-xs text-white/50">
+              {tx("Bâtiment eXplora · Centre d'éducation", "eXplora building · Education center")}
+            </p>
           </div>
         </div>
       </section>
