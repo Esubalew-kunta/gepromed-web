@@ -7,6 +7,7 @@ import { CookieConsentProvider } from "@/lib/cookie-consent";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CookieConsent } from "@/components/CookieConsent";
+import { Analytics } from "@/components/Analytics";
 
 // Display: scientific-journal serif for institutional gravitas.
 const display = Spectral({
@@ -62,6 +63,7 @@ export default function RootLayout({
               <main className="flex-1">{children}</main>
               <SiteFooter />
               <CookieConsent />
+              <Analytics />
             </TrainingsProvider>
           </CookieConsentProvider>
         </LanguageProvider>
