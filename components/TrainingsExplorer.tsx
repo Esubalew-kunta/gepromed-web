@@ -18,7 +18,7 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { useTrainings } from "@/lib/trainings-context";
 import { useLang, useT, loc } from "@/lib/i18n";
-import { fadeUp, staggerContainer, inViewProps } from "@/lib/motion";
+import { fadeUp, staggerContainer } from "@/lib/motion";
 import { Sheet } from "@/components/ui/Sheet";
 import { RegisterPanel } from "@/components/RegisterPanel";
 
@@ -122,8 +122,10 @@ export function TrainingsExplorer({
       )}
 
       <motion.div
-        {...inViewProps}
+        key={`${time}-${specialty}`}
         variants={staggerContainer}
+        initial="hidden"
+        animate="show"
         className={`grid gap-6 sm:grid-cols-2 lg:grid-cols-3 ${showFilters ? "mt-10" : ""}`}
       >
         {filtered.map((x) => (
