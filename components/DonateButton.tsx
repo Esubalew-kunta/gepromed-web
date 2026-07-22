@@ -2,9 +2,10 @@
 
 import { useLang } from "@/lib/i18n";
 
-// TODO(client input): replace with the real donation link (donation page /
-// HelloAsso / external URL) once provided. Single-line swap.
-const DONATE_URL = "https://www.gepromed.com/en";
+// Gepromed collects donations + memberships via HelloAsso — this is the real
+// association page (their "Adhérer ou donner" CTA routes here). Swap to a
+// dedicated don form URL if they create one.
+const DONATE_URL = "https://www.helloasso.com/associations/gepromed";
 
 /**
  * Floating "Faire un don / Donate" button, persistent across every page

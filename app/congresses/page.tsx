@@ -91,6 +91,17 @@ export default function CongressesPage() {
                 </span>
               </div>
 
+              <div className="space-y-4">
+              {featured.logo && (
+                <div className="overflow-hidden rounded-xl2 border border-white/10 bg-white p-4">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={featured.logo}
+                    alt={featured.acronym}
+                    className="mx-auto max-h-72 w-auto object-contain"
+                  />
+                </div>
+              )}
               <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-xl2 border border-white/10 bg-white/10">
                 <div className="bg-brand-950 p-5">
                   <dt className="mono-label text-brand-200">
@@ -125,6 +136,7 @@ export default function CongressesPage() {
                   </dd>
                 </div>
               </dl>
+              </div>
             </div>
           </Link>
         </Reveal>
