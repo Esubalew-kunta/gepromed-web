@@ -248,44 +248,6 @@ export function TrainingDetailView({ t }: { t: TrainingSession }) {
               />
             </dl>
 
-            {/* Sponsor logo, when the session is third-party funded. Purely
-                data-driven (t.isSponsored / t.sponsors from Supabase) — shows
-                the logo once a sponsor uploads one, falls back to the name
-                until then. Never shown for HelpMeSee (foundation-run, not a
-                third-party sponsor in this sense). */}
-            {!hms && t.isSponsored && t.sponsors && t.sponsors.length > 0 && (
-              <div className="mt-5 rounded-lg border border-line bg-mist/60 px-4 py-3">
-                <p className="mono-label text-ink-muted">{tr("trainings.sponsoredBy")}</p>
-                <div className="mt-2 flex flex-wrap items-center gap-4">
-                  {t.sponsors.map((s) =>
-                    s.logoUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        key={s.name}
-                        src={s.logoUrl}
-                        alt={s.name}
-                        className="h-8 w-auto max-w-[9rem] object-contain"
-                      />
-                    ) : s.website ? (
-                      <a
-                        key={s.name}
-                        href={s.website}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="font-semibold text-ink underline"
-                      >
-                        {s.name}
-                      </a>
-                    ) : (
-                      <span key={s.name} className="font-semibold text-ink">
-                        {s.name}
-                      </span>
-                    ),
-                  )}
-                </div>
-              </div>
-            )}
-
             {upcoming ? (
               hms ? (
                 <div className="mt-6 space-y-3">
@@ -360,6 +322,47 @@ export function TrainingDetailView({ t }: { t: TrainingSession }) {
           </div>
         </aside>
       </section>
+
+      {/* Sponsors — dedicated section at the bottom of the page (client request).
+          Data-driven from t.sponsors (Supabase); never shown for HelpMeSee. */}
+      {!hms && t.isSponsored && t.sponsors && t.sponsors.length > 0 && (
+        <section className="border-t border-line bg-mist/40 py-14">
+          <div className="container-page">
+            <p className="mono-label-brand">{tr("trainings.sponsoredBy")}</p>
+            <h2 className="mt-2 font-display text-2xl text-ink sm:text-3xl">
+              {tx("Nos sponsors", "Our sponsors")}
+            </h2>
+            <div className="mt-8 flex flex-wrap items-center gap-x-12 gap-y-8">
+              {t.sponsors.map((s) => (
+                <div key={s.name} className="flex flex-col items-start gap-2">
+                  {s.logoUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={s.logoUrl}
+                      alt={s.name}
+                      className="h-14 w-auto max-w-[12rem] object-contain"
+                    />
+                  ) : (
+                    <span className="font-display text-lg font-semibold text-ink">{s.name}</span>
+                  )}
+                  {s.website ? (
+                    <a
+                      href={s.website}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-sm text-brand-700 underline underline-offset-2"
+                    >
+                      {s.name}
+                    </a>
+                  ) : s.logoUrl ? (
+                    <span className="text-sm text-ink-muted">{s.name}</span>
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </>
   );
 }

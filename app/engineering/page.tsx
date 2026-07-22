@@ -31,10 +31,7 @@ export default function EngineeringPage() {
           </p>
           <div className="mt-6 flex flex-wrap items-center gap-2">
             <span className="pill border border-white/15 bg-white/5 font-mono text-[0.68rem] uppercase tracking-annotation text-brand-200">
-              ISO 9001 · 13485
-            </span>
-            <span className="pill border border-white/15 bg-white/5 font-mono text-[0.68rem] uppercase tracking-annotation text-brand-200">
-              ISO 7198
+              ISO 9001
             </span>
           </div>
         </div>

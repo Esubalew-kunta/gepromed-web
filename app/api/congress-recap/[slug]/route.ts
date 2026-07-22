@@ -184,7 +184,7 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
     );
     doc.moveDown(0.5);
     doc.fontSize(7).fillColor(MUTED).font("Helvetica").text(
-      "GEPROMED, organisme de formation certifié Qualiopi · ISO 9001 · ISO 13485",
+      "GEPROMED, organisme de formation certifié Qualiopi · ISO 9001",
       40,
       doc.y,
       { width: 515, align: "center" },

@@ -111,8 +111,18 @@ function DetailPanel({
 
   return (
     <div>
-      <div className="relative flex h-40 items-end overflow-hidden bg-gradient-to-br from-brand-800 via-brand-600 to-safety-500 p-5">
-        <div className="bg-grid pointer-events-none absolute inset-0 opacity-40" />
+      <div className="relative flex h-56 items-end overflow-hidden bg-gradient-to-br from-brand-800 via-brand-600 to-safety-500 p-5 sm:h-64">
+        {item.image && (
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url('${item.image}')` }}
+          />
+        )}
+        {item.image ? (
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-950/85 via-brand-950/35 to-brand-950/10" />
+        ) : (
+          <div className="bg-grid pointer-events-none absolute inset-0 opacity-40" />
+        )}
         <div className="relative text-white">
           <span className="pill border border-white/20 bg-white/15 font-mono text-[0.66rem] uppercase tracking-annotation text-white backdrop-blur">
             {loc(item.tag, lang)}

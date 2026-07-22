@@ -34,7 +34,7 @@ export default function TrainingsPage() {
           <motion.div variants={fadeUp} className="mt-6 flex flex-wrap items-center gap-2">
             <span className="pill bg-brand-50 text-brand-700">✓ {t("home.trustQualiopi")}</span>
             <span className="pill border border-line bg-white font-mono text-[0.68rem] uppercase tracking-annotation text-ink-muted">
-              ISO 9001 · 13485
+              ISO 9001
             </span>
           </motion.div>
         </motion.div>

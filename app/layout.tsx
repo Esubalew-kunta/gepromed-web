@@ -8,6 +8,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CookieConsent } from "@/components/CookieConsent";
 import { Analytics } from "@/components/Analytics";
+import { DonateButton } from "@/components/DonateButton";
 
 // Display: scientific-journal serif for institutional gravitas.
 const display = Spectral({
@@ -62,6 +63,7 @@ export default function RootLayout({
               <SiteHeader />
               <main className="flex-1">{children}</main>
               <SiteFooter />
+              <DonateButton />
               <CookieConsent />
               <Analytics />
             </TrainingsProvider>

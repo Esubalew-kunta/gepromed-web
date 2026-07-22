@@ -73,7 +73,6 @@ export function TrainingsExplorer({
   const trainings = useTrainings();
   const [time, setTime] = useState<TimeFilter>(initialTime);
   const [specialty, setSpecialty] = useState<Specialty | "all">("all");
-  const [detail, setDetail] = useState<TrainingSession | null>(null);
   const [registerSlug, setRegisterSlug] = useState<string | null>(null);
 
   const filtered = useMemo(() => {
@@ -130,7 +129,7 @@ export function TrainingsExplorer({
       >
         {filtered.map((x) => (
           <motion.div variants={fadeUp} key={x.slug} className="h-full">
-            <TrainingCardModern t={x} onOpen={() => setDetail(x)} />
+            <TrainingCardModern t={x} onRegister={() => setRegisterSlug(x.slug)} />
           </motion.div>
         ))}
       </motion.div>
@@ -138,23 +137,6 @@ export function TrainingsExplorer({
       {filtered.length === 0 && (
         <p className="mt-16 text-center text-ink-muted">{t("trainings.empty")}</p>
       )}
-
-      {/* Detail side drawer */}
-      <Sheet
-        open={!!detail}
-        onClose={() => setDetail(null)}
-        title={detail ? loc(detail.title, lang) : ""}
-        maxWidth="max-w-2xl"
-      >
-        {detail && (
-          <DetailPanel
-            t={detail}
-            onRegister={() => {
-              setRegisterSlug(detail.slug);
-            }}
-          />
-        )}
-      </Sheet>
 
       {/* Register modal */}
       <Sheet
@@ -170,7 +152,7 @@ export function TrainingsExplorer({
   );
 }
 
-function TrainingCardModern({ t, onOpen }: { t: TrainingSession; onOpen: () => void }) {
+function TrainingCardModern({ t, onRegister }: { t: TrainingSession; onRegister: () => void }) {
   const { lang } = useLang();
   const tr = useT();
   const upcoming = isUpcoming(t);
@@ -188,14 +170,14 @@ function TrainingCardModern({ t, onOpen }: { t: TrainingSession; onOpen: () => v
       : { label: tr("trainings.openEnrolment"), cls: "bg-white/90 text-brand-700" };
 
   return (
-    <button
-      onClick={onOpen}
+    <div
       className={`tick-frame group flex h-full flex-col overflow-hidden rounded-xl2 border bg-white text-left shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-soft ${
         hms
           ? "border-amber-300 ring-1 ring-amber-200 hover:border-amber-400"
           : "border-line hover:border-brand-200"
       }`}
     >
+      <Link href={`/trainings/${t.slug}`} className="flex flex-1 flex-col">
       <div className="relative h-40 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
@@ -289,165 +271,34 @@ function TrainingCardModern({ t, onOpen }: { t: TrainingSession; onOpen: () => v
             )
           )}
 
-          <div className="mt-4 flex items-center justify-end border-t border-line pt-4">
-            <span className="inline-flex items-center gap-1.5 font-display text-sm font-semibold text-brand-700 transition group-hover:gap-2.5">
-              {tr("common.details")}
-              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </span>
-          </div>
         </div>
       </div>
-    </button>
-  );
-}
+      </Link>
 
-function DetailPanel({ t, onRegister }: { t: TrainingSession; onRegister: () => void }) {
-  const { lang } = useLang();
-  const tr = useT();
-  const tx = (fr: string, en: string) => (lang === "fr" ? fr : en);
-  const upcoming = isUpcoming(t);
-  const hms = isHelpMeSee(t);
-  const left = spotsLeft(t);
-  const full = left === 0;
-
-  return (
-    <div>
-      <div
-        className="relative h-48 bg-cover bg-center"
-        style={{ backgroundImage: `url('${t.imageUrl || SPECIALTY_IMAGE[t.specialty]}')` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/40 to-brand-950/10" />
-        <div className="absolute bottom-4 left-5 right-5 text-white">
-          <div className="flex flex-wrap gap-2">
-            <span className="pill bg-white/90 text-brand-700">{loc(SPECIALTY_LABELS[t.specialty], lang)}</span>
-            {hms && (
-              <span className="pill bg-amber-400/95 font-semibold text-amber-950">{tr("trainings.helpmesee")}</span>
-            )}
-            <span className="pill border border-white/20 bg-brand-950/45 font-mono text-[0.66rem] uppercase tracking-annotation text-white backdrop-blur">{loc(LEVEL_LABELS[t.level], lang)}</span>
-            <span className="pill border border-white/20 bg-brand-950/45 text-white backdrop-blur">{tr("detail.audience")}: {loc(AUDIENCE_LABELS[t.audience], lang)}</span>
-            {t.qualiopi && <span className="pill bg-brand-50 text-brand-700">✓ Qualiopi</span>}
-          </div>
-          <p className="mt-2 font-mono text-xs text-white/90">
-            {formatDateRange(t.startDate, t.endDate, lang)} · {t.durationDays} {tr("detail.days")} · {loc(t.venue, lang)}, {t.city}
-          </p>
-        </div>
-      </div>
-
-      <div className="p-6">
+      {/* Actions: Register (left) · Details (right) */}
+      <div className="flex items-center justify-between gap-2 border-t border-line px-5 py-4">
+        {upcoming ? (
+          <button
+            type="button"
+            onClick={onRegister}
+            disabled={full}
+            className="btn-primary px-4 py-1.5 text-sm disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {full ? tr("detail.full") : tr("nav.register")}
+          </button>
+        ) : (
+          <span />
+        )}
         <Link
           href={`/trainings/${t.slug}`}
-          className="mono-label-brand group inline-flex items-center gap-1.5 transition hover:gap-2.5"
+          className="group/details inline-flex items-center gap-1.5 font-display text-sm font-semibold text-brand-700 transition hover:gap-2.5"
         >
-          {tx("Voir la fiche complète", "View full page")}
-          <svg viewBox="0 0 24 24" className="h-3 w-3 transition group-hover:translate-x-0.5" fill="none" stroke="currentColor" strokeWidth="2.5">
+          {tr("common.details")}
+          <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </Link>
-
-        <p className="mt-4 leading-relaxed text-ink-soft">{loc(t.summary, lang)}</p>
-        {t.isSponsored && !hms && t.sponsors && t.sponsors.length > 0 && (
-          <p className="mt-1 text-xs text-ink-muted">
-            {tr("trainings.sponsoredBy")}{" "}
-            {t.sponsors.map((s, i) => (
-              <span key={s.name}>
-                {i > 0 ? ", " : ""}
-                {s.website ? (
-                  <a href={s.website} target="_blank" rel="noreferrer" className="underline">
-                    {s.name}
-                  </a>
-                ) : (
-                  s.name
-                )}
-              </span>
-            ))}
-          </p>
-        )}
-
-        {/* Quick-glance facts: general info, distinct from the full page's
-            deep Qualiopi block (méthodes, encadrement, accessibilité...). */}
-        <dl className="mt-5 grid grid-cols-2 gap-3 border-y border-line py-4 text-sm sm:grid-cols-3">
-          <div>
-            <dt className="mono-label text-ink-muted">{tr("detail.days")}</dt>
-            <dd className="mt-0.5 font-medium text-ink">{t.durationDays}</dd>
-          </div>
-          <div>
-            <dt className="mono-label text-ink-muted">{tr("detail.maxParticipants")}</dt>
-            <dd className="mt-0.5 font-medium text-ink">{t.capacity}</dd>
-          </div>
-          <div>
-            <dt className="mono-label text-ink-muted">{tr("detail.audience")}</dt>
-            <dd className="mt-0.5 font-medium text-ink">{loc(AUDIENCE_LABELS[t.audience], lang)}</dd>
-          </div>
-        </dl>
-
-        {t.objectives.length > 0 && (
-          <>
-            <h4 className="mt-5 font-display text-lg">{tr("detail.objectives")}</h4>
-            <ul className="mt-3 space-y-2">
-              {t.objectives.map((o) => (
-                <li key={o.en} className="flex gap-2.5 text-sm text-ink-soft">
-                  <span className="mt-0.5 text-brand-500">✓</span> {loc(o, lang)}
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
-
-        {t.prerequisites && (
-          <>
-            <h4 className="mt-5 font-display text-lg">{tr("detail.prerequisites")}</h4>
-            <p className="mt-2 text-sm leading-relaxed text-ink-soft">{loc(t.prerequisites, lang)}</p>
-          </>
-        )}
-
-        {!upcoming && t.satisfaction && (
-          <>
-            <h4 className="mt-6 font-display text-lg">{tr("detail.results")}</h4>
-            <div className="mt-3 grid grid-cols-3 gap-3">
-              <MiniStat label={tr("detail.satisfaction")} value={`${t.satisfaction}%`} />
-              {t.passRate != null && <MiniStat label={tr("detail.passRate")} value={`${t.passRate}%`} />}
-              {t.photos && t.photos.length > 0 && (
-                <MiniStat label={tr("detail.photos")} value={`${t.photos.length}`} />
-              )}
-            </div>
-          </>
-        )}
       </div>
-
-      {/* sticky footer CTA */}
-      {upcoming &&
-        (hms ? (
-          <div className="sticky bottom-0 space-y-2 border-t border-amber-200 bg-amber-50/95 px-6 py-4 backdrop-blur">
-            <p className="flex items-start gap-2 text-sm text-amber-800">
-              <svg className="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                <rect x="3" y="11" width="18" height="11" rx="2" />
-                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-              </svg>
-              <span>{tr("trainings.helpmeseeNote")}</span>
-            </p>
-            <Link href={`/register?session=${t.slug}`} className="btn-ghost w-full">
-              {tr("trainings.helpmeseeCta")}
-            </Link>
-          </div>
-        ) : (
-          <div className="sticky bottom-0 space-y-2 border-t border-line bg-white/95 px-6 py-4 backdrop-blur">
-            <button onClick={onRegister} disabled={full} className="btn-primary w-full">
-              {full ? tr("detail.full") : tr("detail.registerThis")}
-            </button>
-            <p className="text-center text-xs text-ink-muted">{tr("detail.noEngagement")}</p>
-          </div>
-        ))}
-    </div>
-  );
-}
-
-function MiniStat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-lg bg-mist p-3 text-center">
-      <p className="stat-figure text-xl font-semibold text-brand-700">{value}</p>
-      <p className="mt-0.5 text-xs text-ink-muted">{label}</p>
     </div>
   );
 }
