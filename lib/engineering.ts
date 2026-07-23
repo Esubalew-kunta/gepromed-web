@@ -5,6 +5,7 @@ export type EngineeringCategory = "explant" | "testing" | "rental";
 export type EngineeringItem = {
   id: string;
   category: EngineeringCategory;
+  image?: string;
   /** short label shown on the gradient header (e.g. lead time, standard) */
   tag: L;
   title: L;
@@ -173,92 +174,375 @@ export const TESTING_ITEMS: EngineeringItem[] = [
 ];
 
 // ── Band 3 · Equipment Rental ──────────────────────────────────────────────
+// export const RENTAL_ITEMS: EngineeringItem[] = [
+//   {
+//     id: "rental-wet-lab",
+//     category: "rental",
+//     tag: { fr: "Plateau technique", en: "Technical platform" },
+//     title: {
+//       fr: "Wet-lab & plateau de simulation chirurgicale",
+//       en: "Wet-lab & surgical simulation platform",
+//     },
+//     summary: {
+//       fr: "Location de notre plateau de simulation chirurgicale haute-fidélité, équipé pour la chirurgie vasculaire et ophtalmologique.",
+//       en: "Rental of our high-fidelity surgical simulation platform, equipped for vascular and ophthalmic surgery.",
+//     },
+//     description: [
+//       {
+//         fr: "Notre wet-lab accueille vos sessions de formation, d'évaluation de dispositifs ou de recherche appliquée, avec un environnement conforme aux standards hospitaliers.",
+//         en: "Our wet-lab hosts your training sessions, device evaluation or applied research, in an environment aligned with hospital standards.",
+//       },
+//       {
+//         fr: "Le plateau est disponible à la journée ou pour des campagnes plus longues, avec ou sans accompagnement technique.",
+//         en: "The platform is available per day or for longer campaigns, with or without technical support.",
+//       },
+//     ],
+//     highlights: [
+//       { fr: "Postes de travail instrumentés", en: "Instrumented workstations" },
+//       { fr: "Éclairage et imagerie per-opératoire", en: "Intra-operative lighting and imaging" },
+//       { fr: "Accompagnement technique en option", en: "Optional technical support" },
+//       { fr: "Disponible à la journée ou à la semaine", en: "Available per day or per week" },
+//     ],
+//   },
+//   {
+//     id: "rental-pulsatile-bench",
+//     category: "rental",
+//     tag: { fr: "Banc d'essai", en: "Test bench" },
+//     title: {
+//       fr: "Banc de perfusion pulsatile",
+//       en: "Pulsatile perfusion bench",
+//     },
+//     summary: {
+//       fr: "Mise à disposition d'un banc de perfusion pulsatile pour vos essais hydrodynamiques sur dispositifs vasculaires.",
+//       en: "Access to a pulsatile perfusion bench for your hydrodynamic testing on vascular devices.",
+//     },
+//     description: [
+//       {
+//         fr: "Le banc reproduit des régimes de flux physiologiques et pathologiques, avec réglage fin de la fréquence, du débit et de la pression.",
+//         en: "The bench reproduces physiological and pathological flow regimes, with fine control of frequency, flow rate and pressure.",
+//       },
+//       {
+//         fr: "Idéal pour la R&D, la validation de prototypes et les démonstrations, il est loué avec sa métrologie et son support logiciel.",
+//         en: "Ideal for R&D, prototype validation and demonstrations, it is rented with its metrology and software support.",
+//       },
+//     ],
+//     highlights: [
+//       { fr: "Régimes pulsatiles paramétrables", en: "Configurable pulsatile regimes" },
+//       { fr: "Acquisition pression / débit synchronisée", en: "Synchronized pressure / flow acquisition" },
+//       { fr: "Métrologie et logiciel inclus", en: "Metrology and software included" },
+//       { fr: "Assistance à la mise en service", en: "Commissioning assistance" },
+//     ],
+//   },
+//   {
+//     id: "rental-microct-scanner",
+//     category: "rental",
+//     tag: { fr: "Équipement", en: "Equipment" },
+//     title: {
+//       fr: "Micro-tomographe (micro-CT)",
+//       en: "Micro-CT scanner",
+//     },
+//     summary: {
+//       fr: "Créneaux de mesure sur notre micro-tomographe haute résolution, avec ou sans opérateur.",
+//       en: "Measurement slots on our high-resolution micro-CT scanner, with or without an operator.",
+//     },
+//     description: [
+//       {
+//         fr: "Réservez des créneaux sur notre micro-tomographe pour l'inspection interne non destructive de vos échantillons et dispositifs.",
+//         en: "Book slots on our micro-CT scanner for non-destructive internal inspection of your samples and devices.",
+//       },
+//       {
+//         fr: "Un opérateur qualifié peut prendre en charge l'acquisition et la reconstruction, ou vous former à l'utilisation autonome.",
+//         en: "A qualified operator can handle acquisition and reconstruction, or train you for autonomous use.",
+//       },
+//     ],
+//     highlights: [
+//       { fr: "Créneaux à la demi-journée", en: "Half-day booking slots" },
+//       { fr: "Acquisition et reconstruction 3D", en: "3D acquisition and reconstruction" },
+//       { fr: "Opérateur qualifié en option", en: "Optional qualified operator" },
+//       { fr: "Export des données brutes", en: "Raw data export" },
+//     ],
+//   },
+// ];
+
+
 export const RENTAL_ITEMS: EngineeringItem[] = [
   {
-    id: "rental-wet-lab",
+    id: "keyence-vhx-7100",
     category: "rental",
-    tag: { fr: "Plateau technique", en: "Technical platform" },
+    image: "/photos/equipment/keyence-vhx-7100.png",
+    tag: { fr: "Imagerie 3D", en: "3D imaging" },
     title: {
-      fr: "Wet-lab & plateau de simulation chirurgicale",
-      en: "Wet-lab & surgical simulation platform",
+      fr: "Keyence VHX-7100",
+      en: "Keyence VHX-7100",
     },
     summary: {
-      fr: "Location de notre plateau de simulation chirurgicale haute-fidélité, équipé pour la chirurgie vasculaire et ophtalmologique.",
-      en: "Rental of our high-fidelity surgical simulation platform, equipped for vascular and ophthalmic surgery.",
+      fr: "Reconstruction d'images 3D haute résolution de surfaces et de matériaux, avec grossissement de ×20 à ×2500.",
+      en: "High-resolution 3D image reconstruction of surfaces and materials, with magnification from ×20 to ×2500.",
     },
     description: [
       {
-        fr: "Notre wet-lab accueille vos sessions de formation, d'évaluation de dispositifs ou de recherche appliquée, avec un environnement conforme aux standards hospitaliers.",
-        en: "Our wet-lab hosts your training sessions, device evaluation or applied research, in an environment aligned with hospital standards.",
-      },
-      {
-        fr: "Le plateau est disponible à la journée ou pour des campagnes plus longues, avec ou sans accompagnement technique.",
-        en: "The platform is available per day or for longer campaigns, with or without technical support.",
+        fr: "Le Keyence VHX-7100 permet la reconstruction d'images 3D haute résolution pour l'observation des surfaces et des matériaux.",
+        en: "The Keyence VHX-7100 provides high-resolution 3D image reconstruction for observing surfaces and materials.",
       },
     ],
     highlights: [
-      { fr: "Postes de travail instrumentés", en: "Instrumented workstations" },
-      { fr: "Éclairage et imagerie per-opératoire", en: "Intra-operative lighting and imaging" },
-      { fr: "Accompagnement technique en option", en: "Optional technical support" },
-      { fr: "Disponible à la journée ou à la semaine", en: "Available per day or per week" },
+      {
+        fr: "Reconstruction d'images 3D",
+        en: "3D image reconstruction",
+      },
+      {
+        fr: "Grossissement de ×20 à ×2500",
+        en: "Magnification from ×20 to ×2500",
+      },
     ],
   },
   {
-    id: "rental-pulsatile-bench",
+    id: "faxitron-pathvision",
     category: "rental",
-    tag: { fr: "Banc d'essai", en: "Test bench" },
+    image: "/photos/equipment/faxitron-pathvision.webp",
+    tag: { fr: "Radiographie", en: "Radiography" },
     title: {
-      fr: "Banc de perfusion pulsatile",
-      en: "Pulsatile perfusion bench",
+      fr: "Faxitron PathVision",
+      en: "Faxitron PathVision",
     },
     summary: {
-      fr: "Mise à disposition d'un banc de perfusion pulsatile pour vos essais hydrodynamiques sur dispositifs vasculaires.",
-      en: "Access to a pulsatile perfusion bench for your hydrodynamic testing on vascular devices.",
+      fr: "Système de radiographie haute résolution pour l'imagerie détaillée des échantillons.",
+      en: "High-resolution radiography system for detailed sample imaging.",
     },
     description: [
       {
-        fr: "Le banc reproduit des régimes de flux physiologiques et pathologiques, avec réglage fin de la fréquence, du débit et de la pression.",
-        en: "The bench reproduces physiological and pathological flow regimes, with fine control of frequency, flow rate and pressure.",
-      },
-      {
-        fr: "Idéal pour la R&D, la validation de prototypes et les démonstrations, il est loué avec sa métrologie et son support logiciel.",
-        en: "Ideal for R&D, prototype validation and demonstrations, it is rented with its metrology and software support.",
+        fr: "Le Faxitron PathVision est dédié à la radiographie haute résolution.",
+        en: "The Faxitron PathVision is designed for high-resolution radiography.",
       },
     ],
     highlights: [
-      { fr: "Régimes pulsatiles paramétrables", en: "Configurable pulsatile regimes" },
-      { fr: "Acquisition pression / débit synchronisée", en: "Synchronized pressure / flow acquisition" },
-      { fr: "Métrologie et logiciel inclus", en: "Metrology and software included" },
-      { fr: "Assistance à la mise en service", en: "Commissioning assistance" },
+      {
+        fr: "Radiographie haute résolution",
+        en: "High-resolution radiography",
+      },
+      {
+        fr: "Imagerie détaillée des échantillons",
+        en: "Detailed sample imaging",
+      },
     ],
   },
   {
-    id: "rental-microct-scanner",
+    id: "zeiss-sem-300",
     category: "rental",
-    tag: { fr: "Équipement", en: "Equipment" },
+    image: "/photos/equipment/zeiss-sem-300.png",
+    tag: { fr: "Microscopie", en: "Microscopy" },
     title: {
-      fr: "Micro-tomographe (micro-CT)",
-      en: "Micro-CT scanner",
+      fr: "ZEISS SEM 300",
+      en: "ZEISS SEM 300",
     },
     summary: {
-      fr: "Créneaux de mesure sur notre micro-tomographe haute résolution, avec ou sans opérateur.",
-      en: "Measurement slots on our high-resolution micro-CT scanner, with or without an operator.",
+      fr: "Microscopie électronique à balayage pour l'analyse morphologique.",
+      en: "Scanning electron microscopy for morphological analysis.",
     },
     description: [
       {
-        fr: "Réservez des créneaux sur notre micro-tomographe pour l'inspection interne non destructive de vos échantillons et dispositifs.",
-        en: "Book slots on our micro-CT scanner for non-destructive internal inspection of your samples and devices.",
-      },
-      {
-        fr: "Un opérateur qualifié peut prendre en charge l'acquisition et la reconstruction, ou vous former à l'utilisation autonome.",
-        en: "A qualified operator can handle acquisition and reconstruction, or train you for autonomous use.",
+        fr: "Le ZEISS SEM 300 permet l'observation par microscopie électronique à balayage et l'analyse morphologique des échantillons.",
+        en: "The ZEISS SEM 300 enables scanning electron microscopy and morphological analysis of samples.",
       },
     ],
     highlights: [
-      { fr: "Créneaux à la demi-journée", en: "Half-day booking slots" },
-      { fr: "Acquisition et reconstruction 3D", en: "3D acquisition and reconstruction" },
-      { fr: "Opérateur qualifié en option", en: "Optional qualified operator" },
-      { fr: "Export des données brutes", en: "Raw data export" },
+      {
+        fr: "Microscopie électronique à balayage",
+        en: "Scanning electron microscopy",
+      },
+      {
+        fr: "Analyse morphologique",
+        en: "Morphological analysis",
+      },
+    ],
+  },
+  {
+    id: "keyence-vhx-s7000e-ea300",
+    category: "rental",
+    image: "/photos/equipment/keyence-vhx-s7000e-ea300.png",
+    tag: {
+      fr: "Analyse de surface",
+      en: "Surface analysis",
+    },
+    title: {
+      fr: "Keyence VHX-S7000E + EA-300",
+      en: "Keyence VHX-S7000E + EA-300",
+    },
+    summary: {
+      fr: "Système dédié à l'analyse des caractéristiques de surface.",
+      en: "System dedicated to the analysis of surface characteristics.",
+    },
+    description: [
+      {
+        fr: "L'ensemble Keyence VHX-S7000E et EA-300 permet d'analyser les caractéristiques de surface des échantillons.",
+        en: "The Keyence VHX-S7000E and EA-300 system analyzes the surface characteristics of samples.",
+      },
+    ],
+    highlights: [
+      {
+        fr: "Analyse des caractéristiques de surface",
+        en: "Surface characteristics analysis",
+      },
+      {
+        fr: "Système Keyence VHX-S7000E et EA-300",
+        en: "Keyence VHX-S7000E and EA-300 system",
+      },
+    ],
+  },
+  {
+    id: "zeiss-xradia-context",
+    category: "rental",
+    image: "/photos/equipment/zeiss-xradia-context.png",
+    tag: { fr: "Micro-CT", en: "Micro-CT" },
+    title: {
+      fr: "ZEISS Xradia Context (Micro-CT)",
+      en: "ZEISS Xradia Context (Micro-CT)",
+    },
+    summary: {
+      fr: "Tomographie et imagerie 3D volumétrique interne.",
+      en: "Tomography and internal volumetric 3D imaging.",
+    },
+    description: [
+      {
+        fr: "Le ZEISS Xradia Context réalise des acquisitions de tomographie pour produire une imagerie 3D volumétrique interne.",
+        en: "The ZEISS Xradia Context performs tomography acquisitions to produce internal volumetric 3D imaging.",
+      },
+    ],
+    highlights: [
+      {
+        fr: "Tomographie Micro-CT",
+        en: "Micro-CT tomography",
+      },
+      {
+        fr: "Imagerie 3D volumétrique interne",
+        en: "Internal volumetric 3D imaging",
+      },
+    ],
+  },
+  {
+    id: "histology",
+    category: "rental",
+    image: "/photos/equipment/histology.png",
+    tag: { fr: "Histologie", en: "Histology" },
+    title: {
+      fr: "Histologie",
+      en: "Histology",
+    },
+    summary: {
+      fr: "Analyse histologique de sections biologiques et tissulaires.",
+      en: "Histological analysis of biological and tissue sections.",
+    },
+    description: [
+      {
+        fr: "La plateforme d'histologie permet l'analyse de sections biologiques et tissulaires.",
+        en: "The histology platform enables the analysis of biological and tissue sections.",
+      },
+    ],
+    highlights: [
+      {
+        fr: "Analyse histologique",
+        en: "Histological analysis",
+      },
+      {
+        fr: "Sections biologiques et tissulaires",
+        en: "Biological and tissue sections",
+      },
+    ],
+  },
+  {
+    id: "mts-insight-50kn",
+    category: "rental",
+    image: "/photos/equipment/mts-insight-50kn.jpg",
+    tag: { fr: "Traction", en: "Tensile testing" },
+    title: {
+      fr: "MTS Insight 50 kN",
+      en: "MTS Insight 50 kN",
+    },
+    summary: {
+      fr: "Équipement pour la réalisation de tests de traction jusqu'à 50 kN.",
+      en: "Equipment for tensile testing up to 50 kN.",
+    },
+    description: [
+      {
+        fr: "La MTS Insight 50 kN est utilisée pour réaliser des tests de traction.",
+        en: "The MTS Insight 50 kN is used to perform tensile tests.",
+      },
+    ],
+    highlights: [
+      {
+        fr: "Tests de traction",
+        en: "Tensile testing",
+      },
+      {
+        fr: "Capacité de 50 kN",
+        en: "50 kN capacity",
+      },
+    ],
+  },
+  {
+    id: "blockwise-ttr2",
+    category: "rental",
+    image: "/photos/equipment/blockwise-ttr2.png",
+    tag: {
+      fr: "Force radiale",
+      en: "Radial force",
+    },
+    title: {
+      fr: "Blockwise Model TTR2",
+      en: "Blockwise Model TTR2",
+    },
+    summary: {
+      fr: "Mesure de la force radiale des stents et des endoprothèses à 37 °C.",
+      en: "Radial force measurement of stents and endoprostheses at 37°C.",
+    },
+    description: [
+      {
+        fr: "Le Blockwise Model TTR2 mesure la force radiale des stents et des endoprothèses dans des conditions à 37 °C.",
+        en: "The Blockwise Model TTR2 measures the radial force of stents and endoprostheses under conditions at 37°C.",
+      },
+    ],
+    highlights: [
+      {
+        fr: "Mesure de force radiale",
+        en: "Radial force measurement",
+      },
+      {
+        fr: "Essais à 37 °C",
+        en: "Testing at 37°C",
+      },
+    ],
+  },
+  {
+    id: "ta-electroforce-15-325",
+    category: "rental",
+    image: "/photos/equipment/ta-electroforce-15-325.jpg",
+    tag: {
+      fr: "Fatigue",
+      en: "Fatigue testing",
+    },
+    title: {
+      fr: "TA Instruments ElectroForce 15-325",
+      en: "TA Instruments ElectroForce 15-325",
+    },
+    summary: {
+      fr: "Équipement dédié à la réalisation de tests de fatigue.",
+      en: "Equipment dedicated to fatigue testing.",
+    },
+    description: [
+      {
+        fr: "Le TA Instruments ElectroForce 15-325 est utilisé pour réaliser des tests de fatigue.",
+        en: "The TA Instruments ElectroForce 15-325 is used to perform fatigue tests.",
+      },
+    ],
+    highlights: [
+      {
+        fr: "Tests de fatigue",
+        en: "Fatigue testing",
+      },
+      {
+        fr: "Système ElectroForce 15-325",
+        en: "ElectroForce 15-325 system",
+      },
     ],
   },
 ];
