@@ -72,15 +72,31 @@ function EngineeringCard({
       onClick={onOpen}
       className="tick-frame group flex flex-col overflow-hidden rounded-xl2 border border-line bg-white text-left shadow-card transition duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-soft"
     >
-      <div className="relative flex h-28 items-end overflow-hidden bg-gradient-to-br from-brand-700 via-brand-600 to-safety-500 p-4">
-        <div className="bg-grid pointer-events-none absolute inset-0 opacity-30" />
-        <div className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-white/15 text-white backdrop-blur">
-          <CategoryIcon category={item.category} />
-        </div>
-        <span className="pill relative border border-white/20 bg-white/15 font-mono text-[0.66rem] uppercase tracking-annotation text-white backdrop-blur">
-          {loc(item.tag, lang)}
-        </span>
-      </div>
+    <div className="relative flex h-44 items-end overflow-hidden bg-white p-4">
+  {item.image ? (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={item.image}
+      alt={loc(item.title, lang)}
+      className="absolute inset-0 h-full w-full object-contain p-3 transition duration-300 group-hover:scale-[1.03]"
+    />
+  ) : (
+    <>
+      <div className="absolute inset-0 bg-gradient-to-br from-brand-700 via-brand-600 to-safety-500" />
+      <div className="bg-grid pointer-events-none absolute inset-0 opacity-30" />
+    </>
+  )}
+
+  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-ink/75 to-transparent" />
+
+  <div className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-brand-700/90 text-white shadow-sm backdrop-blur">
+    <CategoryIcon category={item.category} />
+  </div>
+
+  <span className="pill relative border border-white/30 bg-ink/65 font-mono text-[0.66rem] uppercase tracking-annotation text-white backdrop-blur">
+    {loc(item.tag, lang)}
+  </span>
+</div>
 
       <div className="flex flex-1 flex-col p-5">
         <h3 className="font-display text-lg leading-snug text-ink">{loc(item.title, lang)}</h3>
@@ -127,44 +143,104 @@ function DetailPanel({
           <span className="pill border border-white/20 bg-white/15 font-mono text-[0.66rem] uppercase tracking-annotation text-white backdrop-blur">
             {loc(item.tag, lang)}
           </span>
-          <h3 className="mt-2 font-display text-2xl leading-tight text-white">
+        </div>
+
+        {/* Category icon */}
+        <div className="absolute right-5 top-5 grid h-10 w-10 place-items-center rounded-full border border-brand-100 bg-white/90 text-brand-700 shadow-sm backdrop-blur">
+          <CategoryIcon category={item.category} />
+        </div>
+
+        <figcaption className="sr-only">
+          {loc(item.title, lang)}
+        </figcaption>
+      </figure>
+
+      {/* Equipment information */}
+      <div className="flex-1 p-6 sm:p-7">
+        <div className="border-b border-line pb-6">
+          <p className="mono-label-brand">
+            {tx("Équipement", "Equipment", lang)}
+          </p>
+
+          <h3 className="mt-2 font-display text-2xl leading-tight text-ink sm:text-3xl">
             {loc(item.title, lang)}
           </h3>
-        </div>
-      </div>
 
-      <div className="p-6">
-        {item.description.map((p, i) => (
-          <p key={i} className={`leading-relaxed text-ink-soft ${i > 0 ? "mt-4" : ""}`}>
-            {loc(p, lang)}
+          <p className="mt-3 text-base leading-relaxed text-ink-soft">
+            {loc(item.summary, lang)}
           </p>
-        ))}
+        </div>
 
-        <h4 className="mt-6 font-display text-lg">
-          {tx("Ce que nous fournissons", "What we provide", lang)}
-        </h4>
-        <ul className="mt-3 space-y-2">
-          {item.highlights.map((h) => (
-            <li key={h.en} className="flex gap-2.5 text-sm text-ink-soft">
-              <span className="mt-0.5 text-brand-500">✓</span> {loc(h, lang)}
-            </li>
-          ))}
-        </ul>
+        {/* Description */}
+        <section className="py-6">
+          <h4 className="font-display text-lg text-ink">
+            {tx("Présentation", "Overview", lang)}
+          </h4>
+
+          <div className="mt-3 space-y-4">
+            {item.description.map((paragraph, index) => (
+              <p
+                key={index}
+                className="leading-relaxed text-ink-soft"
+              >
+                {loc(paragraph, lang)}
+              </p>
+            ))}
+          </div>
+        </section>
+
+        {/* Capabilities */}
+        <section className="border-t border-line pt-6">
+          <h4 className="font-display text-lg text-ink">
+            {tx(
+              "Caractéristiques principales",
+              "Key capabilities",
+              lang,
+            )}
+          </h4>
+
+          <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+            {item.highlights.map((highlight) => (
+              <li
+                key={highlight.en}
+                className="flex items-start gap-3 rounded-xl border border-line bg-paper p-3.5"
+              >
+                <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand-100 text-xs font-bold text-brand-700">
+                  ✓
+                </span>
+
+                <span className="text-sm leading-relaxed text-ink-soft">
+                  {loc(highlight, lang)}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
 
-      <div className="sticky bottom-0 space-y-2 border-t border-line bg-white/95 px-6 py-4 backdrop-blur">
-        <button onClick={onRequest} className="btn-primary w-full">
-          {tx("Demander cette prestation", "Request this service", lang)}
-        </button>
-        <p className="text-center text-xs text-ink-muted">
+      {/* Sticky action area */}
+      <footer className="sticky bottom-0 border-t border-line bg-white/95 px-6 py-4 shadow-[0_-8px_24px_rgba(15,23,42,0.06)] backdrop-blur sm:px-7">
+        <button
+          type="button"
+          onClick={onRequest}
+          className="btn-primary w-full"
+        >
           {tx(
-            "Demande sans engagement. Notre équipe vous recontacte pour un devis.",
-            "No-commitment request. Our team will contact you with a quote.",
+            "Demander cet équipement",
+            "Request this equipment",
+            lang,
+          )}
+        </button>
+
+        <p className="mt-2 text-center text-xs leading-relaxed text-ink-muted">
+          {tx(
+            "Demande sans engagement. Notre équipe vous recontacte pour confirmer la disponibilité et établir un devis.",
+            "No-commitment request. Our team will contact you to confirm availability and prepare a quote.",
             lang,
           )}
         </p>
-      </div>
-    </div>
+      </footer>
+    </article>
   );
 }
 
