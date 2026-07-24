@@ -2,7 +2,7 @@
 
 import { DocPage } from "@/components/DocPage";
 import { Reveal } from "@/components/Reveal";
-import { useLang, loc, type L } from "@/lib/i18n";
+import { useLang, loc, type L, type Lang } from "@/lib/i18n";
 
 type Person = { name: string; role: L; lead?: boolean; photo?: string };
 
@@ -37,6 +37,22 @@ export default function TeamPage() {
     { name: "Annik Borcos", role: { fr: "Directrice générale", en: "Chief Executive Officer" }, photo: "/photos/team/annik-borcos.jpg" },
   ];
 
+  // Board (Conseil d'administration) — the president sits on the board. The
+  // remaining seats are placeholders until the real member list is provided.
+  const board: Person[] = [
+    president,
+    { name: tx("Membre à confirmer", "Member to be confirmed"), role: { fr: "Administrateur", en: "Board member" } },
+    { name: tx("Membre à confirmer", "Member to be confirmed"), role: { fr: "Administratrice", en: "Board member" } },
+  ];
+
+  // Scientific Committee (Comité scientifique) — placeholders until the real
+  // member list (names, specialties, photos) is provided.
+  const scientificCommittee: Person[] = [
+    { name: tx("Membre à confirmer", "Member to be confirmed"), role: { fr: "Expert scientifique", en: "Scientific expert" } },
+    { name: tx("Membre à confirmer", "Member to be confirmed"), role: { fr: "Expert scientifique", en: "Scientific expert" } },
+    { name: tx("Membre à confirmer", "Member to be confirmed"), role: { fr: "Experte scientifique", en: "Scientific expert" } },
+  ];
+
   const poles = [
     tx("Chirurgie vasculaire", "Vascular surgery"),
     tx("Ophtalmologie", "Ophthalmology"),
@@ -57,21 +73,20 @@ export default function TeamPage() {
         en: "Learn more about the members of the Gepromed team and their roles within the association.",
       }}
     >
-      {/* President */}
-      <h2 className="text-2xl">{tx("Président", "President")}</h2>
-      <div className="mt-5">
-        <div className="flex items-center gap-5 rounded-2xl border border-brand-200 bg-white p-6 shadow-card">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={president.photo}
-            alt={president.name}
-            className="h-20 w-20 shrink-0 rounded-full object-cover ring-2 ring-brand-200"
-          />
-          <div>
-            <p className="text-lg font-semibold text-ink">{president.name}</p>
-            <p className="mt-0.5 text-sm text-ink-muted">{loc(president.role, lang)}</p>
-          </div>
-        </div>
+      {/* Board (Conseil d'administration) — includes the president */}
+      <h2 className="text-2xl">{tx("Conseil d'administration", "Board")}</h2>
+      <p className="mt-2 text-sm text-ink-muted">
+        {tx(
+          "La liste complète du conseil d'administration sera publiée prochainement.",
+          "The full list of board members will be published soon.",
+        )}
+      </p>
+      <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {board.map((p, i) => (
+          <Reveal key={`board-${i}`} delay={(i % 3) * 60}>
+            <MemberCard p={p} lang={lang} />
+          </Reveal>
+        ))}
       </div>
 
       {/* Team */}
@@ -103,6 +118,22 @@ export default function TeamPage() {
         ))}
       </div>
 
+      {/* Scientific Committee (Comité scientifique) */}
+      <h2 className="mt-12 text-2xl">{tx("Comité scientifique", "Scientific Committee")}</h2>
+      <p className="mt-2 text-sm text-ink-muted">
+        {tx(
+          "Les membres du comité scientifique seront présentés prochainement.",
+          "Scientific committee members will be presented soon.",
+        )}
+      </p>
+      <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {scientificCommittee.map((p, i) => (
+          <Reveal key={`sci-${i}`} delay={(i % 3) * 60}>
+            <MemberCard p={p} lang={lang} />
+          </Reveal>
+        ))}
+      </div>
+
       <h2 className="mt-12 text-2xl">{tx("Pôles d'expertise", "Areas of expertise")}</h2>
       <div className="mt-5 flex flex-wrap gap-2">
         {poles.map((p) => (
@@ -110,5 +141,34 @@ export default function TeamPage() {
         ))}
       </div>
     </DocPage>
+  );
+}
+
+function MemberCard({ p, lang }: { p: Person; lang: Lang }) {
+  return (
+    <div
+      className={`group h-full rounded-2xl border bg-white p-5 shadow-card transition hover:-translate-y-0.5 hover:shadow-soft ${
+        p.lead ? "border-brand-200 ring-1 ring-brand-100" : "border-line hover:border-brand-300"
+      }`}
+    >
+      <div className="flex items-center gap-3.5">
+        {p.photo ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={p.photo}
+            alt={p.name}
+            className="h-12 w-12 shrink-0 rounded-full object-cover ring-1 ring-line"
+          />
+        ) : (
+          <div className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-brand-50 font-mono text-sm font-semibold text-brand-700">
+            {initials(p.name)}
+          </div>
+        )}
+        <div>
+          <p className="font-semibold text-ink">{p.name}</p>
+          <p className="mt-0.5 text-sm text-ink-muted">{loc(p.role, lang)}</p>
+        </div>
+      </div>
+    </div>
   );
 }

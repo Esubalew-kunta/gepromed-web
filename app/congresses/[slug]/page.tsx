@@ -239,6 +239,18 @@ function UpcomingBody({ c, lang, tx }: { c: Congress; lang: Lang; tx: Tx }) {
                   </p>
                 </>
               )}
+              {/* Map — keyed on the (real) venue + city so no API key is needed */}
+              <div className="mt-5 overflow-hidden rounded-xl border border-line">
+                <iframe
+                  title={tx("Carte", "Map")}
+                  src={`https://www.google.com/maps?q=${encodeURIComponent(
+                    `${loc(c.location.venue, "en")}, ${loc(c.city, "en")}`,
+                  )}&output=embed`}
+                  className="h-64 w-full"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
             </div>
           </div>
         )}

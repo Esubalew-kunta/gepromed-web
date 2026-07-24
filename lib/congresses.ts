@@ -54,6 +54,8 @@ export type Congress = {
   dates: L;
   city: L;
   venue?: L;
+  /** Edition logo/poster for the "Next edition" block (ISVB / ESVB). */
+  logo?: string;
   title: L;
   summary: L;
   intro: L;
@@ -98,7 +100,15 @@ export const CONGRESSES: Congress[] = [
     year: "2026",
     dates: { fr: "1 au 2 juin 2026", en: "1 to 2 June 2026" },
     city: { fr: "Tampa, Floride, États-Unis", en: "Tampa, Florida, USA" },
+    venue: { fr: "Tampa General Hospital", en: "Tampa General Hospital" },
+    logo: "/photos/congresses/isvb-2026.png", // real ISVB 2026 poster (gepromed.com)
     featured: true,
+    // Real, site-confirmed venue (Tampa General Hospital); exact street address
+    // and daily schedule are hosted on the ISVB event site, not gepromed.com.
+    location: {
+      venue: { fr: "Tampa General Hospital", en: "Tampa General Hospital" },
+      address: { fr: "Tampa, Floride, États-Unis", en: "Tampa, Florida, USA" },
+    },
     title: {
       fr: "ISVB 2026 : symposium international de biomatériaux vasculaires",
       en: "ISVB 2026: International Symposium on Vascular Biomaterials",

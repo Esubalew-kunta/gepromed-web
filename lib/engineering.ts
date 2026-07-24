@@ -14,6 +14,9 @@ export type EngineeringItem = {
   description: L[];
   /** bullet highlights (deliverables, methods, standards) */
   highlights: L[];
+  /** optional hero image shown behind the drawer header (falls back to the
+      brand gradient when absent). Drop a file under public/photos/engineering/. */
+  image?: string;
 };
 
 // ── Band 1 · Explant Analysis ──────────────────────────────────────────────
@@ -87,7 +90,7 @@ export const TESTING_ITEMS: EngineeringItem[] = [
   {
     id: "mechanical-testing",
     category: "testing",
-    tag: { fr: "ISO 7198", en: "ISO 7198" },
+    tag: { fr: "ISO 13485", en: "ISO 13485" },
     title: {
       fr: "Essais mécaniques (traction / fatigue)",
       en: "Mechanical testing (tensile / fatigue)",
@@ -102,8 +105,8 @@ export const TESTING_ITEMS: EngineeringItem[] = [
         en: "Created in 2009 at the Strasbourg University Hospitals with the LPMT of the University of Haute-Alsace, our testing platform is an independent technical environment dedicated to the mechanical evaluation of implantable medical devices and their materials. These activities are ISO 13485 and ISO 9001 certified since 2013.",
       },
       {
-        fr: "Nous réalisons des essais standards, principalement sur les textiles et implants vasculaires (norme ISO 7198) ou sur les stents et endoprothèses (norme ISO 25539), ainsi que la conception de tests sur-mesure lorsque les performances recherchées ne figurent pas dans les normes existantes. Notre vocation est le conseil : identifier tôt les limites et les mécanismes de dégradation pour optimiser la fiabilité, y compris pour les start-ups.",
-        en: "We run standard tests, mainly on vascular textiles and implants (ISO 7198) or on stents and endoprostheses (ISO 25539), plus the design of custom tests when the target performance is not covered by existing standards. Our vocation is advisory: identifying limits and degradation mechanisms early to optimize reliability, including for start-ups.",
+        fr: "Nous réalisons des essais standards, principalement sur les textiles et implants vasculaires ou sur les stents et endoprothèses (norme ISO 25539), ainsi que la conception de tests sur-mesure lorsque les performances recherchées ne figurent pas dans les normes existantes. Notre vocation est le conseil : identifier tôt les limites et les mécanismes de dégradation pour optimiser la fiabilité, y compris pour les start-ups.",
+        en: "We run standard tests, mainly on vascular textiles and implants or on stents and endoprostheses (ISO 25539), plus the design of custom tests when the target performance is not covered by existing standards. Our vocation is advisory: identifying limits and degradation mechanisms early to optimize reliability, including for start-ups.",
       },
     ],
     highlights: [

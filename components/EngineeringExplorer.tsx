@@ -126,26 +126,21 @@ function DetailPanel({
   const { lang } = useLang();
 
   return (
-    <article className="flex min-h-full flex-col bg-white">
-      {/* Large equipment image */}
-      <figure className="relative flex h-72 items-center justify-center overflow-hidden border-b border-line bg-gradient-to-br from-white via-mist/40 to-brand-50/60 sm:h-96">
-        {item.image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={item.image}
-            alt={loc(item.title, lang)}
-            className="h-full w-full object-contain p-6 sm:p-10"
+    <div>
+      <div className="relative flex h-56 items-end overflow-hidden bg-gradient-to-br from-brand-800 via-brand-600 to-safety-500 p-5 sm:h-64">
+        {item.image && (
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url('${item.image}')` }}
           />
-        ) : (
-          <>
-            <div className="absolute inset-0 bg-gradient-to-br from-brand-800 via-brand-600 to-safety-500" />
-            <div className="bg-grid pointer-events-none absolute inset-0 opacity-40" />
-          </>
         )}
-
-        {/* Category badge */}
-        <div className="absolute left-5 top-5">
-          <span className="pill border border-brand-100 bg-white/90 font-mono text-[0.66rem] uppercase tracking-annotation text-brand-700 shadow-sm backdrop-blur">
+        {item.image ? (
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-950/85 via-brand-950/35 to-brand-950/10" />
+        ) : (
+          <div className="bg-grid pointer-events-none absolute inset-0 opacity-40" />
+        )}
+        <div className="relative text-white">
+          <span className="pill border border-white/20 bg-white/15 font-mono text-[0.66rem] uppercase tracking-annotation text-white backdrop-blur">
             {loc(item.tag, lang)}
           </span>
         </div>

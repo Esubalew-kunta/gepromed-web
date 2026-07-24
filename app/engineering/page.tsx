@@ -1,8 +1,11 @@
 "use client";
 
+import { motion } from "motion/react";
 import { EngineeringExplorer } from "@/components/EngineeringExplorer";
-import { useLang } from "@/lib/i18n";
+import { useLang, loc } from "@/lib/i18n";
 import { EXPLANT_ITEMS, TESTING_ITEMS, RENTAL_ITEMS } from "@/lib/engineering";
+import { EQUIPMENT_PARK } from "@/lib/equipment-park";
+import { fadeUp, staggerContainer, inViewProps } from "@/lib/motion";
 
 export default function EngineeringPage() {
   const { lang } = useLang();
@@ -28,10 +31,7 @@ export default function EngineeringPage() {
           </p>
           <div className="mt-6 flex flex-wrap items-center gap-2">
             <span className="pill border border-white/15 bg-white/5 font-mono text-[0.68rem] uppercase tracking-annotation text-brand-200">
-              ISO 9001 · 13485
-            </span>
-            <span className="pill border border-white/15 bg-white/5 font-mono text-[0.68rem] uppercase tracking-annotation text-brand-200">
-              ISO 7198
+              ISO 9001
             </span>
           </div>
         </div>
@@ -82,6 +82,55 @@ export default function EngineeringPage() {
       >
         <EngineeringExplorer items={RENTAL_ITEMS} requireDate />
       </Band>
+
+      {/* Parc d'équipements — the full technical facility */}
+      <section className="relative overflow-hidden border-t border-brand-800 bg-brand-950 py-16 text-white sm:py-20">
+        <div className="bg-grid pointer-events-none absolute inset-0 opacity-30" />
+        <div className="container-page relative">
+          <div className="max-w-2xl">
+            <p className="mono-label text-brand-200">{tx("Parc d'équipements", "Equipment park")}</p>
+            <h2 className="mt-2 font-display text-3xl text-white sm:text-4xl">
+              {tx("Des équipements de pointe", "State-of-the-art equipment")}
+            </h2>
+            <p className="mt-3 leading-relaxed text-white/70">
+              {tx(
+                "Au service de l'analyse et de la caractérisation de vos produits, matériaux et biomatériaux.",
+                "For the analysis and characterization of your products, materials and biomaterials.",
+              )}
+            </p>
+          </div>
+
+          <motion.div
+            {...inViewProps}
+            variants={staggerContainer}
+            className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {EQUIPMENT_PARK.map((e) => (
+              <motion.div
+                variants={fadeUp}
+                key={e.name}
+                className="group overflow-hidden rounded-xl2 border border-white/10 bg-white/[0.04] transition hover:border-white/25 hover:bg-white/[0.07]"
+              >
+                <div className="relative overflow-hidden bg-white">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={e.image}
+                    alt={e.name}
+                    className="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+                  />
+                  <span className="pill absolute left-3 top-3 bg-brand-950/70 font-mono text-[0.62rem] uppercase tracking-annotation text-brand-100 backdrop-blur">
+                    {loc(e.category, lang)}
+                  </span>
+                </div>
+                <div className="p-5">
+                  <h3 className="font-display text-lg text-white">{e.name}</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-white/65">{loc(e.desc, lang)}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
     </>
   );
 }
